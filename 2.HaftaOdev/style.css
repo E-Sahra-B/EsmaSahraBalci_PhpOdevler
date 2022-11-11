@@ -1,0 +1,37 @@
+table,
+td,
+th {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+}
+table th {
+    background: blue;
+    color: aliceblue;
+}
+table tr>td:first-child,
+table tr>th:first-child {
+    text-align: left;
+}
+input[type="button"],
+input[type="submit"] {
+    float: right;
+    padding: 5px;
+    color: aliceblue;
+    background: blue;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type="number"] {
+    /* border: none; */
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
