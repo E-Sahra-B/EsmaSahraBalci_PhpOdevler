@@ -1,0 +1,56 @@
+:root{
+    --kirmizi:crimson;
+    --mavi:blue;
+    --beyaz:aliceblue;
+}
+a {
+    text-decoration: none;
+    color:var(--kirmizi);
+    font-weight: 600;
+    transition: 200ms all;
+}
+a:hover {
+    color: red;
+    font-size: 18px;
+}
+table,
+td,
+th {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table th {
+    background: var(--mavi);
+    color: var(--beyaz);
+}
+table tr>td:first-child,
+table tr>th:first-child {
+    text-align: left;
+    padding-left: 20px!important;
+}
+input {
+padding: 5px; 
+width: 250px;
+height: 29px;
+box-sizing: border-box;
+border-radius: 5px;
+}
+input[type="text"]:hover,
+input[type="text"]:active{
+    border-color: var(--mavi);
+}
+input[type="submit"] {
+    color: var(--beyaz);
+    background: var(--mavi);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+.ortala{
+    text-align: center!important;
+}
