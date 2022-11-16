@@ -11,7 +11,7 @@ table {
     border-radius: 10px;
 }
 table th {
-    background: blue;
+    background: teal;
     color: aliceblue;
 }
 table tr>td:first-child,
@@ -23,7 +23,7 @@ input[type="submit"] {
     float: right;
     padding: 5px;
     color: aliceblue;
-    background: blue;
+    background: teal;;
     border: none;
     border-radius: 5px;
     cursor: pointer;

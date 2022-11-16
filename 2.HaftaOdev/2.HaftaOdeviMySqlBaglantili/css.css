@@ -1,0 +1,43 @@
+table,
+td,
+th {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+}
+table th {
+    background: teal;
+    color: aliceblue;
+}
+table tr>td:first-child,
+table tr>th:first-child {
+    text-align: left;
+}
+input[type="submit"] {
+    float: right;
+    padding: 5px;
+    color: aliceblue;
+    background: teal;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all;
+}
+input[type="submit"]:hover{
+background:green;
+transform: scale(1.03);
+}
+a {
+    text-decoration: none;
+    color:crimson;
+    font-weight: 600;
+}
+a:hover {
+    color: red;
+    font-size: 17px;
+}
