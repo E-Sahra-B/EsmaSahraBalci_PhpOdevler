@@ -11,7 +11,7 @@ $durum = $kontrol->tcKontrol($_POST["tc"]);
 $ekle = $sorgu->execute(array(NULL, $adSoyad, $tc, $durum));
 $toplam = $sorgu->rowCount();
 if ($toplam > 0) {
-    header("Location:hafta4.php");
+    header("Location:index.php");
 } else {
     echo "Kayıt Eklenemedi";
 }

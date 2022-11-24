@@ -1,4 +1,5 @@
 ### Ödev 4:
+
 Bir formdan gelen Ad Soyad ve TC Kimlik numarası verisini veritabanına kaydeden bir uygulama hazırla.
 Veritabanına kayıt etmeden önce TC Kimlik numarasını aşağıdaki kurallara göre bir Class içerisinde
 doğrula ve sonucu da diğer bilgilerle birlikte veritabanına kaydet.
@@ -11,4 +12,4 @@ doğrula ve sonucu da diğer bilgilerle birlikte veritabanına kaydet.
 geriye kalan sayının 10ʹa göre modu 10. haneye eşittir.
 
 **(4)** 1. 2. 3. 4. 5. 6. 7. 8. 9. 10. hanelerin toplamının 10ʹa göre modu 11. haneye eşittir.
-<img src="/4.HaftaOdev/screenshot.png">
+<img src="/4.HaftaOdev/araclar/hafta4.gif">
