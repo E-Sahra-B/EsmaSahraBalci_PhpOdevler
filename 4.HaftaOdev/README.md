@@ -11,4 +11,4 @@ doğrula ve sonucu da diğer bilgilerle birlikte veritabanına kaydet.
 geriye kalan sayının 10ʹa göre modu 10. haneye eşittir.
 
 **(4)** 1. 2. 3. 4. 5. 6. 7. 8. 9. 10. hanelerin toplamının 10ʹa göre modu 11. haneye eşittir.
-<img src="/4.HaftaOdev/screenshot.png">
+<img src="/4.HaftaOdev/hafta4.gif">
