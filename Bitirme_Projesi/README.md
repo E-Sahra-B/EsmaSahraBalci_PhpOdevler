@@ -56,4 +56,4 @@
 
 **28.** Blog sayfasındaki footer kısmında admin tarafından eklemiş olan son 3 blog listelenmektedir.
 
-<img src="/Bitirme_Projesi/images/YonetimPanelliWeb.mp4">
+<img src="/Bitirme_Projesi/images/Bitirme_Projesi.gif">
