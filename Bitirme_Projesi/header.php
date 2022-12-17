@@ -10,10 +10,10 @@
                 <a href="login.php">
                     <i class="fas fa-lock"></i> Giriş Yap</a>
             </span>
-            <!-- <span>
-						<a href="register.html">
-							<i class="far fa-user"></i> Register</a>
-					</span> -->
+            <span>
+                <a href="register.php">
+                    <i class="far fa-user"></i> Kayıt Ol</a>
+            </span>
         </div>
         <div class="col-md-4 log-icons text-right">
 

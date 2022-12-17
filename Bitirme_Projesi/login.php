@@ -4,7 +4,7 @@ include("ayar.php");
 
 if ($_POST) {
 	$kullanici = $_POST["kullanici"];
-	$sifre = $_POST["sifre"];
+	$sifre = sha1(md5($_POST["sifre"]));
 	$sorgu = $baglan->prepare("select * from kullanici where (kullaniciAdi ='$kullanici' && 
         sifre = '$sifre')");
 	$sorgu->fetch(PDO::FETCH_ASSOC);
