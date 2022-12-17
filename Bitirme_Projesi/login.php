@@ -14,6 +14,7 @@ if ($_POST) {
 	if ($kayitsay > 0) {
 		setcookie("user", "esb", strtotime('+1 day'));
 		$_SESSION["giris"] = sha1(md5("var"));
+		$_SESSION["adSoyad"] = $kullanici;
 		echo "
             <script>
             window.location.href='admin/index.php';

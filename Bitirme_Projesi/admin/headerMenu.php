@@ -1,3 +1,7 @@
+<?php
+@session_start();
+@ob_start();
+?>
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
@@ -5,7 +9,7 @@
                 <div class="dropdown profile-element">
                     <img alt="image" class="rounded-circle" src="img/profile_small.jpg" />
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="block m-t-xs font-bold">Mehmet Selçuk Batal</span>
+                        <span class="block m-t-xs font-bold"><?php echo $_SESSION['adSoyad']; ?></span>
                         <span class="text-muted text-xs block">Chairman - Instructor - Author</span>
                     </a>
                 </div>

@@ -1,3 +1,7 @@
+<?php
+@session_start();
+@ob_start();
+?>
 <div class="row border-bottom">
     <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
@@ -10,7 +14,7 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <span class="m-r-sm text-muted welcome-message">Hoşgeldiniz Mehmet Selçuk Batal</span>
+                <span class="m-r-sm text-muted welcome-message">Hoşgeldiniz <?php echo $_SESSION['adSoyad']; ?></span>
             </li>
             <li>
                 <a href="cikis.php" onclick="if (!confirm('Çıkış Yapmak İstediğinize Emin misiniz?')) return false;">
