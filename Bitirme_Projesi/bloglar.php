@@ -24,8 +24,17 @@
 
 						<?php
 						include("ayar.php");
-						$sorgu = $baglan->prepare("select * from bloglar");
+						error_reporting(0);
+						$page = empty(strip_tags($_GET["page"])) ? 1 : strip_tags($_GET["page"]);
+						$limit = 3; //sayfada kaç blok gözüksün
+						$startLimit = ($page * $limit) - $limit; //
+						$sorgu = $baglan->prepare("select * from bloglar limit $startLimit,$limit");
 						$sorgu->fetch(PDO::FETCH_ASSOC);
+						$totalRecord = $baglan->prepare("select * from bloglar");
+						$totalRecord->fetch(PDO::FETCH_ASSOC);
+						$totalRecord->execute();;
+						$pageNumber = ceil(($totalRecord->rowCount()) / $limit); //sayfa sayısı
+
 						$sorgu->execute();
 						foreach ($sorgu as $satir) {
 						?>
@@ -54,32 +63,67 @@
 						<?php
 						}
 						?>
-
-						<!-- <nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-left mt-4">
-								<li class="page-item disabled">
-									<a class="page-link" href="#" tabindex="-1">Previous</a>
-								</li>
-								<li class="page-item">
-									<a class="page-link" href="#">1</a>
-								</li>
-								<li class="page-item">
-									<a class="page-link" href="#">2</a>
-								</li>
-								<li class="page-item">
-									<a class="page-link" href="#">3</a>
-								</li>
-								<li class="page-item">
-									<a class="page-link" href="#">Next</a>
-								</li>
-							</ul>
-						</nav> -->
 					</div>
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center mt-4">
+							<?php
+							if ($page > 1) {
+								$newPage = $page - 1;
+								echo '
+									<li class="page-item">
+									<a class="page-link" href="http://localhost/php/yonetici/bloglar.php?page=' . $newPage . '" tabindex="-1">Geri</a>
+								</li>
+									';
+							} else {
+								echo '
+									<li class="page-item disabled">
+									<a class="page-link" href="javascript:void(0)" tabindex="-1">Geri</a>
+								</li>
+									';
+							}
+
+							$record = 10; //sayfanın sag ve solunda kaç rakam gözüksün
+							for ($i = $page - $record; $i <= $page + $record; $i++) {
+								if ($i > 0 and $i <= $pageNumber) {
+									if ($i == $page) {
+										echo '
+											<li class="page-item active">
+											<a class="page-link" href="http://localhost/php/yonetici/bloglar.php?page=' . $i . '">' . $i . '</a>
+										</li>
+											';
+									} else {
+										echo '
+									<li class="page-item">
+									<a class="page-link" href="http://localhost/php/yonetici/bloglar.php?page=' . $i . '">' . $i . '</a>
+								</li>
+									';
+									}
+								}
+							}
+
+							if ($page != $pageNumber) {
+								$newPage = $page + 1;
+								echo '
+									<li class="page-item">
+									<a class="page-link" 
+									href="http://localhost/php/yonetici/bloglar.php?page=' . $newPage . '" tabindex="-1">İleri</a>
+								</li>
+									';
+							} else {
+								echo '
+									<li class="page-item disabled">
+									<a class="page-link" href="javascript:void(0)" tabindex="-1">İleri</a>
+								</li>
+									';
+							}
+							?>
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!--//main-->
+
 	<?php
 	include_once("footer.php");
 	include_once("script.php");
