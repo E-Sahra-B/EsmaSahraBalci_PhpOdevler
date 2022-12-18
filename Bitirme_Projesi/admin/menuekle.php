@@ -1,7 +1,30 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 include("../ayar.php");
+
 $sorgu = $baglan->query("select * from menuler", PDO::FETCH_ASSOC);
+
+if (isset($_POST["menuKaydet"])) {
+    $sorgu = $baglan->prepare("insert into menuler values(?,?,?,?,?,?,?)");
+    // $kontrol = new kontroller();
+    // $menuAdi = $kontrol->guvenlik($_POST["menuadi"]);
+    $menuAdi = $_POST["menuadi"];
+    $menuLink = $_POST["menulink"];
+    $resim = "img/" . $_FILES["resim"]["name"];
+    move_uploaded_file($_FILES["resim"]["tmp_name"], $resim);
+    $aciklama = $_POST["aciklama"];
+    $tarih = date('Y-m-d');
+    $ziyaret = "0";
+    $ekle = $sorgu->execute(array(NULL, $menuAdi, $menuLink, $resim, $aciklama, $tarih, $ziyaret));
+    $toplam = $sorgu->rowCount();
+    if ($toplam > 0) {
+        print '<div class="alert alert-success">KAYIT YAPILDI</div>';
+        header("Refresh: 2; url=menuliste.php");
+    } else {
+        print '<div class="alert alert-danger">HATA: KAYIT YAPILAMADI !</div>';
+        header("Refresh: 2; url=menuekle.php");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,6 +36,7 @@ $sorgu = $baglan->query("select * from menuler", PDO::FETCH_ASSOC);
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -25,7 +49,7 @@ $sorgu = $baglan->query("select * from menuler", PDO::FETCH_ASSOC);
             <?php
             include_once("header.php");
             ?>
-            <form action="islem.php" method="post" enctype="multipart/form-data">
+            <form action="menuekle.php" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group row"><label class="col-sm-2 col-form-label">Menü Adı</label>
@@ -48,7 +72,7 @@ $sorgu = $baglan->query("select * from menuler", PDO::FETCH_ASSOC);
                         <div class="form-group row"><label class="col-sm-2 col-form-label">Açıklama</label>
                             <div class="col-sm-10">
                                 <div class="summernote">
-                                    <textarea class="form-control" name="aciklama" id="exampleFormControlTextarea1" rows="5"></textarea>
+                                    <textarea class="ckeditor" name="aciklama"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +86,7 @@ $sorgu = $baglan->query("select * from menuler", PDO::FETCH_ASSOC);
                         <div class="form-group row justify-content-between">
                             <div></div>
                             <div class="col-lg-10">
-                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Kaydet">
+                                <input type="submit" name="menuKaydet" class="btn btn-lg btn-primary btn-block" value="Kaydet">
                             </div>
                         </div>
                     </div>
@@ -76,6 +100,9 @@ $sorgu = $baglan->query("select * from menuler", PDO::FETCH_ASSOC);
     <?php
     include_once("script.php");
     ?>
+    <script>
+        CKEDITOR.replace('editor1');
+    </script>
 </body>
 
 </html>

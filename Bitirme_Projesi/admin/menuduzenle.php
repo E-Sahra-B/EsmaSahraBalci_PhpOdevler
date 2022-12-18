@@ -43,6 +43,7 @@ if ($_POST) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -86,7 +87,7 @@ if ($_POST) {
                             <div class="form-group row"><label class="col-lg-2 col-form-label">Açıklama</label>
                                 <div class="col-lg-10">
                                     <div class="summernote">
-                                        <textarea class="form-control" name="aciklama" id="exampleFormControlTextarea1" rows="5"><?php echo $satir["aciklama"]; ?></textarea>
+                                        <textarea class="ckeditor" name="aciklama"><?php echo $satir["aciklama"]; ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -117,6 +118,9 @@ if ($_POST) {
     <?php
     include_once("script.php");
     ?>
+    <script>
+        CKEDITOR.replace('editor1');
+    </script>
 </body>
 
 </html>
