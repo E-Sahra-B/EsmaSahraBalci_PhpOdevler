@@ -36,7 +36,7 @@
                 <a href="blogekle.php"><i class="fa fa-keyboard-o"></i> <span class="nav-label">Blog Ekle</span></a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-stack-overflow"></i> <span class="nav-label">Ayarlar</span></a>
+                <a href="kullaniciduzen"><i class="fa fa-stack-overflow"></i> <span class="nav-label">Ayarlar</span></a>
             </li>
             <li>
                 <a href="cikis.php"><i class="fa fa-sign-out"></i> <span class="nav-label">Çıkış Yap</span></a>
