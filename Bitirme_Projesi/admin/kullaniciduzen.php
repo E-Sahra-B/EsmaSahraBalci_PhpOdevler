@@ -4,7 +4,60 @@
 error_reporting(0);
 include("../ayar.php");
 if (isset($_POST["kullaniciduzen"])) {
-    //post verileri
+    $id = $_POST["id"];
+    $sorgu = $baglan->query("select * from kullanici where id=$id");
+    $satir = $sorgu->fetch(PDO::FETCH_ASSOC);
+    $kullaniciAdi = $_POST["kullaniciAdi"];
+    $sifre = $_POST["sifre"];
+    $ySifre = $_POST["ySifre"];
+    $ySifreTekrar = $_POST["ySifreTekrar"];
+    $resim = "img/" . $_FILES["resim"]["name"];
+    $resim_tmp = $_FILES["resim"]["tmp_name"];
+    if ($resim_tmp != "") {
+        move_uploaded_file($resim_tmp, $resim);
+        $sorgu = $baglan->prepare("update kullanici set kullaniciAdi=?, resim=? where id=?");
+        $guncelle = $sorgu->execute(array($kullaniciAdi, $resim, $id));
+        if ($guncelle) {
+            print '<div class="alert alert-success">RESİM GÜNCELLEME YAPILDI</div>';
+            header("Refresh: 2; url=kullaniciduzen.php");
+        } else {
+            print '<div class="alert alert-danger">HATA: RESİM GÜNCELLEME YAPILAMADI !</div>';
+            header("refresh:2", "kullaniciduzen.php");
+        }
+    }
+    if ($sifre != "" and $ySifre != "" and $ySifreTekrar != "") {
+        if ($ySifre == $ySifreTekrar) {
+            if ($satir["sifre"] == sha1(md5($sifre))) {
+                $sorgu = $baglan->prepare("update kullanici set kullaniciAdi=?, sifre=? where id=?");
+                $guncelle = $sorgu->execute(array($kullaniciAdi, sha1(md5($ySifre)), $id));
+                if ($guncelle) {
+                    print '<div class="alert alert-success">ŞİFRE GÜNCELLEME YAPILDI</div>';
+                    header("Refresh: 2; url=kullaniciduzen.php");
+                } else {
+
+                    print '<div class="alert alert-danger">ŞİFRE GÜNCELLEME YAPALAMADI</div>';
+                    header("Refresh: 2; url=kullaniciduzen.php");
+                }
+            } else {
+                print '<div class="alert alert-danger">Girmiş olduğunuz eski şifre hatalıdır.</div>';
+                header("refresh:2", "kullaniciduzen.php");
+            }
+        } else {
+            print '<div class="alert alert-danger">Girmiş olduğunuz şifreler birbiri ile aynı değildir.</div>';
+            header("refresh:2", "kullaniciduzen.php");
+        }
+    }
+    if ($_POST["kullaniciAdi"] != $_SESSION['adSoyad']) {
+        $sorgu = $baglan->prepare("update kullanici set kullaniciAdi=? where id=?");
+        $guncelle = $sorgu->execute(array($kullaniciAdi, $id));
+        if ($guncelle) {
+            print '<div class="alert alert-success">KULLANICI ADI GÜNCELLEME YAPILDI</div>';
+            header("Refresh: 2; url=kullaniciduzen.php");
+        } else {
+            print '<div class="alert alert-danger">KULLANICI ADI GÜNCELLEME YAPILAMADI</div>';
+            header("Refresh: 2; url=kullaniciduzen.php");
+        }
+    }
 } else {
     $cek = $baglan->prepare("SELECT * FROM kullanici WHERE kullaniciAdi =:kAdi");
     $cek->execute(array('kAdi' => $_SESSION['adSoyad']));
@@ -42,19 +95,24 @@ if (isset($_POST["kullaniciduzen"])) {
                                 <input type="text" class="form-control" name="kullaniciAdi" value="<?= $kullaniciAdi ?>">
                             </div>
                         </div>
-                        <div class="form-group row"><label class="col-lg-2 col-form-label">Şifre Giriniz</label>
+                        <div class="form-group row"><label class="col-lg-2 col-form-label">Eski Şifrenizi Giriniz</label>
                             <div class="col-lg-10">
                                 <input type="text" class="form-control" name="sifre">
+                            </div>
+                        </div>
+                        <div class="form-group row"><label class="col-lg-2 col-form-label">Şifre Giriniz</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="ySifre">
                             </div>
                         </div>
                         <div class="form-group row"><label class="col-lg-2 col-form-label">Şifre Tekrar</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" name="sifre">
+                                <input type="text" class="form-control" name="ySifreTekrar">
                             </div>
                         </div>
                         <div class="form-group row"><label class="col-lg-2 col-form-label">Resim</label>
                             <div class="col-lg-10">
-                                <img src="<?= $resim ?>" width="100" height="100%" name="resim2" value="<?= $resim ?>">
+                                <img src="<?= $satir["resim"]; ?>" width="100" height="100%" name="resim2" value="<?= $resim ?>">
                             </div>
                         </div>
                         <div class="form-group row">
