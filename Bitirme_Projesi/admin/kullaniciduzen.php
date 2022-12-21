@@ -3,67 +3,10 @@
 @ob_start();
 error_reporting(0);
 include("../ayar.php");
-if (isset($_POST["kullaniciduzen"])) {
-    $id = $_POST["id"];
-    $sorgu = $baglan->query("select * from kullanici where id=$id");
-    $satir = $sorgu->fetch(PDO::FETCH_ASSOC);
-    $kullaniciAdi = $_POST["kullaniciAdi"];
-    $sifre = $_POST["sifre"];
-    $ySifre = $_POST["ySifre"];
-    $ySifreTekrar = $_POST["ySifreTekrar"];
-    $resim = "img/" . $_FILES["resim"]["name"];
-    $resim_tmp = $_FILES["resim"]["tmp_name"];
-    if ($resim_tmp != "") {
-        move_uploaded_file($resim_tmp, $resim);
-        $sorgu = $baglan->prepare("update kullanici set kullaniciAdi=?, resim=? where id=?");
-        $guncelle = $sorgu->execute(array($kullaniciAdi, $resim, $id));
-        if ($guncelle) {
-            print '<div class="alert alert-success">RESİM GÜNCELLEME YAPILDI</div>';
-            header("Refresh: 2; url=kullaniciduzen.php");
-        } else {
-            print '<div class="alert alert-danger">HATA: RESİM GÜNCELLEME YAPILAMADI !</div>';
-            header("refresh:2", "kullaniciduzen.php");
-        }
-    }
-    if ($sifre != "" and $ySifre != "" and $ySifreTekrar != "") {
-        if ($ySifre == $ySifreTekrar) {
-            if ($satir["sifre"] == sha1(md5($sifre))) {
-                $sorgu = $baglan->prepare("update kullanici set kullaniciAdi=?, sifre=? where id=?");
-                $guncelle = $sorgu->execute(array($kullaniciAdi, sha1(md5($ySifre)), $id));
-                if ($guncelle) {
-                    print '<div class="alert alert-success">ŞİFRE GÜNCELLEME YAPILDI</div>';
-                    header("Refresh: 2; url=kullaniciduzen.php");
-                } else {
-
-                    print '<div class="alert alert-danger">ŞİFRE GÜNCELLEME YAPALAMADI</div>';
-                    header("Refresh: 2; url=kullaniciduzen.php");
-                }
-            } else {
-                print '<div class="alert alert-danger">Girmiş olduğunuz eski şifre hatalıdır.</div>';
-                header("refresh:2", "kullaniciduzen.php");
-            }
-        } else {
-            print '<div class="alert alert-danger">Girmiş olduğunuz şifreler birbiri ile aynı değildir.</div>';
-            header("refresh:2", "kullaniciduzen.php");
-        }
-    }
-    if ($_POST["kullaniciAdi"] != $_SESSION['adSoyad']) {
-        $sorgu = $baglan->prepare("update kullanici set kullaniciAdi=? where id=?");
-        $guncelle = $sorgu->execute(array($kullaniciAdi, $id));
-        if ($guncelle) {
-            print '<div class="alert alert-success">KULLANICI ADI GÜNCELLEME YAPILDI</div>';
-            header("Refresh: 2; url=kullaniciduzen.php");
-        } else {
-            print '<div class="alert alert-danger">KULLANICI ADI GÜNCELLEME YAPILAMADI</div>';
-            header("Refresh: 2; url=kullaniciduzen.php");
-        }
-    }
-} else {
-    $cek = $baglan->prepare("SELECT * FROM kullanici WHERE kullaniciAdi =:kAdi");
-    $cek->execute(array('kAdi' => $_SESSION['adSoyad']));
-    $satir = $cek->fetch(PDO::FETCH_ASSOC);
-    extract($satir);
-}
+$cek = $baglan->prepare("SELECT * FROM kullanici WHERE kullaniciAdi =:kAdi");
+$cek->execute(array('kAdi' => $_SESSION['adSoyad']));
+$satir = $cek->fetch(PDO::FETCH_ASSOC);
+extract($satir);
 ?>
 <!DOCTYPE html>
 <html>
@@ -79,6 +22,7 @@ if (isset($_POST["kullaniciduzen"])) {
 </head>
 
 <body class="">
+    <div id="sonuc"></div>
     <div id="wrapper">
         <?php
         include_once("headerMenu.php");
@@ -87,7 +31,7 @@ if (isset($_POST["kullaniciduzen"])) {
             <?php
             include_once("header.php");
             ?>
-            <form action="kullaniciduzen.php" method="post" enctype="multipart/form-data">
+            <form id="ajaxForm" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group row"><label class="col-lg-2 col-form-label">Kullanıcı Adı</label>
@@ -125,7 +69,7 @@ if (isset($_POST["kullaniciduzen"])) {
                         <div class="form-group row justify-content-between">
                             <div></div>
                             <div class="col-lg-10">
-                                <input type="submit" name="kullaniciduzen" class="btn btn-lg btn-primary btn-block" value="Güncelle">
+                                <input type="button" id="ajaxButton" class="btn btn-lg btn-primary btn-block" value="Güncelle">
                             </div>
                         </div>
                     </div>
@@ -139,6 +83,28 @@ if (isset($_POST["kullaniciduzen"])) {
     <?php
     include_once("script.php");
     ?>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $("#ajaxButton").click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: "ajax.php",
+                    data: $("#ajaxForm").serialize(),
+                    success: function(cevap) {
+                        $("#sonuc").fadeIn(1000);
+                        $("#sonuc").html(cevap);
+                        $("#sonuc").fadeOut(5000);
+                    },
+                    error: function(sonuc) {
+                        $("#sonuc").fadeIn(1000);
+                        $("#sonuc").html(sonuc);
+                        $("#sonuc").fadeOut(5000);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
