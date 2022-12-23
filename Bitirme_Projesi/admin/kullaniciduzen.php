@@ -22,7 +22,6 @@ extract($satir);
 </head>
 
 <body class="">
-    <div id="sonuc"></div>
     <div id="wrapper">
         <?php
         include_once("headerMenu.php");
@@ -31,7 +30,7 @@ extract($satir);
             <?php
             include_once("header.php");
             ?>
-            <form id="ajaxForm" method="post" enctype="multipart/form-data">
+            <form id="ajaxForm" action="ajax.php" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group row"><label class="col-lg-2 col-form-label">Kullanıcı Adı</label>
@@ -56,25 +55,26 @@ extract($satir);
                         </div>
                         <div class="form-group row"><label class="col-lg-2 col-form-label">Resim</label>
                             <div class="col-lg-10">
-                                <img src="<?= $satir["resim"]; ?>" width="100" height="100%" name="resim2" value="<?= $resim ?>">
+                                <img id="ajaxResim" src="<?= $satir["resim"]; ?>" width="100" height="100%" name="resim2" value="<?= $resim ?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="formFile" class="col-lg-2 col-form-label">Resim Güncelle</label>
                             <div class="col-lg-10">
-                                <input class="form-control" type="file" name="resim" id="formFile" value="<?= $resim ?>">
+                                <input class="form-control" type="file" name="resim" id="ajaxFile" value="<?= $resim ?>">
                             </div>
                         </div>
                         <input type="hidden" name="id" value="<?= $id ?>">
                         <div class="form-group row justify-content-between">
                             <div></div>
                             <div class="col-lg-10">
-                                <input type="button" id="ajaxButton" class="btn btn-lg btn-primary btn-block" value="Güncelle">
+                                <input type="submit" id="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Güncelle">
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
+            <div id="sonuc"></div>
             <?php
             include_once("footer.php");
             ?>
@@ -86,23 +86,39 @@ extract($satir);
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
-            $("#ajaxButton").click(function() {
+            $("#ajaxForm").on('submit', (function(e) {
+                e.preventDefault();
+                var form_data = new FormData(this);
                 $.ajax({
-                    type: "POST",
                     url: "ajax.php",
-                    data: $("#ajaxForm").serialize(),
+                    type: "POST",
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
                     success: function(cevap) {
                         $("#sonuc").fadeIn(1000);
                         $("#sonuc").html(cevap);
                         $("#sonuc").fadeOut(5000);
-                    },
-                    error: function(sonuc) {
-                        $("#sonuc").fadeIn(1000);
-                        $("#sonuc").html(sonuc);
-                        $("#sonuc").fadeOut(5000);
+                        $("#ajaxFile").val('');
                     }
                 });
-            });
+            }));
+            let dosya = document.getElementById('ajaxFile');
+            if (dosya != null) {
+                function readURL(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            $("#ajaxResim").attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+                $("#ajaxFile").on("change", function(argument) {
+                    readURL(this);
+                })
+            }
         });
     </script>
 </body>
