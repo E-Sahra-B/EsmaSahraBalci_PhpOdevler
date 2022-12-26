@@ -56,4 +56,12 @@
 
 **28.** Blog sayfasındaki footer kısmında admin tarafından eklemiş olan son 3 blog listelenmektedir.
 
+**28.** Admin kullanıcı ayar kısımında kullanıcı şifre değişikliği ve bu işlemlerin ajax ile yapılması.
+
+**29.** Admin kullanıcı kayıt işleminde şifrelemenin Sha1 ve Md5 ile yapılması.
+
+**30.** Admin Blog sayfasındaki blog yazılarının Ck Editörü ile hazılanması.
+
+**31.** Blog sayfasındaki blog yazılarının sayfalanması.
+
 <img src="/Bitirme_Projesi/images/Bitirme_Projesi.gif">
