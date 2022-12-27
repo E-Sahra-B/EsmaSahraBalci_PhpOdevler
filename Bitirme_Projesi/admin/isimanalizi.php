@@ -33,8 +33,15 @@ include("../ayar.php");
             </form>
             <?php
             $ad = $_GET["isim"];
-            $i1 = trim($ad);
-            $isim = strtolower($i1);
+            function kucult($metin)
+            {
+                $bul = ['Ğ', 'Ü', 'Ş', 'İ', 'Ö', 'Ç', 'ğ', 'ü', 'ş', 'i', 'ı', 'ö', 'ç', ' '];
+                $degistir = ['g', 'u', 's', 'i', 'o', 'c', 'g', 'u', 's', 'i', 'i', 'o', 'c', ''];
+                $metin = str_replace($bul, $degistir, $metin);
+                $metin = mb_strtolower($metin, 'utf-8');
+                return $metin;
+            }
+            $isim = kucult($ad);
             $dizi = array('a' => 1, 'j' => 1, 's' => 1, 'ş' => 1, 'b' => 2, 'k' => 2, 't' => 2, 'c' => 3, 'ç' => 3, 'l' => 3, 'u' => 3, 'ü' => 3, 'd' => 4, 'm' => 4, 'v' => 4, 'e' => 5, 'n' => 5, 'w' => 5, 'f' => 6, 'o' => 6, 'ö' => 6, 'x' => 6, 'g' => 7, 'ğ' => 7, 'p' => 7, 'y' => 7, 'h' => 8, 'q' => 8, 'z' => 8, 'ı' => 9, 'i' => 9, 'r' => 9);
             echo "<br><b>" . $ad . "</b><br>";
             $uzunluk = strlen($isim);
