@@ -4,14 +4,11 @@ include("ayar.php");
 
 if ($_POST) {
 	$kullanici = $_POST["kullanici"];
-	$sifre = sha1(md5($_POST["sifre"]));
-	$sorgu = $baglan->prepare("select * from kullanici where (kullaniciAdi ='$kullanici' && 
-        sifre = '$sifre')");
-	$sorgu->fetch(PDO::FETCH_ASSOC);
-	$sorgu->execute();
-	$kayitsay = $sorgu->rowCount();
-
-	if ($kayitsay > 0) {
+	$parola = $_POST["sifre"];
+	$sorgu = $baglan->prepare("select * from kullanici where (kullaniciAdi =?)");
+	$sonuc = $sorgu->execute(array($kullanici));
+	$kayit = $sorgu->fetch(PDO::FETCH_ASSOC);
+	if (password_verify($parola, $kayit["sifre"])) {
 		setcookie("user", "esb", strtotime('+1 day'));
 		$_SESSION["giris"] = sha1(md5("var"));
 		$_SESSION["adSoyad"] = $kullanici;

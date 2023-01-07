@@ -17,9 +17,11 @@ if ($_POST) {
         print '<div class="alert alert-danger">Girmiş olduğunuz şifreler birbiri ile aynı değildir.</div>';
         header("refresh:2", "register.php");
     } else {
-        $sorgu = $baglan->prepare('insert into kullanici set kullaniciAdi=?, sifre=?');
+        $password = password_hash($_POST["sifre"], PASSWORD_DEFAULT);
+        $resim = "img/default.png";
+        $sorgu = $baglan->prepare('insert into kullanici set kullaniciAdi=?, sifre=?, resim=?');
         $ekle = $sorgu->execute([
-            $kullanici, $sifre
+            $kullanici, $password, $resim
         ]);
         if ($ekle) {
             print '<div class="alert alert-success">KULLANICI KAYDI BAŞARILI</div>';
