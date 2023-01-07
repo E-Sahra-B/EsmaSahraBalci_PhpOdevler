@@ -3,11 +3,12 @@ session_start();
 include("ayar.php");
 
 if ($_POST) {
-	$kullanici = $_POST["kullanici"];
-	$parola = $_POST["sifre"];
+	$kullanici = filter_var(trim($_POST["kullanici"]), FILTER_SANITIZE_STRING);
+	$parola = filter_var(trim($_POST["sifre"]), FILTER_SANITIZE_STRING);
 	$sorgu = $baglan->prepare("select * from kullanici where (kullaniciAdi =?)");
 	$sonuc = $sorgu->execute(array($kullanici));
 	$kayit = $sorgu->fetch(PDO::FETCH_ASSOC);
+	//password_hash ve password_verify kullanmak için Veritabanındaki Şifre column karakter uzunluğu 60 dan fazla olmalı
 	if (password_verify($parola, $kayit["sifre"])) {
 		setcookie("user", "esb", strtotime('+1 day'));
 		$_SESSION["giris"] = sha1(md5("var"));
