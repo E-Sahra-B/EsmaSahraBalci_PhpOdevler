@@ -1,5 +1,7 @@
 ### Bitirme Projesi Yönetim Panelli Web Sitesi
 
+<img src="/Bitirme_Projesi/images/Bitirme_Projesi.gif">
+
 **1.** Admin sayfası için kullanıcı girişinden veri tabanından kontrol edilerek giriş yapılıyor.
 
 **2.** Admin giriş yaptığında cookie ve session oluşturuyor.
@@ -63,5 +65,3 @@
 **30.** Admin Blog sayfasındaki blog yazılarının Ck Editörü ile hazılanması.
 
 **31.** Blog sayfasındaki blog yazılarının sayfalanması.
-
-<img src="/Bitirme_Projesi/images/Bitirme_Projesi.gif">
