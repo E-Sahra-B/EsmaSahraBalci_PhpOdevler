@@ -29,7 +29,7 @@ include("../ayar.php");
                 <input type="text" name="isim" id="">
                 <input type="submit" class="btn btn-sm btn-primary" value="Hesapla">
                 <br>
-                <small style="color: red;">Lütfen Türkçe karakterler kullanmayınız!</small>
+                <!-- <small style="color: red;">Lütfen Türkçe karakterler kullanmayınız!</small> -->
             </form>
             <?php
             $ad = $_GET["isim"];
@@ -44,7 +44,7 @@ include("../ayar.php");
             $isim = kucult($ad);
             $dizi = array('a' => 1, 'j' => 1, 's' => 1, 'ş' => 1, 'b' => 2, 'k' => 2, 't' => 2, 'c' => 3, 'ç' => 3, 'l' => 3, 'u' => 3, 'ü' => 3, 'd' => 4, 'm' => 4, 'v' => 4, 'e' => 5, 'n' => 5, 'w' => 5, 'f' => 6, 'o' => 6, 'ö' => 6, 'x' => 6, 'g' => 7, 'ğ' => 7, 'p' => 7, 'y' => 7, 'h' => 8, 'q' => 8, 'z' => 8, 'ı' => 9, 'i' => 9, 'r' => 9);
             echo "<br><b>" . $ad . "</b><br>";
-            $uzunluk = strlen($isim);
+            $uzunluk = mb_strlen($isim);
             $sayi = 0;
             $toplam = $sayi;
             while ($sayi < $uzunluk) {
@@ -55,10 +55,10 @@ include("../ayar.php");
             echo "<br>";
             $son = substr($toplam, -1, 1);
             $ilk = substr($toplam, 0, 1);
-            $toplamUzunluk = strlen($toplam);
+            $toplamUzunluk = mb_strlen($toplam);
             if ($toplam != 11 && $toplam != 22 && $toplam != 22 && $toplamUzunluk > 1) {
                 $sonuc = $ilk + $son;
-                if ($sonuc != 11 && $sonuc != 22 && $sonuc != 22 && strlen($sonuc) > 1) {
+                if ($sonuc != 11 && $sonuc != 22 && $sonuc != 22 && mb_strlen($sonuc) > 1) {
                     $son = substr($sonuc, -1, 1);
                     $ilk = substr($sonuc, 0, 1);
                     $cikti = $ilk + $son;
@@ -77,7 +77,7 @@ include("../ayar.php");
                 11 => "Dünya lideri olma isteği – çocukluk döneminde anlaşılmadıklarından dolayı içe dönüktürler ve zorluklar yaşayabilirler. ",
                 22 => "Sevgi ile dünyayı değiştirme isteği, özverili, ilham verici "
             );
-            if ($sonuc != 11 && $sonuc != 22 && $sonuc != 22 && strlen($sonuc) > 1) {
+            if ($sonuc != 11 && $sonuc != 22 && $sonuc != 22 && mb_strlen($sonuc) > 1) {
                 echo "<b>Sayınız</b> => $cikti <br> <b>Açıklama</b> => " . $aciklama[$cikti] . "<br>";
             } else {
                 echo "<b>Sayınız</b> => $sonuc <br> <b>Açıklama</b> => " . $aciklama[$sonuc] . "<br>";
@@ -114,12 +114,9 @@ include("../ayar.php");
                 "z" => "Prensipleri olan, akademik olarak başarılı, akıllı ve maddiyata önem veren bir karakteri temsil eder."
             );
             echo "<br>";
-            for ($i = 0; $i < $uzunluk; $i++) {
+            for ($i = 0; $i <= $uzunluk; $i++) {
                 echo "<b>" . strtoupper($isim[$i]) . "</b> => " . $harfler[$isim[$i]] . "<br><br>";
             }
-
-
-
             include_once("footer.php");
             ?>
         </div>
