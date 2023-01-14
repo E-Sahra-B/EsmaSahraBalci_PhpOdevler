@@ -1,0 +1,59 @@
+ETİCARET PROJESİ
+
+CLASS YAPISI
+
+YÖNETİM PANELİ
+ÜYE GİRİŞ
+LOG TUTMA
+SEPET UYGULAMASI
+EMAIL ALTYAPISI
+
+
+VERİTABANI
+
+Kategoriler
+no int(11)
+baslik varchar(100)
+ziyaret int(11)
+tarih datetime
+durum varchar(5)
+
+Urunler
+no int(11)
+kategori varchar(100)
+kod varchar(10)
+baslik varchar(100)
+aciklama text
+fiyat double(10,2)
+resim varchar(250)
+ziyaret int(11)
+tarih datetime
+durum varchar(5)
+
+Kullanıcılar
+no int(11)
+adsoyad varchar(100)
+email varchar(100)
+parola varchar(250)
+durum varchar(5)
+
+Siparişler
+no int(11)
+kullanici int(11)
+kod varchar(20)
+urunler varchar(250)
+aratoplam double(10,2)
+kdvtoplam double(10,2)
+indtoplam double(10,2)
+gentoplam double(10,2)
+tarih datetime
+durum varchar(5)
+
+Ödemeler
+no int(11)
+siparis int(11)
+tur varchar(20)
+kartno varchar(10)
+ipadresi varchar(20)
+oturum text
+durum varchar(5)
