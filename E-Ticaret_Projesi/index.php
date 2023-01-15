@@ -29,10 +29,13 @@ require_once 'inc/config.php';
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <?php
-                $sorgu = $baglan->select('urunler', ['no', 'baslik', 'resim', 'fiyat', 'durum'])->where('durum', 'aktif', '=')->orderBy('RAND()')->limit(12)->run();
+                //$sorgu = $baglan->select('urunler', ['no', 'baslik', 'resim', 'fiyat', 'durum'])->where('durum', 'aktif', '=')->orderBy('RAND()')->limit(12)->run();
+                $sorgu = $baglan->select('urunler', ['no', 'baslik', 'resim', 'fiyat', 'durum', 'ziyaret'])->where('durum', 'aktif', '=')->orderBy('RAND()')->run();
                 $toplamUrun = $baglan->rowCount();
                 if ($sorgu) {
                     foreach ($sorgu as $satir) {
+                        // $yildiz = ($urunZiyaret * ($toplamUrun * 5)) / $toplamZiyaretci;
+                        $urunZiyaret = $satir["ziyaret"];
                         $eskifiyat = $satir["fiyat"] * 1.50;
                         echo "<div class='col mb-5'>
                                 <div class='card h-100'>
@@ -42,7 +45,21 @@ require_once 'inc/config.php';
                                 <div class='text-center'>
                                 <h5 class='fw-bolder'>$satir[baslik]</h5>
                                 <div class='d-flex justify-content-center small text-warning mb-2'>";
-                        echo "<div class='bi-star-fill'></div>";
+                        if ($urunZiyaret > 5) {
+                            $urunZiyaret = 5;
+                            for ($i = 1; $i <= $urunZiyaret; $i++) {
+                                echo "<div class='bi-star-fill'></div>";
+                            }
+                        } elseif ($urunZiyaret < 1) {
+                            $urunZiyaret = 1;
+                            for ($i = 1; $i <= $urunZiyaret; $i++) {
+                                echo "<div class='bi-star-fill'></div>";
+                            }
+                        } else {
+                            for ($i = 1; $i <= $urunZiyaret; $i++) {
+                                echo "<div class='bi-star-fill'></div>";
+                            }
+                        }
                         echo "
                                 </div>
                                 <span class='text-muted text-decoration-line-through'>₺$eskifiyat</span>

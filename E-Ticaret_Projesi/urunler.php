@@ -51,36 +51,56 @@ if ($tur == "yeni") {
                     $sorgux = $baglan->select('urunler', ['count(*) as toplam'])->where('durum', 'aktif', '=')->run();
                     $adres = "";
                 }
-
                 $toplam = $sorgux[0]["toplam"];
                 $kacar = 8;
                 $sayfa = ceil($toplam / $kacar);
                 $limit = ($sf - 1) * $kacar;
-
                 if ($sf > $sayfa) {
                     header("Location:urunler.php?" . $adres . "sf=1");
                 }
-
                 if ($tur == "yeni") {
-                    $sorgu = $baglan->select('urunler', ['no', 'baslik', 'resim', 'fiyat'])->where('durum', 'aktif', '=')->orderBy('tarih', 'desc')->limit($limit, $kacar)->run();
+                    $sorgu = $baglan->select('urunler', ['no', 'baslik', 'resim', 'fiyat', 'durum', 'ziyaret'])->where('durum', 'aktif', '=')->orderBy('tarih', 'desc')->limit($limit, $kacar)->run();
                 } else if ($tur == "coksatan") {
-                    $sorgu = $baglan->select('urunler', ['no', 'baslik', 'resim', 'fiyat'])->where('durum', 'aktif', '=')->orderBy('ziyaret', 'desc')->limit($limit, $kacar)->run();
+                    $sorgu = $baglan->select('urunler', ['no', 'baslik', 'resim', 'fiyat', 'durum', 'ziyaret'])->where('durum', 'aktif', '=')->orderBy('ziyaret', 'desc')->limit($limit, $kacar)->run();
                     $adres = "t=coksatan&";
                 } else {
-                    $sorgu = $baglan->select('urunler', ['no', 'baslik', 'resim', 'fiyat'])->where('durum', 'aktif', '=')->orderBy('fiyat', 'asc')->limit($limit, $kacar)->run();
+                    $sorgu = $baglan->select('urunler', ['no', 'baslik', 'resim', 'fiyat', 'durum', 'ziyaret'])->where('durum', 'aktif', '=')->orderBy('fiyat', 'asc')->limit($limit, $kacar)->run();
                     $adres = "";
                 }
                 if ($sorgu) {
                     foreach ($sorgu as $satir) {
+                        $eskifiyat = $satir["fiyat"] * 1.50;
+                        $urunZiyaret = $satir["ziyaret"];
                         echo "<div class='col mb-5'>
                                 <div class='card h-100'>
+                                <div class='badge bg-dark text-white position-absolute' style='top: 0.5rem; right: 0.5rem'>$satir[durum]</div>
                                 <a href='detay.php?no=$satir[no]'><img class='card-img-top' src='$satir[resim]' alt='$satir[baslik]'></a>
                                 <div class='card-body p-4'>
                                 <div class='text-center'>
                                 <h5 class='fw-bolder'>$satir[baslik]</h5>
-                                ₺" . number_format($satir["fiyat"], 2, ',', '.') . "
+                                <div class='d-flex justify-content-center small text-warning mb-2'>";
+                        if ($urunZiyaret > 5) {
+                            $urunZiyaret = 5;
+                            for ($i = 1; $i <= $urunZiyaret; $i++) {
+                                echo "<div class='bi-star-fill'></div>";
+                            }
+                        } elseif ($urunZiyaret < 1) {
+                            $urunZiyaret = 1;
+                            for ($i = 1; $i <= $urunZiyaret; $i++) {
+                                echo "<div class='bi-star-fill'></div>";
+                            }
+                        } else {
+                            for ($i = 1; $i <= $urunZiyaret; $i++) {
+                                echo "<div class='bi-star-fill'></div>";
+                            }
+                        }
+                        echo "
+                                </div>
+                                <span class='text-muted text-decoration-line-through'>₺$eskifiyat</span>
+                                ₺" . number_format($satir['fiyat'], 2, ',', '.') . "
                                 </div>
                                 </div>
+
                                 <div class='card-footer p-4 pt-0 border-top-0 bg-transparent'>
                                 <div class='text-center'><a class='btn btn-outline-dark mt-auto' href='detay.php?no=$satir[no]'>İncele</a></div>
                                 </div>
