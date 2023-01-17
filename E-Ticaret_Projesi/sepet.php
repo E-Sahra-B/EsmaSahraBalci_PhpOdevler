@@ -88,7 +88,7 @@ if ($sepet->urunsay() < 1) {
                     <div class="row mt-5">
                         <div class="col-12 text-center">
                             <button type="submit" class="btn btn-success me-3">Siparişi Kaydet</button>
-                            <a href="kontrol.php?islem=temizle" class="btn btn-outline-secondary" onclick='if (!confirm("Sepet içeriği temizlenecektir. Emin misiniz?")) return false'>İptal Et</a>
+                            <a href="kontrol.php?islem=temizle" class="btn btn-outline-secondary" onclick='if (!confirm("Sepet içeriği temizlenecektir. Emin misiniz?")) return false'>Sepeti İptal Et</a>
                         </div>
                     </div>
                 </form>
