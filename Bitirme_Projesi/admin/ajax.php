@@ -46,9 +46,10 @@ if (isset($_POST)) {
     }
     if ($sifre != "" and $ySifre != "" and $ySifreTekrar != "") {
         if ($ySifre == $ySifreTekrar) {
-            if ($satir["sifre"] == sha1(md5($sifre))) {
+            if (password_verify($sifre, $satir["sifre"])) {
+                $parola = password_hash($ySifre, PASSWORD_DEFAULT);
                 $sorgu = $baglan->prepare("update kullanici set kullaniciAdi=?, sifre=? where id=?");
-                $guncelle = $sorgu->execute(array($kullaniciAdi, sha1(md5($ySifre)), $id));
+                $guncelle = $sorgu->execute(array($kullaniciAdi, $parola, $id));
                 if ($guncelle) {
                     echo '<div class="alert alert-success">ŞİFRE GÜNCELLEME YAPILDI</div>';
                 } else {
