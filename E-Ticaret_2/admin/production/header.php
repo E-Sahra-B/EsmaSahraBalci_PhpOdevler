@@ -1,10 +1,25 @@
 <?php
+ob_start();
+session_start();
+error_reporting(0);
 include '../netting/baglan.php';
+
 $ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
 $ayarsor->execute(array(
     'id' => 0
 ));
 $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
+
+$kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_mail=:mail");
+$kullanicisor->execute(array(
+    'mail' => $_SESSION['kullanici_mail']
+));
+$kullaniciGeldiMi = $kullanicisor->rowCount();
+$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+if ($kullaniciGeldiMi == 0) {
+    Header("Location:login.php?durum=izinsiz");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +80,7 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                         </div>
                         <div class="profile_info">
                             <span>Hoşgeldin</span>
-                            <h2>Esma Sahra BALCI</h2>
+                            <h2><?php echo $kullanicicek['kullanici_adsoyad'] ?></h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -108,7 +123,7 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                         <a data-toggle="tooltip" data-placement="top" title="Lock">
                             <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout">
+                        <a href="logout.php" data-toggle="tooltip" data-placement="top" title="Logout">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -125,7 +140,7 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/img.jpg" alt="">Esma Sahra BALCI
+                                    <img src="images/img.jpg" alt=""><?php echo $kullanicicek['kullanici_adsoyad']; ?>
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">

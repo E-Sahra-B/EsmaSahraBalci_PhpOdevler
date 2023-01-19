@@ -1,4 +1,6 @@
 <?php
+ob_start();
+session_start();
 require_once 'baglan.php';
 
 if (isset($_POST['genelayarkaydet'])) {
@@ -126,5 +128,25 @@ if (isset($_POST['hakkimizdakaydet'])) {
 		header("Location:../production/hakkimizda.php?durum=ok");
 	} else {
 		header("Location:../production/hakkimizda.php?durum=no");
+	}
+}
+
+if (isset($_POST['admingiris'])) {
+	$kullanici_mail = $_POST['kullanici_mail'];
+	$kullanici_password = trim($_POST["kullanici_password"]);
+	$kullanicisor = $db->prepare("SELECT * FROM kullanici 
+	where kullanici_mail=:mail and kullanici_yetki=:yetki");
+	$kullanicisor->execute(array(
+		'mail' => $kullanici_mail,
+		'yetki' => 5
+	));
+	$kayit = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+	if (password_verify($kullanici_password, $kayit["kullanici_password"])) {
+		$_SESSION['kullanici_mail'] = $kullanici_mail;
+		header("Location:../production/index.php");
+		exit;
+	} else {
+		header("Location:../production/login.php?durum=no");
+		exit;
 	}
 }
