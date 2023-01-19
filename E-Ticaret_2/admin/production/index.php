@@ -1,5 +1,5 @@
 <?php
-include 'header.php';
+require_once 'header.php';
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
@@ -37,4 +37,4 @@ include 'header.php';
   </div>
 </div>
 <!-- /page content -->
-<?php include 'footer.php'; ?>
+<?php require_once 'footer.php'; ?>
