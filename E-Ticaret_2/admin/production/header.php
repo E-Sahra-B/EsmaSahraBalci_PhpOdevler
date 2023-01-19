@@ -43,8 +43,8 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
     <!-- Dropzone.js -->
     <script src="../vendors/dropzone/dist/min/dropzone.min.js"></script>
     <!-- Ck Editör -->
-    <!--<script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>-->
-    <script src="ckeditor/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
+    <!-- <script src="ckeditor/ckeditor.js"></script> -->
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>

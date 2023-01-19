@@ -12,7 +12,16 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?php echo $ayarcek['ayar_title'] ?></title>
+  <title>
+    <?php
+    if (empty($title)) {
+      echo $ayarcek['ayar_title'];
+    } else {
+      echo $title;
+    }
+    ?>
+
+  </title>
   <meta name="description" content="<?php echo $ayarcek['ayar_description'] ?>">
   <meta name="keywords" content="<?php echo $ayarcek['ayar_keywords'] ?>">
   <meta name="author" content="<?php echo $ayarcek['ayar_author'] ?>">
@@ -118,7 +127,7 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                   <li><a href="index.php" class="active">Anasayfa</a>
                     <div class="curve"></div>
                   </li>
-
+                  <li><a href="hakkimizda.php">Hakkımızda</a></li>
                 </ul>
               </div>
             </div>
