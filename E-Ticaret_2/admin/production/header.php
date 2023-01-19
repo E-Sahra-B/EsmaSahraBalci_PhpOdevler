@@ -1,3 +1,11 @@
+<?php
+include '../netting/baglan.php';
+$ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
+$ayarsor->execute(array(
+    'id' => 0
+));
+$ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +15,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>E-Ticaret_2</title>
+    <title>
+        <?php
+        if (empty($title)) {
+            echo "E-ticaret";
+        } else {
+            echo $title;
+        }
+        ?>
+    </title>
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -66,19 +82,7 @@
                                         <li><a href="iletisim-ayarlar.php">İletişim Ayarlar</a></li>
                                         <li><a href="api-ayarlar.php">Api Ayarlar</a></li>
                                         <li><a href="sosyal-ayar.php">Sosyal Ayarlar</a></li>
-                                        <!--
-                    Facebook
-                    Twitter
-                    Youtube
-                    Google
-                    -->
                                         <li><a href="mail-ayar.php">Mail Ayarlar</a></li>
-                                        <!--
-                    Smtp Host
-                    Smtp User
-                    Smtp Password
-                    Smtp Port
-                    -->
                                     </ul>
                                 </li>
                                 <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda </a></li>
