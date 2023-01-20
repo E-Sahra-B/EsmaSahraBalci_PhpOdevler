@@ -2,6 +2,8 @@
 ob_start();
 session_start();
 require_once 'baglan.php';
+include '../production/fonksiyon.php';
+
 
 if (isset($_POST['genelayarkaydet'])) {
 	$ayarkaydet = $db->prepare("UPDATE ayar SET
@@ -179,5 +181,69 @@ if ($_GET['kullanicisil'] == "ok") {
 		header("location:../production/kullanici.php?sil=ok");
 	} else {
 		header("location:../production/kullanici.php?sil=no");
+	}
+}
+
+if (isset($_POST['menuduzenle'])) {
+	$menu_id = $_POST['menu_id'];
+	$menu_seourl = seo($_POST['menu_ad']);
+	$ayarkaydet = $db->prepare("UPDATE menu SET
+		menu_ad=:menu_ad,
+		menu_detay=:menu_detay,
+		menu_url=:menu_url,
+		menu_sira=:menu_sira,
+		menu_seourl=:menu_seourl,
+		menu_durum=:menu_durum
+		WHERE menu_id={$_POST['menu_id']}");
+	$update = $ayarkaydet->execute(array(
+		'menu_ad' => $_POST['menu_ad'],
+		'menu_detay' => $_POST['menu_detay'],
+		'menu_url' => $_POST['menu_url'],
+		'menu_sira' => $_POST['menu_sira'],
+		'menu_seourl' => $menu_seourl,
+		'menu_durum' => $_POST['menu_durum']
+	));
+	if ($update) {
+		Header("Location:../production/menu-duzenle.php?menu_id=$menu_id&durum=ok");
+	} else {
+		Header("Location:../production/menu-duzenle.php?menu_id=$menu_id&durum=no");
+	}
+}
+
+if ($_GET['menusil'] == "ok") {
+	islemkontrol();
+	$sil = $db->prepare("DELETE from menu where menu_id=:id");
+	$kontrol = $sil->execute(array(
+		'id' => $_GET['menu_id']
+	));
+	if ($kontrol) {
+		header("location:../production/menu.php?sil=ok");
+	} else {
+		header("location:../production/menu.php?sil=no");
+	}
+}
+
+if (isset($_POST['menukaydet'])) {
+	$menu_seourl = seo($_POST['menu_ad']);
+	$ayarekle = $db->prepare("INSERT INTO menu SET
+		menu_ad=:menu_ad,
+		menu_detay=:menu_detay,
+		menu_url=:menu_url,
+		menu_sira=:menu_sira,
+		menu_seourl=:menu_seourl,
+		menu_durum=:menu_durum
+		");
+	$insert = $ayarekle->execute(array(
+		'menu_ad' => $_POST['menu_ad'],
+		'menu_detay' => $_POST['menu_detay'],
+		'menu_url' => $_POST['menu_url'],
+		'menu_sira' => $_POST['menu_sira'],
+		'menu_seourl' => $menu_seourl,
+		'menu_durum' => $_POST['menu_durum']
+	));
+	if ($insert) {
+		Header("Location:../production/menu-ekle.php?durum=ok");
+	} else {
+		Header("Location:../production/menu-ekle.php?durum=no");
 	}
 }
