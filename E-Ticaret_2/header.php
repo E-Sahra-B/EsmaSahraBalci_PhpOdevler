@@ -1,5 +1,6 @@
 <?php
 require_once 'admin/netting/baglan.php';
+require_once 'admin/production/fonksiyon.php';
 $ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
 $ayarsor->execute(array(
   'id' => 0
@@ -127,7 +128,21 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                   <li><a href="index.php" class="active">Anasayfa</a>
                     <div class="curve"></div>
                   </li>
-                  <li><a href="hakkimizda.php">Hakkımızda</a></li>
+                  <?php
+                  $menusor = $db->prepare("SELECT * FROM menu where menu_durum=:durum order by menu_sira ASC limit 5");
+                  $menusor->execute(array(
+                    'durum' => 1
+                  ));
+                  while ($menucek = $menusor->fetch(PDO::FETCH_ASSOC)) {
+                  ?>
+                    <li><a href="<?php
+                                  if (!empty($menucek['menu_url'])) {
+                                    echo $menucek['menu_url'];
+                                  } else {
+                                    echo "sayfa-" . seo($menucek['menu_ad']);
+                                  }
+                                  ?>"><?php echo $menucek['menu_ad'] ?></a></li>
+                  <?php } ?>
                 </ul>
               </div>
             </div>
