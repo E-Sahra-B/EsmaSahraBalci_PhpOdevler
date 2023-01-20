@@ -51,7 +51,7 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
       <div class="container">
         <div class="row">
           <div class="col-xs-6 col-md-4 main-logo animated shake">
-            <a href="index.php"><img width="250" src="<?php echo $ayarcek['ayar_logo'] ?>" alt="Site Logosu" class="logo img-responsive"></a>
+            <a href="index.php"><img width="250" src="<?= $ayarcek['ayar_logo'] ?>" alt="Site Logosu" class="logo img-responsive"></a>
           </div>
           <div class="col-md-8">
             <div class="pushright">
@@ -63,7 +63,7 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                       <div class="title-widget-bg">
                         <div class="title-widget">Kullanıcı Giriş</div>
                       </div>
-                      <form action="nedmin/netting/islem.php" method="POST" role="form">
+                      <form action="admin/netting/islem.php" method="POST" role="form">
                         <div class="form-group">
                           <input type="text" class="form-control" name="kullanici_mail" id="username" placeholder="Kullanıcı Adınız (Mail Adresiniz)">
                         </div>
