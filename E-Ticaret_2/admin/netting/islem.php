@@ -150,3 +150,34 @@ if (isset($_POST['admingiris'])) {
 		exit;
 	}
 }
+
+if (isset($_POST['kullaniciduzenle'])) {
+	$kullanici_id = $_POST['kullanici_id'];
+	$ayarkaydet = $db->prepare("UPDATE kullanici SET
+		kullanici_gsm=:kullanici_gsm,
+		kullanici_adsoyad=:kullanici_adsoyad,
+		kullanici_durum=:kullanici_durum
+		WHERE kullanici_id={$_POST['kullanici_id']}");
+	$update = $ayarkaydet->execute(array(
+		'kullanici_gsm' => $_POST['kullanici_gsm'],
+		'kullanici_adsoyad' => $_POST['kullanici_adsoyad'],
+		'kullanici_durum' => $_POST['kullanici_durum']
+	));
+	if ($update) {
+		Header("Location:../production/kullanici-duzenle.php?kullanici_id=$kullanici_id&durum=ok");
+	} else {
+		Header("Location:../production/kullanici-duzenle.php?kullanici_id=$kullanici_id&durum=no");
+	}
+}
+
+if ($_GET['kullanicisil'] == "ok") {
+	$sil = $db->prepare("DELETE from kullanici where kullanici_id=:id");
+	$kontrol = $sil->execute(array(
+		'id' => $_GET['kullanici_id']
+	));
+	if ($kontrol) {
+		header("location:../production/kullanici.php?sil=ok");
+	} else {
+		header("location:../production/kullanici.php?sil=no");
+	}
+}
