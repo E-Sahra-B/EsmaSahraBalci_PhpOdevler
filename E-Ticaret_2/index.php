@@ -4,7 +4,7 @@ require_once 'header.php';
 <div class="container">
 	<div class="clearfix"></div>
 	<div class="lines"></div>
-	<!-- Slider Kısmı -->
+	<?php require_once 'slider.php'; ?>
 </div>
 <div class="f-widget featpro">
 	<div class="container">
