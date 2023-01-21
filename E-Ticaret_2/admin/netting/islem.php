@@ -381,3 +381,72 @@ if ($_GET['slidersil'] == "ok") {
 		Header("Location:../production/slider.php?durum=no");
 	}
 }
+
+if (isset($_POST['kullanicikaydet'])) {
+	$kullanici_adsoyad = htmlspecialchars($_POST['kullanici_adsoyad']);
+	$kullanici_mail = htmlspecialchars($_POST['kullanici_mail']);
+	$kullanici_passwordone = $_POST['kullanici_passwordone'];
+	$kullanici_passwordtwo = $_POST['kullanici_passwordtwo'];
+	if ($kullanici_passwordone == $kullanici_passwordtwo) {
+		if (strlen($kullanici_passwordone) >= 6) {
+			$kullanicisor = $db->prepare("select * from kullanici where kullanici_mail=:mail");
+			$kullanicisor->execute(array(
+				'mail' => $kullanici_mail
+			));
+			$say = $kullanicisor->rowCount();
+			if ($say == 0) {
+				$password = sha1(md5($kullanici_passwordone));
+				$kullanici_yetki = 1;
+				$kullanicikaydet = $db->prepare("INSERT INTO kullanici SET
+					kullanici_adsoyad=:kullanici_adsoyad,
+					kullanici_mail=:kullanici_mail,
+					kullanici_password=:kullanici_password,
+					kullanici_yetki=:kullanici_yetki
+					");
+				$insert = $kullanicikaydet->execute(array(
+					'kullanici_adsoyad' => $kullanici_adsoyad,
+					'kullanici_mail' => $kullanici_mail,
+					'kullanici_password' => $password,
+					'kullanici_yetki' => $kullanici_yetki
+				));
+				if ($insert) {
+					header("Location:../../index.php?durum=loginbasarili");
+				} else {
+					header("Location:../../register.php?durum=basarisiz");
+				}
+			} else {
+				header("Location:../../register.php?durum=mukerrerkayit");
+			}
+		} else {
+			header("Location:../../register.php?durum=eksiksifre");
+		}
+	} else {
+		header("Location:../../register.php?durum=farklisifre");
+	}
+}
+
+if (isset($_POST['kullanicigiris'])) {
+	echo $kullanici_mail = htmlspecialchars($_POST['kullanici_mail']);
+	echo $kullanici_password = sha1(md5($_POST['kullanici_password']));
+	$kullanicisor = $db->prepare("select * from kullanici where 
+    kullanici_mail=:mail and 
+    kullanici_yetki=:yetki and 
+    kullanici_password=:password and 
+    kullanici_durum=:durum");
+	$kullanicisor->execute(array(
+		'mail' => $kullanici_mail,
+		'yetki' => 1,
+		'password' => $kullanici_password,
+		'durum' => 1
+	));
+	$say = $kullanicisor->rowCount();
+	if ($say == 1) {
+		echo $_SESSION['userkullanici_mail'] = $kullanici_mail;
+		header("Location:../../");
+		exit;
+	} else {
+		header("Location:../../?durum=basarisizgiris");
+	}
+}
+
+//bendeki

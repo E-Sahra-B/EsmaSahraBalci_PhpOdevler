@@ -1,4 +1,7 @@
 <?php
+ob_start();
+session_start();
+error_reporting(0);
 require_once 'admin/netting/baglan.php';
 require_once 'admin/production/fonksiyon.php';
 $ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
@@ -6,6 +9,13 @@ $ayarsor->execute(array(
   'id' => 0
 ));
 $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
+
+$kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_mail=:mail");
+$kullanicisor->execute(array(
+  'mail' => $_SESSION['userkullanici_mail']
+));
+$say = $kullanicisor->rowCount();
+$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,8 +65,13 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
           </div>
           <div class="col-md-8">
             <div class="pushright">
-              <div class="top">
-                <a href="#" id="reg" class="btn btn-default btn-dark">Giriş Yap<span>-- yada --</span>Kayıt Ol</a>
+              <div class="top" style="float: right;">
+                <?php
+                if (!isset($_SESSION['userkullanici_mail'])) { ?>
+                  <a href="#" id="reg" class="btn btn-default btn-dark">Giriş Yap<span>-- yada --</span>Kayıt Ol</a>
+                <?php } else { ?>
+                  <a href="#" class="btn btn-default btn-dark">Hoşgeldin<span>--</span><?php echo $kullanicicek['kullanici_adsoyad'] ?></a>
+                <?php } ?>
                 <div class="regwrap">
                   <div class="row">
                     <div class="col-md-6 regform">
@@ -71,7 +86,7 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                           <input type="password" class="form-control" name="kullanici_password" id="password" placeholder="Şifreniz">
                         </div>
                         <div class="form-group">
-                          <button type="submit" name="kullanicigiris" class="btn btn-default btn-red btn-sm">Giriş Yap</button>
+                          <button type="submit" name="kullanicigiris" class="btn btn-default btn-info btn-sm">Giriş Yap</button>
                         </div>
                       </form>
                     </div>
@@ -82,7 +97,7 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                       <p>
                         Yeni Kullanıcımısın? Alışverişe başlamak için hemen kayıt olmalısın!
                       </p>
-                      <a href="register"><button class="btn btn-default btn-yellow">Kayıt Ol</button></a>
+                      <a href="register"><button class="btn btn-default btn-success">Kayıt Ol</button></a>
                     </div>
                   </div>
                 </div>
@@ -105,6 +120,37 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                   </div>
                 </div>
               </div>
+              <?php
+              if ($_GET['durum'] == "loginbasarili") { ?>
+                <div class="alert alert-success alert-dismissible fade in" style="float:left; margin:15px; height:30px; padding:5px; ">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close"> &times;</a>
+                  Kaydınız işleminiz tamamlandı. Giriş yapabilirsiniz.
+                </div>
+              <?php } elseif ($_GET['durum'] == "exit") { ?>
+                <div class="alert alert-info alert-dismissible fade in" style="float:left; margin:15px; height:30px; padding:5px; ">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close"> &times;</a>
+                  Çıkış işlemi gerçekleştirdiniz.
+                </div>
+              <?php } elseif ($_GET['durum'] == "basarisizgiris") { ?>
+                <div class="alert alert-danger alert-dismissible fade in" style="float:left; margin:15px; height:30px; padding:5px; ">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close"> &times;</a>
+                  Hatalı kullanıcı veya şifre girdiniz.
+                </div>
+              <?php } ?>
+
+              <?php
+              if (isset($_SESSION['userkullanici_mail'])) { ?>
+                <ul class="small-menu">
+                  <li><button class="btn btn-default btn-chart btn-dark"><a href="hesabim" class="myacc">Hesap Bilgilerim</a></button></li>
+                  <li><button class="btn btn-default btn-chart btn-dark"><a href="siparislerim" class="myshop">Siparişlerim</a></button></li>
+                  <li><button class="btn btn-default btn-chart btn-dark"><a href="logout" class="mycheck">Güvenli Çıkış</a></button></li>
+                </ul>
+              <?php } ?>
+
+
+
+
+
             </div>
           </div>
         </div>
@@ -167,12 +213,6 @@ $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
                 <div class="clearfix"></div>
               </div>
             </div>
-
-            <ul class="small-menu">
-              <li><a href="hesabim" class="myacc">Hesap Bilgilerim</a></li>
-              <li><a href="siparislerim" class="myshop">Siparişlerim</a></li>
-              <li><a href="logout" class="mycheck">Güvenli Çıkış</a></li>
-            </ul>
 
           </div>
         </div>

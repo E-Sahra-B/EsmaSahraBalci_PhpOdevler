@@ -64,7 +64,7 @@
 			</div><!--footer newsletter widget-->
 			<div class="col-md-4"><!--footer contact widget-->
 				<div class="title-widget-bg">
-					<div class="title-widget-cursive">Shopping</div>
+					<div class="title-widget-cursive">Esb-Ticaret</div>
 				</div>
 				<ul class="contact-widget">
 					<li class="fphone"><?php echo $ayarcek['ayar_tel']; ?> <br> <?php echo $ayarcek['ayar_faks']; ?></li>
