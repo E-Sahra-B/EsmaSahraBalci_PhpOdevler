@@ -11,6 +11,7 @@ if (isset($_GET['sef'])) {
        $urunsor->execute(array(
               'kategori_id' => $kategori_id
        ));
+       $say = $urunsor->rowCount();
 } else {
        $urunsor = $db->prepare("SELECT * FROM urun order by urun_id DESC");
        $urunsor->execute();
@@ -32,6 +33,9 @@ if (isset($_GET['sef'])) {
                      </div>
                      <div class="row prdct"><!--Products-->
                             <?php
+                            if ($say == 0) {
+                                   echo "Bu kategoride ürün bulunamadı";
+                            }
                             while ($uruncek = $urunsor->fetch(PDO::FETCH_ASSOC)) {
                             ?>
                                    <div class="col-md-4">
@@ -51,7 +55,7 @@ if (isset($_GET['sef'])) {
                                                                </div>
                                                         </div>
                                                  </div>
-                                                 <span class="smalltitle"><a href="#>"><?php echo $uruncek['urun_ad'] ?></a></span>
+                                                 <span class="smalltitle"><a href="#>"><?php echo substr($uruncek['urun_ad'], 0, 15) ?></a></span>
                                                  <span class="smalldesc">Ürün Kodu.: <?php echo $uruncek['urun_id'] ?></span>
                                           </div>
                                    </div>
