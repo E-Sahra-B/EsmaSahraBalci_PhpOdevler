@@ -78,6 +78,7 @@ if ($say == 0) {
 				<ul id="myTab" class="nav nav-tabs shop-tab">
 					<li class="active"><a href="#desc" data-toggle="tab">Açıklama</a></li>
 					<li class=""><a href="#rev" data-toggle="tab">Yorumlar (0)</a></li>
+					<li class=""><a href="#video" data-toggle="tab">Ürün Video</a></li>
 				</ul>
 				<div id="myTabContent" class="tab-content shop-tab-ct">
 					<div class="tab-pane fade active in" id="desc">
@@ -104,10 +105,55 @@ if ($say == 0) {
 							Yorum yazabilmek için <a style="color:red" href="register">kayıt</a> olmalı yada üyemizseniz <a style="color:green" href="index">giriş</a> yapmalısınız...
 						<?php } ?>
 					</div>
-
+					<div class="tab-pane fade " id="video">
+						<p>
+							<?php
+							$say = strlen($uruncek['urun_video']);
+							if ($say > 0) { ?>
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $uruncek['urun_video'] ?>" frameborder="0" allowfullscreen></iframe>
+							<?php } else {
+								echo "Bu ürüne video eklenmemiştir";
+							}
+							?>
+						</p>
+					</div>
 				</div>
 			</div>
-
+			<div id="title-bg">
+				<div class="title">Benzer Ürünler</div>
+			</div>
+			<div class="row prdct"><!--Products-->
+				<?php
+				$kategori_id = $uruncek['kategori_id'];
+				$urunaltsor = $db->prepare("SELECT * FROM urun where kategori_id=:kategori_id order by  rand() limit 3");
+				$urunaltsor->execute(array(
+					'kategori_id' => $kategori_id
+				));
+				while ($urunaltcek = $urunaltsor->fetch(PDO::FETCH_ASSOC)) {
+				?>
+					<div class="col-md-4">
+						<div class="productwrap">
+							<div class="pr-img">
+								<div class="hot"></div>
+								<a href="urun-<?= seo($urunaltcek["urun_ad"]) . '-' . $urunaltcek["urun_id"] ?>">
+									<img src="img/logo-yok.png" alt="" class="img-responsive"></a>
+								<div class="pricetag on-sale">
+									<div class="inner on-sale">
+										<span class="onsale">
+											<span class="oldprice">
+												<?php echo number_format(($urunaltcek['urun_fiyat'] * 1.50), 2, ',', '.')  ?> ₺
+											</span>
+											<?php echo number_format($urunaltcek['urun_fiyat'], 2, ',', '.'); ?> ₺
+										</span>
+									</div>
+								</div>
+							</div>
+							<span class="smalltitle"><a href="#>"><?php echo substr($urunaltcek['urun_ad'], 0, 15) ?></a></span>
+							<span class="smalldesc">Ürün Kodu.: <?php echo $urunaltcek['urun_id'] ?></span>
+						</div>
+					</div>
+				<?php } ?>
+			</div><!--Products-->
 			<div class="spacer"></div>
 		</div><!--Main content-->
 		<?php require_once 'sidebar.php' ?>
