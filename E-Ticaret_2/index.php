@@ -197,6 +197,7 @@ require_once 'header.php';
 			<div class="spacer"></div>
 		</div><!--Main content-->
 		<!-- Siderbar kısmı-->
+		<?php require_once 'sidebar.php'; ?>
 	</div>
 </div>
 <?php require_once 'footer.php'; ?>
