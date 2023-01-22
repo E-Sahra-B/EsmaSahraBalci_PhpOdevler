@@ -1,7 +1,20 @@
 ﻿<?php
 require_once 'header.php';
-$urunsor = $db->prepare("SELECT * FROM urun order by urun_id DESC");
-$urunsor->execute();
+if (isset($_GET['sef'])) {
+       $kategorisor = $db->prepare("SELECT * FROM kategori where kategori_seourl=:seourl");
+       $kategorisor->execute(array(
+              'seourl' => $_GET['sef']
+       ));
+       $kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC);
+       $kategori_id = $kategoricek['kategori_id'];
+       $urunsor = $db->prepare("SELECT * FROM urun where kategori_id=:kategori_id order by urun_id DESC");
+       $urunsor->execute(array(
+              'kategori_id' => $kategori_id
+       ));
+} else {
+       $urunsor = $db->prepare("SELECT * FROM urun order by urun_id DESC");
+       $urunsor->execute();
+}
 ?>
 <div class="container">
        <div class="clearfix"></div>
