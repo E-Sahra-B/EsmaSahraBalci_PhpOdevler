@@ -42,7 +42,7 @@ if (isset($_GET['sef'])) {
                                           <div class="productwrap">
                                                  <div class="pr-img">
                                                         <div class="hot"></div>
-                                                        <a href="#">
+                                                        <a href="urun-<?= seo($uruncek["urun_ad"]) . '-' . $uruncek["urun_id"] ?>">
                                                                <img src="img/logo-yok.png" alt="" class="img-responsive"></a>
                                                         <div class="pricetag on-sale">
                                                                <div class="inner on-sale">
