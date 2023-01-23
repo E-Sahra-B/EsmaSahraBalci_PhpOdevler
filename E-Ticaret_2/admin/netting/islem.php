@@ -172,7 +172,7 @@ if (isset($_POST['kullaniciduzenle'])) {
 	}
 }
 
-if ($_GET['kullanicisil'] == "ok") {
+if (isset($_GET['kullanicisil'])) {
 	$sil = $db->prepare("DELETE from kullanici where kullanici_id=:id");
 	$kontrol = $sil->execute(array(
 		'id' => $_GET['kullanici_id']
@@ -210,7 +210,7 @@ if (isset($_POST['menuduzenle'])) {
 	}
 }
 
-if ($_GET['menusil'] == "ok") {
+if (isset($_GET['menusil']) == "ok") {
 	islemkontrol();
 	$sil = $db->prepare("DELETE from menu where menu_id=:id");
 	$kontrol = $sil->execute(array(
@@ -367,7 +367,7 @@ if (isset($_POST['sliderduzenle'])) {
 	}
 }
 
-if ($_GET['slidersil'] == "ok") {
+if (isset($_GET['slidersil']) == "ok") {
 	islemkontrol();
 	$sil = $db->prepare("DELETE from slider where slider_id=:slider_id");
 	$kontrol = $sil->execute(array(
@@ -492,7 +492,7 @@ if (isset($_POST['kategoriekle'])) {
 	}
 }
 
-if ($_GET['kategorisil'] == "ok") {
+if (isset($_GET['kategorisil']) == "ok") {
 	$sil = $db->prepare("DELETE from kategori where kategori_id=:kategori_id");
 	$kontrol = $sil->execute(array(
 		'kategori_id' => $_GET['kategori_id']
@@ -504,7 +504,7 @@ if ($_GET['kategorisil'] == "ok") {
 	}
 }
 
-if ($_GET['urunsil'] == "ok") {
+if (isset($_GET['urunsil']) == "ok") {
 	$sil = $db->prepare("DELETE from urun where urun_id=:urun_id");
 	$kontrol = $sil->execute(array(
 		'urun_id' => $_GET['urun_id']
@@ -580,5 +580,24 @@ if (isset($_POST['urunduzenle'])) {
 		Header("Location:../production/urun-duzenle.php?durum=ok&urun_id=$urun_id");
 	} else {
 		Header("Location:../production/urun-duzenle.php?durum=no&urun_id=$urun_id");
+	}
+}
+
+if (isset($_POST['yorumkaydet'])) {
+	$gelen_url = $_POST['gelen_url'];
+	$ayarekle = $db->prepare("INSERT INTO yorumlar SET
+		yorum_detay=:yorum_detay,
+		kullanici_id=:kullanici_id,
+		urun_id=:urun_id	
+		");
+	$insert = $ayarekle->execute(array(
+		'yorum_detay' => $_POST['yorum_detay'],
+		'kullanici_id' => $_POST['kullanici_id'],
+		'urun_id' => $_POST['urun_id']
+	));
+	if ($insert) {
+		Header("Location:$gelen_url?yorum=ok");
+	} else {
+		Header("Location:$gelen_url?yorum=no");
 	}
 }

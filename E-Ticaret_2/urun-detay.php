@@ -5,7 +5,7 @@ $urunsor->execute(array(
 	'urun_id' => $_GET['urun_id']
 ));
 $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
-echo $say = $urunsor->rowCount();
+$say = $urunsor->rowCount();
 if ($say == 0) {
 	header("Location:index.php?durum=donttry");
 	exit;
@@ -74,32 +74,62 @@ if ($say == 0) {
 					</div>
 				</div>
 			</div>
+			<?php
+			if ($_GET['yorum'] == "ok") { ?>
+				<div class="alert alert-success">Yorum Başarılı</div>
+			<?php } elseif ($_GET['yorum'] == "no") { ?>
+				<div class="alert alert-danger">Yorum Başarısız</div>
+			<?php }
+			?>
 			<div class="tab-review">
 				<ul id="myTab" class="nav nav-tabs shop-tab">
-					<li class="active"><a href="#desc" data-toggle="tab">Açıklama</a></li>
-					<li class=""><a href="#rev" data-toggle="tab">Yorumlar (0)</a></li>
+					<li <?php if ($_GET['yorum'] != "ok") { ?> class="active" <?php } ?>><a href="#desc" data-toggle="tab">Açıklama</a></li>
+					<li <?php if ($_GET['yorum'] == "ok") { ?> class="active" <?php } ?>>
+						<?php
+						$kullanici_id = $kullanicicek['kullanici_id'];
+						$urun_id = $uruncek['urun_id'];
+						$yorumsor = $db->prepare("SELECT * FROM yorumlar where urun_id=:urun_id");
+						$yorumsor->execute(array(
+							'urun_id' => $urun_id
+						));
+						?>
+						<a href="#rev" data-toggle="tab">Yorumlar (<?php echo $yorumsor->rowCount(); ?>)</a>
+					</li>
 					<li class=""><a href="#video" data-toggle="tab">Ürün Video</a></li>
 				</ul>
 				<div id="myTabContent" class="tab-content shop-tab-ct">
-					<div class="tab-pane fade active in" id="desc">
+					<div class="tab-pane fade <?php if ($_GET['yorum'] != "ok") { ?> active in <?php } ?>" id="desc">
 						<p>
 							<?php echo $uruncek['urun_detay'] ?>
 						</p>
 					</div>
-					<div class="tab-pane fade" id="rev">
-						<!-- Yorumlar Kısmı -->
-						<p class="dash">
-							<span>Jhon Doe</span> (11/25/2012)<br><br>
-							Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse.
-						</p>
-						<!-- Yorumlar Kısmı Bitiş -->
+					<div class="tab-pane fade <?php if ($_GET['yorum'] == "ok") { ?> active in <?php } ?>" id="rev">
+						<?php
+						while ($yorumcek = $yorumsor->fetch(PDO::FETCH_ASSOC)) {
+							$ykullanici_id = $yorumcek['kullanici_id'];
+							$ykullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_id=:id");
+							$ykullanicisor->execute(array(
+								'id' => $ykullanici_id
+							));
+							$ykullanicicek = $ykullanicisor->fetch(PDO::FETCH_ASSOC);
+						?>
+							<!-- Yorumlar Kısmı -->
+							<p class="dash">
+								<span><?php echo $ykullanicicek['kullanici_adsoyad'] ?></span> (<?php echo $yorumcek['yorum_zaman'] ?>)<br><br>
+								<?php echo $yorumcek['yorum_detay'] ?>
+							</p>
+							<!-- Yorumlar Kısmı Bitiş -->
+						<?php } ?>
 						<h4>Yorum Yazın</h4>
 						<?php if (isset($_SESSION['userkullanici_mail'])) { ?>
-							<form role="form">
+							<form action="admin/netting/islem.php" method="POST" role="form">
 								<div class="form-group">
-									<textarea class="form-control" placeholder="Lütfen yorumunuzu buraya yazınız..." id="text"></textarea>
+									<textarea name="yorum_detay" class="form-control" placeholder="Lütfen yorumunuzu buraya yazınız..." id="text"></textarea>
 								</div>
-								<button type="submit" class="btn btn-default btn-red btn-sm">Yorumu Gönder</button>
+								<input type="hidden" name="kullanici_id" value="<?php echo $kullanicicek['kullanici_id'] ?>">
+								<input type="hidden" name="urun_id" value="<?php echo $uruncek['urun_id'] ?>">
+								<input type="hidden" name="gelen_url" value="<?php echo "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>">
+								<button type="submit" name="yorumkaydet" class="btn btn-default btn-info btn-sm">Yorumu Gönder</button>
 							</form>
 						<?php } else { ?>
 							Yorum yazabilmek için <a style="color:red" href="register">kayıt</a> olmalı yada üyemizseniz <a style="color:green" href="index">giriş</a> yapmalısınız...
