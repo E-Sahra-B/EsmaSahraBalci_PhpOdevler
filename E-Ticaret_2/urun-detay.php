@@ -88,9 +88,10 @@ if ($say == 0) {
 						<?php
 						$kullanici_id = $kullanicicek['kullanici_id'];
 						$urun_id = $uruncek['urun_id'];
-						$yorumsor = $db->prepare("SELECT * FROM yorumlar where urun_id=:urun_id");
+						$yorumsor = $db->prepare("SELECT * FROM yorumlar where urun_id=:urun_id and yorum_onay=:yorum_onay");
 						$yorumsor->execute(array(
-							'urun_id' => $urun_id
+							'urun_id' => $urun_id,
+							'yorum_onay' => 1
 						));
 						?>
 						<a href="#rev" data-toggle="tab">Yorumlar (<?php echo $yorumsor->rowCount(); ?>)</a>

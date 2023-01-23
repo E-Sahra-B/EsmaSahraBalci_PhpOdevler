@@ -601,3 +601,29 @@ if (isset($_POST['yorumkaydet'])) {
 		Header("Location:$gelen_url?yorum=no");
 	}
 }
+
+if (isset($_GET['yorum_onay']) == "ok") {
+	$duzenle = $db->prepare("UPDATE yorumlar SET
+		yorum_onay=:yorum_onay
+		WHERE yorum_id={$_GET['yorum_id']}");
+	$update = $duzenle->execute(array(
+		'yorum_onay' => $_GET['yorum_one']
+	));
+	if ($update) {
+		Header("Location:../production/yorum.php?durum=ok");
+	} else {
+		Header("Location:../production/yorum.php?durum=no");
+	}
+}
+
+if (isset($_GET['yorumsil']) == "ok") {
+	$sil = $db->prepare("DELETE from yorumlar where yorum_id=:yorum_id");
+	$kontrol = $sil->execute(array(
+		'yorum_id' => $_GET['yorum_id']
+	));
+	if ($kontrol) {
+		Header("Location:../production/yorum.php?durum=ok");
+	} else {
+		Header("Location:../production/yorum.php?durum=no");
+	}
+}
