@@ -526,6 +526,7 @@ if (isset($_POST['urunekle'])) {
 		urun_video=:urun_video,
 		urun_keyword=:urun_keyword,
 		urun_durum=:urun_durum,
+		urun_onecikar=:urun_onecikar,
 		urun_stok=:urun_stok,	
 		urun_seourl=:seourl		
 		");
@@ -537,6 +538,7 @@ if (isset($_POST['urunekle'])) {
 		'urun_video' => $_POST['urun_video'],
 		'urun_keyword' => $_POST['urun_keyword'],
 		'urun_durum' => $_POST['urun_durum'],
+		'urun_onecikar' => $_POST['urun_onecikar'],
 		'urun_stok' => $_POST['urun_stok'],
 		'seourl' => $urun_seourl
 	));
@@ -556,6 +558,7 @@ if (isset($_POST['urunduzenle'])) {
 		urun_detay=:urun_detay,
 		urun_fiyat=:urun_fiyat,
 		urun_video=:urun_video,
+		urun_onecikar=:urun_onecikar,
 		urun_keyword=:urun_keyword,
 		urun_durum=:urun_durum,
 		urun_stok=:urun_stok,	
@@ -567,6 +570,7 @@ if (isset($_POST['urunduzenle'])) {
 		'urun_detay' => $_POST['urun_detay'],
 		'urun_fiyat' => $_POST['urun_fiyat'],
 		'urun_video' => $_POST['urun_video'],
+		'urun_onecikar' => $_POST['urun_onecikar'],
 		'urun_keyword' => $_POST['urun_keyword'],
 		'urun_durum' => $_POST['urun_durum'],
 		'urun_stok' => $_POST['urun_stok'],

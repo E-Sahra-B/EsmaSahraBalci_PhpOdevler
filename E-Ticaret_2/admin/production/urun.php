@@ -35,6 +35,7 @@ $urunsor->execute();
                   <th>Kategori Id</th>
                   <th>Ürün Stok</th>
                   <th>Ürün Fiyat</th>
+                  <th>Öne Çıkar</th>
                   <th>Durum</th>
                   <th></th>
                   <th></th>
@@ -60,7 +61,15 @@ $urunsor->execute();
                     </td>
                     <td><?php echo $uruncek['urun_stok'] ?></td>
                     <td><?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.') ?></td>
-
+                    <td>
+                      <center><?php
+                              if ($uruncek['urun_onecikar'] == 1) { ?>
+                          <button class="btn btn-warning btn-xs">Kaldır</button>
+                        <?php } else { ?>
+                          <button class="btn btn-dark btn-xs">Öne Çıkar</button>
+                        <?php } ?>
+                      </center>
+                    </td>
                     <td>
                       <center><?php
                               if ($uruncek['urun_durum'] == 1) { ?>

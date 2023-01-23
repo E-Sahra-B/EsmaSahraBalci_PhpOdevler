@@ -33,9 +33,9 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
           <div class="x_content">
             <br />
             <form action="../netting/islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-              <!-- Ürün Kategori Select   -->
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori Seç<span class="required">*</span></label>
+                <!-- Ürün Kategori Select   -->
                 <div class="col-md-6 col-sm-6 col-xs-6">
                   <?php
                   $urun_id = $uruncek['kategori_id'];
@@ -55,8 +55,8 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                     <?php } ?>
                   </select>
                 </div>
+                <!-- Ürün Kategori Select Bitiş   -->
               </div>
-              <!-- Ürün Kategori Select Bitiş   -->
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Ürün Ad <span class="required">*</span>
                 </label>
@@ -110,6 +110,16 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <input type="text" id="first-name" name="urun_stok" value="<?php echo $uruncek['urun_stok'] ?>" required="required" class="form-control col-md-7 col-xs-12">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Ürün Öne Çıkar<span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select id="heard" class="form-control" name="urun_onecikar" required>
+                    <option value="1" <?php echo $uruncek['urun_onecikar'] == '1' ? 'selected=""' : ''; ?>>Evet</option>
+                    <option value="0" <?php echo $uruncek['urun_onecikar'] == '0' ? 'selected=""' : ''; ?>>Hayır</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">

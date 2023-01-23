@@ -106,6 +106,16 @@ require_once 'header.php';
                 </div>
               </div>
               <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Öne Çıkar<span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select id="heard" class="form-control" name="urun_onecikar" required>
+                    <option value="1">Evet</option>
+                    <option value="0">Hayır</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Ürün Durum<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
