@@ -641,3 +641,47 @@ if (isset($_GET['urun_onecikar']) == "ok") {
 		Header("Location:../production/urun.php?durum=no");
 	}
 }
+
+if (isset($_POST['sepetekle'])) {
+	$ayarekle = $db->prepare("INSERT INTO sepet SET
+		urun_adet=:urun_adet,
+		kullanici_id=:kullanici_id,
+		urun_id=:urun_id	
+		");
+	$insert = $ayarekle->execute(array(
+		'urun_adet' => $_POST['urun_adet'],
+		'kullanici_id' => $_POST['kullanici_id'],
+		'urun_id' => $_POST['urun_id']
+	));
+	if ($insert) {
+		Header("Location:../../sepet?durum=ok");
+	} else {
+		Header("Location:../../sepet?durum=no");
+	}
+}
+
+if (isset($_GET['sepetduzenle'])) {
+	$kaydet = $db->prepare("UPDATE sepet SET
+        urun_adet=:urun_adet    
+        WHERE urun_id={$_GET['urun_id']}");
+	$update = $kaydet->execute(array(
+		'urun_adet' => $_GET['urun_adet']
+	));
+	if ($update) {
+		Header("Location:../../sepet?durum=ok");
+	} else {
+		Header("Location:../../sepet?durum=no");
+	}
+}
+
+if (isset($_GET['sepetsil']) == "ok") {
+	$sil = $db->prepare("DELETE from sepet where sepet_id=:id");
+	$kontrol = $sil->execute(array(
+		'id' => $_GET['sepet_id']
+	));
+	if ($kontrol) {
+		header("Location:../../sepet?sil=ok");
+	} else {
+		header("Location:../../sepet?sil=no");
+	}
+}
