@@ -30,26 +30,37 @@ if ($say == 0) {
 			</div>
 			<div class="row">
 				<div class="col-md-6">
+					<?php
+					$urun_id = $uruncek['urun_id'];
+					$urunfotosor = $db->prepare("SELECT * FROM urunfoto where urun_id=:urun_id order by urunfoto_sira ASC limit 1 ");
+					$urunfotosor->execute(array(
+						'urun_id' => $urun_id
+					));
+					$urunfotocek = $urunfotosor->fetch(PDO::FETCH_ASSOC);
+					?>
 					<div class="dt-img">
-						<div class="detpricetag">
-							<div class="inner"><?php echo $uruncek['urun_fiyat'] ?> TL</div>
+						<div class="detpricetag blue">
+							<div class="inner"><?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.'); ?></div>
 						</div>
-						<a class="fancybox" href="images\sample-1.jpg" data-fancybox-group="gallery" title="Cras neque mi, semper leon"><img src="images\sample-1.jpg" alt="" class="img-responsive"></a>
+						<a class="fancybox" href="<?php echo $urunfotocek['urunfoto_resimyol'] ?>" data-fancybox-group="gallery" title="<?php echo $uruncek['urun_ad']; ?>"><img src="<?php echo $urunfotocek['urunfoto_resimyol'] ?>" alt="" class="img-responsive"></a>
 					</div>
-					<div class="thumb-img">
-						<a class="fancybox" href="images\sample-4.jpg" data-fancybox-group="gallery" title="Cras neque mi, semper leon"><img src="images\sample-4.jpg" alt="" class="img-responsive"></a>
-					</div>
-					<div class="thumb-img">
-						<a class="fancybox" href="images\sample-5.jpg" data-fancybox-group="gallery" title="Cras neque mi, semper leon"><img src="images\sample-5.jpg" alt="" class="img-responsive"></a>
-					</div>
-					<div class="thumb-img">
-						<a class="fancybox" href="images\sample-1.jpg" data-fancybox-group="gallery" title="Cras neque mi, semper leon"><img src="images\sample-1.jpg" alt="" class="img-responsive"></a>
-					</div>
+					<?php
+					$urun_id = $uruncek['urun_id'];
+					$urunfotosor = $db->prepare("SELECT * FROM urunfoto where urun_id=:urun_id order by urunfoto_sira ASC limit 1,3 ");
+					$urunfotosor->execute(array(
+						'urun_id' => $urun_id
+					));
+					while ($urunfotocek = $urunfotosor->fetch(PDO::FETCH_ASSOC)) {
+					?>
+						<div class="thumb-img">
+							<a class="fancybox" href="<?php echo $urunfotocek['urunfoto_resimyol'] ?>" data-fancybox-group="gallery" title="<?php echo $uruncek['urun_ad']; ?>"><img src="<?php echo $urunfotocek['urunfoto_resimyol'] ?>" alt="" class="img-responsive"></a>
+						</div>
+					<?php } ?>
 				</div>
 				<div class="col-md-6 det-desc">
 					<div class="productdata">
 						<div class="infospan">Ürün Kodu <span><?php echo $uruncek['urun_id']; ?></span></div>
-						<div class="infospan">Ürün Fiyat <span><?php echo $uruncek['urun_fiyat']; ?></span></div>
+						<div class="infospan">Ürün Fiyat <span><?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.'); ?></span></div>
 						<div class="clearfix"></div>
 						<hr>
 						<form action="admin/netting/islem.php" method="POST">

@@ -53,7 +53,21 @@
 								<button class="btn btn-danger btn-sm">✖</button>
 							</a>
 						</td>
-						<td><img src="img\logo-yok.png" width="100" alt=""></td>
+						<td><img src="
+						<?php
+						$urun_id = $sepetcek['urun_id'];
+						$urunfotosor = $db->prepare("SELECT * FROM urunfoto where urun_id=:urun_id order by urunfoto_sira ASC limit 1 ");
+						$urunfotosor->execute(array(
+							'urun_id' => $urun_id
+						));
+						$urunfotocek = $urunfotosor->fetch(PDO::FETCH_ASSOC);
+						if (!empty($urunfotocek['urunfoto_resimyol'])) {
+							echo $urunfotocek['urunfoto_resimyol'];
+						} else {
+							echo "img\logo-yok.png";
+						}
+						?>
+						" width="100" alt=""></td>
 						<td style="vertical-align: middle;"><?php echo $uruncek['urun_ad'] ?></td>
 						<td style="vertical-align: middle;"><?php echo $uruncek['urun_id'] ?></td>
 						<td style="vertical-align: middle;" width="100">

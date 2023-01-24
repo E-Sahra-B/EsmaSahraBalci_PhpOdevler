@@ -26,10 +26,10 @@ if (isset($_GET['sef'])) {
               <div class="col-md-9"><!--Main content-->
                      <div class="title-bg">
                             <div class="title">Kategoriler</div>
-                            <div class="title-nav">
+                            <!-- <div class="title-nav">
                                    <a href="javascripti:void(0);"><i class="fa fa-th-large"></i>grid</a>
                                    <a href="javascripti:void(0);"><i class="fa fa-bars"></i>List</a>
-                            </div>
+                            </div> -->
                      </div>
                      <div class="row prdct"><!--Products-->
                             <?php
@@ -43,14 +43,28 @@ if (isset($_GET['sef'])) {
                                                  <div class="pr-img">
                                                         <div class="hot"></div>
                                                         <a href="urun-<?= seo($uruncek["urun_ad"]) . '-' . $uruncek["urun_id"] ?>">
-                                                               <img src="img/logo-yok.png" alt="" class="img-responsive"></a>
+                                                               <img src="
+                                                               <?php
+                                                               $urun_id = $uruncek['urun_id'];
+                                                               $urunfotosor = $db->prepare("SELECT * FROM urunfoto where urun_id=:urun_id order by urunfoto_sira ASC limit 1 ");
+                                                               $urunfotosor->execute(array(
+                                                                      'urun_id' => $urun_id
+                                                               ));
+                                                               $urunfotocek = $urunfotosor->fetch(PDO::FETCH_ASSOC);
+                                                               if (!empty($urunfotocek['urunfoto_resimyol'])) {
+                                                                      echo $urunfotocek['urunfoto_resimyol'];
+                                                               } else {
+                                                                      echo "img\logo-yok.png";
+                                                               }
+                                                               ?>
+                                                               " alt="" class="img-responsive"></a>
                                                         <div class="pricetag on-sale">
                                                                <div class="inner on-sale">
                                                                       <span class="onsale">
                                                                              <span class="oldprice">
-                                                                                    <?php echo number_format(($uruncek['urun_fiyat'] * 1.50), 2, ',', '.')  ?> ₺
+                                                                                    <?php echo number_format(($uruncek['urun_fiyat'] * 1.50), 2, ',', '.');   ?>
                                                                              </span>
-                                                                             <?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.'); ?> ₺
+                                                                             <?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.'); ?>
                                                                       </span>
                                                                </div>
                                                         </div>
