@@ -685,3 +685,19 @@ if (isset($_GET['sepetsil']) == "ok") {
 		header("Location:../../sepet?sil=no");
 	}
 }
+
+if (isset($_POST['urunfotosil'])) {
+	$urun_id = $_POST['urun_id'];
+	$checklist = $_POST['urunfotosec'];
+	foreach ($checklist as $list) {
+		$sil = $db->prepare("DELETE from urunfoto where urunfoto_id=:urunfoto_id");
+		$kontrol = $sil->execute(array(
+			'urunfoto_id' => $list
+		));
+	}
+	if ($kontrol) {
+		Header("Location:../production/urun-galeri.php?urun_id=$urun_id&durum=ok");
+	} else {
+		Header("Location:../production/urun-galeri.php?urun_id=$urun_id&durum=no");
+	}
+}

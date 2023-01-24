@@ -54,9 +54,9 @@ if ($kullaniciGeldiMi == 0) {
     <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
-    <!-- Dropzone.js -->
+    <!-- Dropzone.js Çoklu Resim yükleme css -->
     <link href="../vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
-    <!-- Dropzone.js -->
+    <!-- Dropzone.js Çoklu Resim yükleme js -->
     <script src="../vendors/dropzone/dist/min/dropzone.min.js"></script>
     <!-- Ck Editör -->
     <script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
