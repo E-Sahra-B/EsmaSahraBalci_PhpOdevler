@@ -817,3 +817,53 @@ if (isset($_GET['aktifpasif']) == "ok") {
 		Header("Location:../production/kullanici.php?durum=no");
 	}
 }
+
+if (isset($_POST['admin-bilgi-guncelle'])) {
+	if ($_FILES['kullanici_resim']["size"] > 0) {
+		$uploads_dir = '../../img';
+		@$tmp_name = $_FILES['kullanici_resim']["tmp_name"];
+		@$name = $_FILES['kullanici_resim']["name"];
+		$benzersizsayi1 = rand(10000, 11000);
+		$benzersizsayi2 = rand(10000, 11000);
+		$benzersizsayi3 = rand(10000, 11000);
+		$benzersizsayi4 = rand(10000, 11000);
+		$benzersizad = $benzersizsayi1 . $benzersizsayi2 . $benzersizsayi3 . $benzersizsayi4;
+		$refimgyol = substr($uploads_dir, 6) . "/" . $benzersizad . $name;
+		@move_uploaded_file($tmp_name, "$uploads_dir/$benzersizad$name");
+		$duzenle = $db->prepare("UPDATE kullanici SET
+			kullanici_adsoyad=:ad,
+			kullanici_gsm=:tel,
+			kullanici_durum=:durum,
+			kullanici_resim=:kullanici_resim	
+			WHERE kullanici_id={$_POST['kullanici_id']}");
+		$update = $duzenle->execute(array(
+			'ad' => $_POST['kullanici_adsoyad'],
+			'tel' => $_POST['kullanici_gsm'],
+			'durum' => $_POST['kullanici_durum'],
+			'kullanici_resim' => $refimgyol,
+		));
+		if ($update) {
+			$resimsilunlink = $_POST['kullanici_resimyol'];
+			unlink("../../$resimsilunlink");
+			Header("Location:../production/admin-bilgi-guncelle.php?&durum=ok");
+		} else {
+			Header("Location:../production/admin-bilgi-guncelle.php?durum=no");
+		}
+	} else {
+		$duzenle = $db->prepare("UPDATE kullanici SET
+			kullanici_adsoyad=:ad,
+			kullanici_gsm=:tel,
+			kullanici_durum=:durum		
+			WHERE kullanici_id={$_POST['kullanici_id']}");
+		$update = $duzenle->execute(array(
+			'ad' => $_POST['kullanici_adsoyad'],
+			'tel' => $_POST['kullanici_gsm'],
+			'durum' => $_POST['kullanici_durum']
+		));
+		if ($update) {
+			Header("Location:../production/admin-bilgi-guncelle.php?&durum=ok");
+		} else {
+			Header("Location:../production/admin-bilgi-guncelle.php?durum=no");
+		}
+	}
+}
