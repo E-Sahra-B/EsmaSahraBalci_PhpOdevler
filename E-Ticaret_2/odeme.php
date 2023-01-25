@@ -4,7 +4,10 @@
 	<div class="lines"></div>
 </div>
 <div class="container">
-
+	<?php
+	if ($_GET['durum'] == "no") { ?>
+		<div class="alert alert-danger">Ödeme İşlem Başarısız</div>
+	<?php } ?>
 	<div class="title-bg">
 		<div class="title">Ödeme Sayfası</div>
 	</div>
@@ -83,7 +86,7 @@
 			<li class="active"><a href="#rev" data-toggle="tab">Banka Havalesi </a></li>
 		</ul>
 		<div id="myTabContent" class="tab-content shop-tab-ct">
-			<div class="tab-pane fade active in" id="desc">
+			<div class="tab-pane fade" id="desc">
 				<p>
 					Entegrasyon Tamamlanmadı.
 				</p>
@@ -95,12 +98,14 @@
 					$bankasor = $db->prepare("SELECT * FROM banka order by banka_id ASC");
 					$bankasor->execute();
 					while ($bankacek = $bankasor->fetch(PDO::FETCH_ASSOC)) { ?>
-						<input type="radio" name="banka_id" value="<?php echo $bankacek['banka_id'] ?>">
+						<input type="radio" name="siparis_banka" value="<?php echo $bankacek['banka_ad'] ?>">
 						<?php echo $bankacek['banka_ad'];
 						echo " "; ?><br>
 					<?php } ?>
+					<input type="hidden" name="kullanici_id" value="<?php echo $kullanicicek['kullanici_id'] ?>">
+					<input type="hidden" name="siparis_toplam" value="<?php echo $toplam_fiyat ?>">
 					<hr>
-					<button class="btn btn-success" type="submit" name="sipariskaydet">Sipariş Ver</button>
+					<button class="btn btn-success" type="submit" name="bankasiparisekle">Sipariş Ver</button>
 				</form>
 			</div>
 		</div>
