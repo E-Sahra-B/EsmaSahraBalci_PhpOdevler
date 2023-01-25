@@ -701,3 +701,105 @@ if (isset($_POST['urunfotosil'])) {
 		Header("Location:../production/urun-galeri.php?urun_id=$urun_id&durum=no");
 	}
 }
+
+if (isset($_POST['kullanicibilgiguncelle'])) {
+	$kullanici_id = $_POST['kullanici_id'];
+	$sifre = sha1(md5($_POST['sifre']));
+	$kullanici_passwordone = $_POST['kullanici_passwordone'];
+	$kullanici_passwordtwo = $_POST['kullanici_passwordtwo'];
+	$kullanicisor = $db->prepare("select * from kullanici where kullanici_id=:id");
+	$kullanicisor->execute(array(
+		'id' => $kullanici_id
+	));
+	$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+	if (!empty($kullanici_passwordone) and !empty($kullanici_passwordtwo && !empty($sifre))) {
+		if ($kullanici_passwordone == $kullanici_passwordtwo) {
+			if (strlen($kullanici_passwordone) >= 6) {
+				if ($kullanicicek["kullanici_password"] == $sifre) {
+					$kullaniciGuncelle = $db->prepare("UPDATE kullanici SET
+				kullanici_adsoyad=:kullanici_adsoyad,
+				kullanici_password=:kullanici_password,
+				kullanici_il=:kullanici_il,
+				kullanici_ilce=:kullanici_ilce,
+				kullanici_adres=:kullanici_adres
+				WHERE kullanici_id={$_POST['kullanici_id']}");
+					$update = $kullaniciGuncelle->execute(array(
+						'kullanici_adsoyad' => $_POST['kullanici_adsoyad'],
+						'kullanici_password' => sha1(md5($kullanici_passwordone)),
+						'kullanici_il' => $_POST['kullanici_il'],
+						'kullanici_ilce' => $_POST['kullanici_ilce'],
+						'kullanici_adres' => $_POST['kullanici_adres']
+					));
+					if ($update) {
+						Header("Location:../../hesabim?durum=ok");
+					} else {
+						Header("Location:../../hesabim?durum=no");
+					}
+				} else {
+					header("Location:../../hesabim?durum=eskisifreyanlis");
+				}
+			} else {
+				header("Location:../../hesabim?durum=eksiksifre");
+			}
+		} else {
+			header("Location:../../hesabim?durum=farklisifre");
+		}
+	} else {
+		$kullaniciGuncelle = $db->prepare("UPDATE kullanici SET
+				kullanici_adsoyad=:kullanici_adsoyad,
+				kullanici_il=:kullanici_il,
+				kullanici_ilce=:kullanici_ilce,
+				kullanici_adres=:kullanici_adres
+				WHERE kullanici_id={$_POST['kullanici_id']}");
+		$update = $kullaniciGuncelle->execute(array(
+			'kullanici_adsoyad' => $_POST['kullanici_adsoyad'],
+			'kullanici_il' => $_POST['kullanici_il'],
+			'kullanici_ilce' => $_POST['kullanici_ilce'],
+			'kullanici_adres' => $_POST['kullanici_adres']
+		));
+		if ($update) {
+			Header("Location:../../hesabim?durum=ok");
+		} else {
+			Header("Location:../../hesabim?durum=no");
+		}
+	}
+}
+
+if (isset($_POST['kullanicisifreguncelle'])) {
+	$kullanici_eskipassword = trim($_POST['kullanici_eskipassword']);
+	$kullanici_passwordone = trim($_POST['kullanici_passwordone']);
+	$kullanici_passwordtwo = trim($_POST['kullanici_passwordtwo']);
+	$kullanici_password = sha1(md5($kullanici_eskipassword));
+	$kullanicisor = $db->prepare("select * from kullanici where kullanici_password=:password and kullanici_id=:id");
+	$kullanicisor->execute(array(
+		'password' => $kullanici_password,
+		'id' => $_POST['kullanici_id']
+	));
+	$say = $kullanicisor->rowCount();
+	if ($say == 0) {
+		header("Location:../../sifre-guncelle?durum=eskisifre");
+	} else {
+		if ($kullanici_passwordone == $kullanici_passwordtwo) {
+			if (strlen($kullanici_passwordone) >= 6) {
+				$password = sha1(md5($kullanici_passwordone));
+				$kullanici_yetki = 1;
+				$kullanicisifreguncelle = $db->prepare("UPDATE kullanici SET
+					kullanici_password=:kullanici_password
+					WHERE kullanici_id={$_POST['kullanici_id']}");
+				$update = $kullanicisifreguncelle->execute(array(
+					'kullanici_password' => $password
+				));
+				if ($update) {
+					header("Location:../../sifre-guncelle.php?durum=sifredegisti");
+				} else {
+					header("Location:../../sifre-guncelle.php?durum=no");
+				}
+			} else {
+				header("Location:../../sifre-guncelle.php?durum=eksiksifre");
+			}
+		} else {
+			header("Location:../../sifre-guncelle?durum=sifreleruyusmuyor");
+			exit;
+		}
+	}
+}
