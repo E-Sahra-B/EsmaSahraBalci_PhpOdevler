@@ -98,7 +98,7 @@
 				<div class="clearfix"></div>
 				<a href="kategoriler" class="btn btn-info pull-right btn-block">Alışverişe Devam ➤</a>
 				<br><br>
-				<a href="" class="btn btn-primary pull-right btn-block"> Ödeme Sayfası ➤➤</a>
+				<a href="odeme" class="btn btn-primary pull-right btn-block"> Ödeme Sayfası ➤➤</a>
 			</div>
 			<div class="clearfix"></div>
 		</div>
