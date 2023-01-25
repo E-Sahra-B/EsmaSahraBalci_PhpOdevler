@@ -803,3 +803,17 @@ if (isset($_POST['kullanicisifreguncelle'])) {
 		}
 	}
 }
+
+if (isset($_GET['aktifpasif']) == "ok") {
+	$aktifPasif = $db->prepare("UPDATE kullanici SET
+		kullanici_durum=:kullanici_durum
+		WHERE kullanici_id={$_GET['kullanici_id']}");
+	$degistir = $aktifPasif->execute(array(
+		'kullanici_durum' => $_GET['durumdegis']
+	));
+	if ($degistir) {
+		Header("Location:../production/kullanici.php?durum=ok");
+	} else {
+		Header("Location:../production/kullanici.php?durum=no");
+	}
+}

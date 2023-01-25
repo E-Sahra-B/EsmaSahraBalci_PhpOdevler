@@ -1,8 +1,8 @@
 <?php
 $title = "Kullanıcı Listeleme";
 require_once 'header.php';
-$kullanicisor = $db->prepare("SELECT * FROM kullanici");
-$kullanicisor->execute();
+$kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_yetki=:yetki");
+$kullanicisor->execute(['yetki' => 1]);
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
@@ -15,28 +15,17 @@ $kullanicisor->execute();
             <div>
               <?php
               if ($_GET['sil'] == "ok") { ?>
-                <div class="alert alert-success">İşlem Başarılı</div>
+                <div class="alert alert-success alert-dismissible">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  Kullanıcı Silme İşlemi Başarılı
+                </div>
               <?php } elseif ($_GET['sil'] == "no") { ?>
-                <div class="alert alert-danger">İşlem Başarısız</div>
+                <div class="alert alert-danger">İşlem Başarısız
+                </div>
               <?php }
               ?>
             </div>
             <h2>Kullanıcı Listeleme</h2>
-            <ul class="nav navbar-right panel_toolbox">
-              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Settings 1</a>
-                  </li>
-                  <li><a href="#">Settings 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li><a class="close-link"><i class="fa fa-close"></i></a>
-              </li>
-            </ul>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -48,6 +37,7 @@ $kullanicisor->execute();
                   <th>Ad Soyad</th>
                   <th>Mail Adresi</th>
                   <th>Telefon</th>
+                  <th>Durum</th>
                   <th></th>
                   <th></th>
                 </tr>
@@ -60,11 +50,19 @@ $kullanicisor->execute();
                     <td><?php echo $kullanicicek['kullanici_adsoyad'] ?></td>
                     <td><?php echo $kullanicicek['kullanici_mail'] ?></td>
                     <td><?php echo $kullanicicek['kullanici_gsm'] ?></td>
-                    <td>
-                      <center><a href="kullanici-duzenle.php?kullanici_id=<?php echo $kullanicicek['kullanici_id']; ?>"><button class="btn btn-primary btn-xs">Düzenle</button></a></center>
+                    <td class="text-center">
+                      <?php
+                      if ($kullanicicek['kullanici_durum'] == 0) { ?>
+                        <a href="../netting/islem.php?kullanici_id=<?php echo $kullanicicek['kullanici_id'] ?>&durumdegis=1&aktifpasif=ok"><button class="btn btn-secondary btn-xs">Aktif Yap</button></a>
+                      <?php } elseif ($kullanicicek['kullanici_durum'] == 1) { ?>
+                        <a href="../netting/islem.php?kullanici_id=<?php echo $kullanicicek['kullanici_id'] ?>&durumdegis=0&aktifpasif=ok"><button class="btn btn-success btn-xs">Pasif Yap</button></a>
+                      <?php } ?>
                     </td>
-                    <td>
-                      <center><a href="../netting/islem.php?kullanici_id=<?php echo $kullanicicek['kullanici_id']; ?>&kullanicisil=ok"><button class="btn btn-danger btn-xs">Sil</button></a></center>
+                    <td class="text-center">
+                      <a href="kullanici-duzenle.php?kullanici_id=<?php echo $kullanicicek['kullanici_id']; ?>"><button class="btn btn-primary btn-xs">Düzenle</button></a>
+                    </td>
+                    <td class="text-center">
+                      <a href="../netting/islem.php?kullanici_id=<?php echo $kullanicicek['kullanici_id']; ?>&kullanicisil=ok"><button class="btn btn-danger btn-xs">Sil</button></a>
                     </td>
                   </tr>
                 <?php  }
