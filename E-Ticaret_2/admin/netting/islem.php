@@ -454,12 +454,14 @@ if (isset($_POST['kategoriduzenle'])) {
 	$kategori_seourl = seo($_POST['kategori_ad']);
 	$kaydet = $db->prepare("UPDATE kategori SET
 		kategori_ad=:ad,
+		kategori_ust=:ust,
 		kategori_durum=:kategori_durum,	
 		kategori_seourl=:seourl,
 		kategori_sira=:sira
 		WHERE kategori_id={$_POST['kategori_id']}");
 	$update = $kaydet->execute(array(
 		'ad' => $_POST['kategori_ad'],
+		'ust' => $_POST['kategoriust_id'],
 		'kategori_durum' => $_POST['kategori_durum'],
 		'seourl' => $kategori_seourl,
 		'sira' => $_POST['kategori_sira']
@@ -475,12 +477,14 @@ if (isset($_POST['kategoriekle'])) {
 	$kategori_seourl = seo($_POST['kategori_ad']);
 	$kaydet = $db->prepare("INSERT INTO kategori SET
 		kategori_ad=:ad,
+		kategori_ust=:ust,
 		kategori_durum=:kategori_durum,	
 		kategori_seourl=:seourl,
 		kategori_sira=:sira
 		");
 	$insert = $kaydet->execute(array(
 		'ad' => $_POST['kategori_ad'],
+		'ust' => $_POST['kategoriust_id'],
 		'kategori_durum' => $_POST['kategori_durum'],
 		'seourl' => $kategori_seourl,
 		'sira' => $_POST['kategori_sira']

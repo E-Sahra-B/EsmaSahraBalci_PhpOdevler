@@ -6,16 +6,60 @@
 	<div class="categorybox">
 		<ul>
 			<?php
-			$kategorisor = $db->prepare("SELECT * FROM kategori order by kategori_sira ASC");
-			$kategorisor->execute();
-			while ($kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC)) { ?>
-				<li><a href="kategori-<?php echo seo($kategoricek['kategori_ad']) ?>"><?php echo $kategoricek['kategori_ad'] ?></a></li>
-			<?php } ?>
+			$query = "SELECT * FROM kategori order by kategori_id";
+			$goster = $db->prepare($query);
+			$goster->execute();
+			$toplamSatirSayisi = $goster->rowCount();
+			$tumSonuclar = $goster->fetchAll();
+			$altKategoriSayisi = 0;
+			for ($i = 0; $i < $toplamSatirSayisi; $i++) {
+				if ($tumSonuclar[$i]['kategori_ust'] == "0") {
+					$altKategoriSayisi++;
+				}
+			}
+			for ($i = 0; $i < $toplamSatirSayisi; $i++) {
+				if ($tumSonuclar[$i]['kategori_ust'] == "0") {
+					kategori($tumSonuclar[$i]['kategori_id'], $tumSonuclar[$i]['kategori_ad'], $tumSonuclar[$i]['kategori_ust']);
+				}
+			}
+			function kategori($kategori_id, $kategori_ad, $kategori_ust)
+			{
+				global $tumSonuclar;
+				global $toplamSatirSayisi;
+				$altKategoriSayisi = 0;
+				for ($i = 0; $i < $toplamSatirSayisi; $i++) {
+					if ($tumSonuclar[$i]['kategori_ust'] == $kategori_id) {
+						$altKategoriSayisi++;
+					}
+				}
+			?>
+				<li>
+					<a href="kategori-<?= seo($kategori_ad) ?>"><?php echo $kategori_ad ?></a>
+					<?php
+					if ($altKategoriSayisi > 0) {
+						echo "( $altKategoriSayisi )";
+					} ?>
+					</a>
+					<?php
+					if ($altKategoriSayisi > 0) {
+						echo "<ul>";
+						for ($i = 0; $i < $toplamSatirSayisi; $i++) {
+							if ($tumSonuclar[$i]['kategori_ust'] == $kategori_id) {
+								kategori($tumSonuclar[$i]['kategori_id'], $tumSonuclar[$i]['kategori_ad'], $tumSonuclar[$i]['kategori_ust']);
+							}
+						}
+						echo "</ul>";
+					}
+					?>
+				</li>
+			<?php
+			}
+			?>
 		</ul>
 	</div>
-	<div class="ads">
+	<!-- <div class="ads">
 		<a href="product.htm"><img src="images\ads.png" class="img-responsive" alt=""></a>
-	</div>
+	</div> -->
 	<div class="title-bg">
 		<div class="title">Best Seller</div>
 	</div>

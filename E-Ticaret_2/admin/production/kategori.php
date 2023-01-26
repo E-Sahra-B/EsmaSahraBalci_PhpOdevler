@@ -23,7 +23,7 @@ $kategorisor->execute();
             </div>
             <h2>Kategori Listeleme</h2>
             <div class="clearfix"></div>
-            <div align="right">
+            <div class="text-right">
               <a href="kategori-ekle.php"><button class="btn btn-success btn-xs"> Yeni Ekle</button></a>
             </div>
           </div>
@@ -34,6 +34,7 @@ $kategorisor->execute();
                 <tr>
                   <th>S.No</th>
                   <th>Kategori Ad</th>
+                  <th>Üst Kategori Ad</th>
                   <th>Kategori Sira</th>
                   <th>Kategori Durum</th>
                   <th></th>
@@ -48,21 +49,30 @@ $kategorisor->execute();
                   <tr>
                     <td width="20"><?php echo $say ?></td>
                     <td><?php echo $kategoricek['kategori_ad'] ?></td>
+                    <td>
+                      <?php
+                      $kategoriustsor = $db->prepare("SELECT * FROM kategori where kategori_id=:id");
+                      $kategoriustsor->execute(array(
+                        'id' => $kategoricek['kategori_ust']
+                      ));
+                      $kategoriustcek = $kategoriustsor->fetch(PDO::FETCH_ASSOC);
+                      echo $kategoriustcek['kategori_ad']
+                      ?>
+                    </td>
                     <td><?php echo $kategoricek['kategori_sira'] ?></td>
-                    <td>
-                      <center><?php
-                              if ($kategoricek['kategori_durum'] == 1) { ?>
-                          <button class="btn btn-success btn-xs">Aktif</button>
-                        <?php } else { ?>
-                          <button class="btn btn-secondary btn-xs">Pasif</button>
-                        <?php } ?>
-                      </center>
+                    <td class="text-center">
+                      <?php
+                      if ($kategoricek['kategori_durum'] == 1) { ?>
+                        <button class="btn btn-success btn-xs">Aktif</button>
+                      <?php } else { ?>
+                        <button class="btn btn-secondary btn-xs">Pasif</button>
+                      <?php } ?>
                     </td>
-                    <td>
-                      <center><a href="kategori-duzenle.php?kategori_id=<?php echo $kategoricek['kategori_id']; ?>"><button class="btn btn-primary btn-xs">Düzenle</button></a></center>
+                    <td class="text-center">
+                      <a href="kategori-duzenle.php?kategori_id=<?php echo $kategoricek['kategori_id']; ?>"><button class="btn btn-primary btn-xs">Düzenle</button></a>
                     </td>
-                    <td>
-                      <center><a href="../netting/islem.php?kategori_id=<?php echo $kategoricek['kategori_id']; ?>&kategorisil=ok"><button class="btn btn-danger btn-xs">Sil</button></a></center>
+                    <td class="text-center">
+                      <a href="../netting/islem.php?kategori_id=<?php echo $kategoricek['kategori_id']; ?>&kategorisil=ok"><button class="btn btn-danger btn-xs">Sil</button></a>
                     </td>
                   </tr>
                 <?php  }

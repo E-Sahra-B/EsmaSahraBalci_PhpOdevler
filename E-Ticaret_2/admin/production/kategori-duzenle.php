@@ -26,7 +26,7 @@ $kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC);
               ?>
             </div>
             <h2>Kategori Düzenleme</h2>
-            <div align="right">
+            <div class="text-right">
               <a href="kategori.php"><button class="btn btn-success btn-xs">Kategori Listesi</button></a>
             </div>
             <div class="clearfix"></div>
@@ -34,6 +34,29 @@ $kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC);
           <div class="x_content">
             <br />
             <form action="../netting/islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+              <div class="form-group"><!-- Ürün Kategori Select   -->
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori Ust Seç<span class="required">*</span></label>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <?php
+                  $kategoriust_id = $kategoricek['kategori_ust'];
+                  $kategoriustsor = $db->prepare("select * from kategori where kategori_ust=:kategori_ust order by kategori_sira");
+                  $kategoriustsor->execute(array(
+                    'kategori_ust' => 0
+                  ));
+                  ?>
+                  <select class="select2_multiple form-control" required="" name="kategoriust_id">
+                    <option value="0">Ust Kategori</option>
+                    <?php
+                    while ($kategoriustcek = $kategoriustsor->fetch(PDO::FETCH_ASSOC)) {
+                      $kategori_id = $kategoriustcek['kategori_id'];
+                    ?>
+                      <option <?php if ($kategori_id == $kategoriust_id) {
+                                echo "selected='select'";
+                              } ?> value="<?php echo $kategoriustcek['kategori_id']; ?>"><?php echo $kategoriustcek['kategori_ad']; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div> <!-- Ürün Kategori Select Bitiş   -->
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori Ad <span class="required">*</span>
                 </label>
