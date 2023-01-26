@@ -1,5 +1,15 @@
 ﻿<?php
 require_once 'header.php';
+$sayfada = 6;
+$sorgu = $db->prepare("select * from kategori");
+$sorgu->execute();
+$toplam_icerik = $sorgu->rowCount();
+$toplam_sayfa = ceil($toplam_icerik / $sayfada);
+$sayfa = isset($_GET['sayfa']) ? (int) $_GET['sayfa'] : 1;
+if ($sayfa < 1) $sayfa = 1;
+if ($sayfa > $toplam_sayfa) $sayfa = $toplam_sayfa;
+$limit = ($sayfa - 1) * $sayfada;
+
 if (isset($_GET['sef'])) {
        $kategorisor = $db->prepare("SELECT * FROM kategori where kategori_seourl=:seourl");
        $kategorisor->execute(array(
@@ -7,16 +17,23 @@ if (isset($_GET['sef'])) {
        ));
        $kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC);
        $kategori_id = $kategoricek['kategori_id'];
-       $urunsor = $db->prepare("SELECT * FROM urun where kategori_id=:kategori_id order by urun_id DESC");
+       //$urunsor = $db->prepare("SELECT * FROM urun where kategori_id=:kategori_id order by urun_id DESC");
+       $urunsor = $db->prepare("SELECT * FROM urun where kategori_id=:kategori_id order by urun_id DESC limit $limit,$sayfada");
        $urunsor->execute(array(
               'kategori_id' => $kategori_id
        ));
        $say = $urunsor->rowCount();
 } else {
-       $urunsor = $db->prepare("SELECT * FROM urun order by urun_id DESC");
+       //$urunsor = $db->prepare("SELECT * FROM urun order by urun_id DESC");
+       $urunsor = $db->prepare("SELECT * FROM urun order by urun_id DESC limit $limit,$sayfada");
        $urunsor->execute();
 }
 ?>
+
+<head>
+       <title><?php echo $kategoricek['kategori_ad'] ?> - Esb-Ticaret</title>
+</head>
+
 <div class="container">
        <div class="clearfix"></div>
        <div class="lines"></div>
@@ -33,7 +50,7 @@ if (isset($_GET['sef'])) {
                      </div>
                      <div class="row prdct"><!--Products-->
                             <?php
-                            if ($say == 0) {
+                            if ($toplam_icerik == 0) {
                                    echo "Bu kategoride ürün bulunamadı";
                             }
                             while ($uruncek = $urunsor->fetch(PDO::FETCH_ASSOC)) {
@@ -76,16 +93,27 @@ if (isset($_GET['sef'])) {
                             <?php } ?>
 
                      </div><!--Products-->
-                     <!-- 
-				<ul class="pagination shop-pag">
-					<li><a href="#"><i class="fa fa-caret-left"></i></a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-				</ul> -->
+                     <div class="text-right" class="col-md-12">
+                            <ul class="pagination shop-pag">
+                                   <!-- <li><a href="#"><i class="fa fa-caret-left"></i></a></li> -->
+                                   <?php
+                                   $s = 0;
+                                   while ($s < $toplam_sayfa) {
+                                          $s++;
+                                          if ($s == $sayfa) { ?>
+                                                 <li class="active">
+                                                        <a href="kategoriler?sayfa=<?php echo $s; ?>"><?php echo $s; ?></a>
+                                                 </li>
+                                          <?php } else { ?>
+                                                 <li>
+                                                        <a href="kategoriler?sayfa=<?php echo $s; ?>"><?php echo $s; ?></a>
+                                                 </li>
+                                   <?php   }
+                                   }
+                                   ?>
+                                   <!-- <li><a href="#"><i class="fa fa-caret-right"></i></a></li> -->
+                            </ul>
+                     </div>
               </div>
               <?php require_once 'sidebar.php' ?>
        </div>
