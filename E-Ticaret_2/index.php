@@ -73,83 +73,8 @@ require_once 'header.php';
 				echo substr($hakkimizdacek['hakkimizda_icerik'], 0, 1000) ?>
 			</p>
 			<a href="hakkimizda" class="btn btn-default btn-info btn-sm">Devamını Oku</a>
-			<div class="title-bg">
-				<div class="title">Lastest Products</div>
-			</div>
-			<div class="row prdct"><!--Products-->
-				<div class="col-md-4">
-					<div class="productwrap">
-						<div class="pr-img">
-							<a href="product.htm"><img src="images\sample-2.jpg" alt="" class="img-responsive"></a>
-							<div class="pricetag on-sale">
-								<div class="inner on-sale"><span class="onsale"><span class="oldprice">$314</span>$199</span></div>
-							</div>
-						</div>
-						<span class="smalltitle"><a href="product.htm">Black Shoes</a></span>
-						<span class="smalldesc">Item no.: 1000</span>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="productwrap">
-						<div class="pr-img">
-							<a href="product.htm"><img src="images\sample-1.jpg" alt="" class="img-responsive"></a>
-							<div class="pricetag">
-								<div class="inner">$199</div>
-							</div>
-						</div>
-						<span class="smalltitle"><a href="product.htm">Nikon Camera</a></span>
-						<span class="smalldesc">Item no.: 1000</span>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="productwrap">
-						<div class="pr-img">
-							<a href="product.htm"><img src="images\sample-3.jpg" alt="" class="img-responsive"></a>
-							<div class="pricetag">
-								<div class="inner">$199</div>
-							</div>
-						</div>
-						<span class="smalltitle"><a href="product.htm">Red T- Shirt</a></span>
-						<span class="smalldesc">Item no.: 1000</span>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="productwrap">
-						<div class="pr-img">
-							<a href="product.htm"><img src="images\sample-1.jpg" alt="" class="img-responsive"></a>
-							<div class="pricetag">
-								<div class="inner">$199</div>
-							</div>
-						</div>
-						<span class="smalltitle"><a href="product.htm">Nikon Camera</a></span>
-						<span class="smalldesc">Item no.: 1000</span>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="productwrap">
-						<div class="pr-img">
-							<a href="product.htm"><img src="images\sample-2.jpg" alt="" class="img-responsive"></a>
-							<div class="pricetag">
-								<div class="inner">$199</div>
-							</div>
-						</div>
-						<span class="smalltitle"><a href="product.htm">Black Shoes</a></span>
-						<span class="smalldesc">Item no.: 1000</span>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="productwrap">
-						<div class="pr-img">
-							<a href="product.htm"><img src="images\sample-3.jpg" alt="" class="img-responsive"></a>
-							<div class="pricetag">
-								<div class="inner">$199</div>
-							</div>
-						</div>
-						<span class="smalltitle"><a href="product.htm">Red T-Shirt</a></span>
-						<span class="smalldesc">Item no.: 1000</span>
-					</div>
-				</div>
-			</div><!--Products-->
+			<!--Products-->
+			<?php require_once 'soneklenenurun.php'; ?>
 			<div class="spacer"></div>
 		</div><!--Main content-->
 		<!-- Siderbar kısmı-->
