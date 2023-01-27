@@ -146,10 +146,6 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                 </ul>
               <?php } ?>
 
-
-
-
-
             </div>
           </div>
         </div>
@@ -192,50 +188,78 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
               </div>
             </div>
             <div class="col-md-2 machart">
-              <button id="popcart" class="btn btn-default btn-chart btn-sm ">
-                <span class="mychart">Alışveriş Sepeti</span>|<span class="allprice">➤</span></button>
-              <div class="popcart">
-                <table class="table table-condensed popcart-inner">
-                  <tbody>
-                    <?php
-                    $kullanici_id = $kullanicicek['kullanici_id'];
-                    $sepetsor = $db->prepare("SELECT * FROM sepet where kullanici_id=:id");
-                    $sepetsor->execute(array(
-                      'id' => $kullanici_id
-                    ));
-                    while ($sepetcek = $sepetsor->fetch(PDO::FETCH_ASSOC)) {
-                      $urun_id = $sepetcek['urun_id'];
-                      $urunsor = $db->prepare("SELECT * FROM urun where urun_id=:urun_id");
-                      $urunsor->execute(array(
-                        'urun_id' => $urun_id
-                      ));
-                      $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
-                      $toplam_fiyat += $uruncek['urun_fiyat'] * $sepetcek['urun_adet'];
-                    ?>
-                      <tr>
-                        <td>
-                          <a href="product.htm"><img src="img\logo-yok.png" alt="" class="img-responsive"></a>
-                        </td>
-                        <td><a href="product.htm"><?php echo $uruncek['urun_ad'] ?></a></td>
-                        <td><?php echo $sepetcek['urun_adet'] ?> Adet</td>
-                        <td><?php echo $uruncek['urun_fiyat'] ?></td>
-                        <td><!--<a href=""><i class="fa fa-times-circle fa-2x"></i></a>--></td>
-                      </tr>
-                    <?php } ?>
-                  </tbody>
-                </table>
-                <br>
-                <div class="btn-popcart">
-                  <a href="sepet" class="btn btn-default btn-info btn-sm">Sepeti Görüntüle</a>
+              <?php
+              $kullanici_id = $kullanicicek['kullanici_id'];
+              $sepetsor = $db->prepare("SELECT * FROM sepet where kullanici_id=:id");
+              $sepetsor->execute(array(
+                'id' => $kullanici_id
+              ));
+              $sepetsay = $sepetsor->rowCount();
+              ?>
+              <button id="popcart" class="btn btn-primary btn-chart btn-sm ">
+                <span class="mychart">Alışveriş Sepeti</span>|<span class="allprice">
+                  <span class="badge"><?= $sepetsay ?></span>
+                </span></button>
+              <?php
+              if ($sepetsay > 0) { ?>
+                <div class="popcart">
+                  <table class="table table-condensed popcart-inner">
+                    <tbody>
+                      <?php
+                      // $kullanici_id = $kullanicicek['kullanici_id'];
+                      // $sepetsor = $db->prepare("SELECT * FROM sepet where kullanici_id=:id");
+                      // $sepetsor->execute(array(
+                      //   'id' => $kullanici_id
+                      // ));
+                      while ($sepetcek = $sepetsor->fetch(PDO::FETCH_ASSOC)) {
+                        $urun_id = $sepetcek['urun_id'];
+                        $urunsor = $db->prepare("SELECT * FROM urun where urun_id=:urun_id");
+                        $urunsor->execute(array(
+                          'urun_id' => $urun_id
+                        ));
+                        $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
+                        $toplam_fiyat += $uruncek['urun_fiyat'] * $sepetcek['urun_adet'];
+                      ?>
+                        <tr>
+                          <td>
+                            <a href="urun-<?= seo($sonuruncek["urun_ad"]) . '-' . $sonuruncek["urun_id"] ?>"><img src="
+                            <?php
+                            $urun_id = $sepetcek['urun_id'];
+                            $urunfotosor = $db->prepare("SELECT * FROM urunfoto where urun_id=:urun_id order by urunfoto_sira ASC limit 1 ");
+                            $urunfotosor->execute(array(
+                              'urun_id' => $urun_id
+                            ));
+                            $urunfotocek = $urunfotosor->fetch(PDO::FETCH_ASSOC);
+                            if (!empty($urunfotocek['urunfoto_resimyol'])) {
+                              echo $urunfotocek['urunfoto_resimyol'];
+                            } else {
+                              echo "img\logo-yok.png";
+                            }
+                            ?>
+                            " alt="" class="img-responsive"></a>
+                          </td>
+                          <td><a href="product.htm"><?php echo $uruncek['urun_ad'] ?></a></td>
+                          <td><?php echo $sepetcek['urun_adet'] ?> Adet</td>
+                          <td class="text-right"><?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.'); ?></td>
+                          <td><!--<a href=""><i class="fa fa-times-circle fa-2x"></i></a>--></td>
+                        </tr>
+                      <?php } ?>
+                    </tbody>
+                  </table>
+                  <br>
+                  <div class="btn-popcart">
+                    <a href="sepet" class="btn btn-default btn-info btn-sm">Sepeti Görüntüle</a>
+                  </div>
+                  <div class="popcart-tot">
+                    <p>
+                      Toplam Tutar<br>
+                      <span><b><?php echo number_format($toplam_fiyat, 2, ',', '.'); ?> TL</b> </span>
+                    </p>
+                  </div>
+                  <div class="clearfix"></div>
                 </div>
-                <div class="popcart-tot">
-                  <p>
-                    Toplam Tutar<br>
-                    <span><?php echo number_format($toplam_fiyat, 2, ',', '.'); ?> TL</span>
-                  </p>
-                </div>
-                <div class="clearfix"></div>
-              </div>
+              <?php }
+              ?>
             </div>
 
           </div>
