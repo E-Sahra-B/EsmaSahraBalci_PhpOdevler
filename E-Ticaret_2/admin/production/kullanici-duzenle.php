@@ -80,7 +80,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
               <input type="hidden" name="kullanici_id" value="<?php echo $kullanicicek['kullanici_id'] ?>">
               <div class="ln_solid"></div>
               <div class="form-group">
-                <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <div class="text-right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <button type="submit" name="kullaniciduzenle" class="btn btn-success">Güncelle</button>
                 </div>
               </div>

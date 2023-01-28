@@ -20,7 +20,7 @@ require_once 'header.php';
               ?>
             </div>
             <h2>Slider Ekleme</h2>
-            <div align="right">
+            <div class="text-right">
               <a href="slider.php"><button class="btn btn-success btn-xs">Slider Listesi</button></a>
             </div>
             <div class="clearfix"></div>
@@ -68,7 +68,7 @@ require_once 'header.php';
               </div>
               <div class="ln_solid"></div>
               <div class="form-group">
-                <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <div class="text-right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <button type="submit" name="sliderkaydet" class="btn btn-success">Kaydet</button>
                 </div>
               </div>

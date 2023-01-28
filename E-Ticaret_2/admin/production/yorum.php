@@ -63,17 +63,16 @@ $yorumsor->execute();
                         $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                         echo $uruncek['urun_ad'];
                         ?></td>
-                    <td>
-                      <center><?php
-                              if ($yorumcek['yorum_onay'] == 0) { ?>
-                          <a href="../netting/islem.php?yorum_id=<?php echo $yorumcek['yorum_id'] ?>&yorum_one=1&yorum_onay=ok"><button class="btn btn-success btn-xs">Onayla</button></a>
-                        <?php } elseif ($yorumcek['yorum_onay'] == 1) { ?>
-                          <a href="../netting/islem.php?yorum_id=<?php echo $yorumcek['yorum_id'] ?>&yorum_one=0&yorum_onay=ok"><button class="btn btn-warning btn-xs">Kaldır</button></a>
-                        <?php } ?>
-                      </center>
+                    <td class="text-center">
+                      <?php
+                      if ($yorumcek['yorum_onay'] == 0) { ?>
+                        <a href="../netting/islem.php?yorum_id=<?php echo $yorumcek['yorum_id'] ?>&yorum_one=1&yorum_onay=ok"><button class="btn btn-success btn-xs">Onayla</button></a>
+                      <?php } elseif ($yorumcek['yorum_onay'] == 1) { ?>
+                        <a href="../netting/islem.php?yorum_id=<?php echo $yorumcek['yorum_id'] ?>&yorum_one=0&yorum_onay=ok"><button class="btn btn-warning btn-xs">Kaldır</button></a>
+                      <?php } ?>
                     </td>
-                    <td>
-                      <center><a href="../netting/islem.php?yorum_id=<?php echo $yorumcek['yorum_id']; ?>&yorumsil=ok"><button class="btn btn-danger btn-xs">Sil</button></a></center>
+                    <td class="text-center">
+                      <a href="../netting/islem.php?yorum_id=<?php echo $yorumcek['yorum_id']; ?>&yorumsil=ok"><button class="btn btn-danger btn-xs">Sil</button></a>
                     </td>
                   </tr>
                 <?php  }

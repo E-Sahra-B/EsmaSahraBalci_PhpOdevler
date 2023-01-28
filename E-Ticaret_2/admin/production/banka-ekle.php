@@ -65,7 +65,7 @@ require_once 'header.php';
               <input type="hidden" name="banka_id" value="<?php echo $bankacek['banka_id'] ?>">
               <div class="ln_solid"></div>
               <div class="form-group">
-                <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <div class="text-right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <button type="submit" name="bankaekle" class="btn btn-success">Kaydet</button>
                 </div>
               </div>

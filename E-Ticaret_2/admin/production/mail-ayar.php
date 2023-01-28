@@ -68,7 +68,7 @@ error_reporting(0);
                   <input type="text" id="first-name" placeholder="Smtp portunu giriniz..." name="ayar_smtpport" value="<?php echo $ayarcek['ayar_smtpport']; ?>" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
-              <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+              <div class="text-right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                 <button type="submit" name="mailayarkaydet" class="btn btn-success">Güncelle</button>
               </div>
             </form>

@@ -23,8 +23,8 @@ $urunsor->execute();
             </div>
             <h2>Ürün Listeleme</h2>
             <div class="clearfix"></div>
-            <div class="right">
-              <a href="urun-ekle.php"><button class="btn btn-success btn-xs"> Yeni Ekle</button></a>
+            <div class="text-right">
+              <a href="urun-ekle.php"><button class="btn btn-success btn-xs"><i class="fa fa-folder"></i> Yeni Ekle</button></a>
             </div>
           </div>
           <div class="x_content">
@@ -63,7 +63,7 @@ $urunsor->execute();
                     <td><?php echo $uruncek['urun_stok'] ?></td>
                     <td><?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.') ?></td>
                     <td class="text-center">
-                      <a href="urun-galeri.php?urun_id=<?php echo $uruncek['urun_id'] ?>"><button class="btn btn-info btn-xs">Resim İşlemleri</button></a>
+                      <a href="urun-galeri.php?urun_id=<?php echo $uruncek['urun_id'] ?>"><button class="btn btn-info btn-xs"><i class="fa fa-camera"></i> Resim İşlemleri</button></a>
                     </td>
                     <td class="text-center">
                       <?php
@@ -75,17 +75,17 @@ $urunsor->execute();
                     </td>
                     <td class="text-center">
                       <?php
-                      if ($uruncek['urun_durum'] == 1) { ?>
-                        <button class="btn btn-success btn-xs">Aktif</button>
-                      <?php } else { ?>
-                        <button class="btn btn-secondary btn-xs">Pasif</button>
+                      if ($uruncek['urun_durum'] == 0) { ?>
+                        <a href="../netting/islem.php?urun_id=<?php echo $uruncek['urun_id'] ?>&durumdegis=1&urunaktifpasif=ok"><button class="btn btn-secondary btn-xs">Aktif Yap</button></a>
+                      <?php } elseif ($uruncek['urun_durum'] == 1) { ?>
+                        <a href="../netting/islem.php?urun_id=<?php echo $uruncek['urun_id'] ?>&durumdegis=0&urunaktifpasif=ok"><button class="btn btn-success btn-xs">Pasif Yap</button></a>
                       <?php } ?>
                     </td>
                     <td class="text-center">
-                      <a href="urun-duzenle.php?urun_id=<?php echo $uruncek['urun_id']; ?>"><button class="btn btn-primary btn-xs">Düzenle</button></a>
+                      <a href="urun-duzenle.php?urun_id=<?php echo $uruncek['urun_id']; ?>"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Düzenle</button></a>
                     </td>
                     <td class="text-center">
-                      <a href="../netting/islem.php?urun_id=<?php echo $uruncek['urun_id']; ?>&urunsil=ok"><button class="btn btn-danger btn-xs">Sil</button></a>
+                      <a href="../netting/islem.php?urun_id=<?php echo $uruncek['urun_id']; ?>&urunsil=ok"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Sil</button></a>
                     </td>
                   </tr>
                 <?php  }

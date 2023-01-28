@@ -25,7 +25,7 @@ $menucek = $menusor->fetch(PDO::FETCH_ASSOC);
               ?>
             </div>
             <h2>Menü Düzenleme</h2>
-            <div align="right">
+            <div class="text-right">
               <a href="menu.php"><button class="btn btn-success btn-xs">Menü Listesi</button></a>
             </div>
             <div class="clearfix"></div>
@@ -94,7 +94,7 @@ $menucek = $menusor->fetch(PDO::FETCH_ASSOC);
               <input type="hidden" name="menu_id" value="<?php echo $menucek['menu_id'] ?>">
               <div class="ln_solid"></div>
               <div class="form-group">
-                <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <div class="text-right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <button type="submit" name="menuduzenle" class="btn btn-success">Güncelle</button>
                 </div>
               </div>

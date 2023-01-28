@@ -25,7 +25,7 @@ $slidercek = $slidersor->fetch(PDO::FETCH_ASSOC);
               ?>
             </div>
             <h2>Slider Düzenleme</h2>
-            <div align="right">
+            <div class="text-right">
               <a href="slider.php"><button class="btn btn-success btn-xs">Slider Listesi</button></a>
             </div>
             <div class="clearfix"></div>
@@ -82,7 +82,7 @@ $slidercek = $slidersor->fetch(PDO::FETCH_ASSOC);
               <input type="hidden" name="slider_resimyol" value="<?php echo $slidercek['slider_resimyol'] ?>">
               <div class="ln_solid"></div>
               <div class="form-group">
-                <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <div class="text-right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <button type="submit" name="sliderduzenle" class="btn btn-success">Güncelle</button>
                 </div>
               </div>

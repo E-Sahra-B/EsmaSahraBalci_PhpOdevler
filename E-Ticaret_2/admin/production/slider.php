@@ -23,7 +23,7 @@ $slidersor->execute();
             </div>
             <h2>Slider Listeleme</h2>
             <div class="clearfix"></div>
-            <div align="right">
+            <div class="text-right">
               <a href="slider-ekle.php"><button class="btn btn-success btn-xs"> Yeni Ekle</button></a>
             </div>
           </div>
@@ -53,20 +53,19 @@ $slidersor->execute();
                     <td><?php echo $slidercek['slider_ad'] ?></td>
                     <td><?php echo $slidercek['slider_url'] ?></td>
                     <td><?php echo $slidercek['slider_sira'] ?></td>
-                    <td>
-                      <center><?php
-                              if ($slidercek['slider_durum'] == 1) { ?>
-                          <button class="btn btn-success btn-xs">Aktif</button>
-                        <?php } else { ?>
-                          <button class="btn btn-secondary btn-xs">Pasif</button>
-                        <?php } ?>
-                      </center>
+                    <td class="text-center">
+                      <?php
+                      if ($slidercek['slider_durum'] == 1) { ?>
+                        <button class="btn btn-success btn-xs">Aktif</button>
+                      <?php } else { ?>
+                        <button class="btn btn-secondary btn-xs">Pasif</button>
+                      <?php } ?>
                     </td>
-                    <td>
-                      <center><a href="slider-duzenle.php?slider_id=<?php echo $slidercek['slider_id']; ?>"><button class="btn btn-primary btn-xs">Düzenle</button></a></center>
+                    <td class="text-center">
+                      <a href="slider-duzenle.php?slider_id=<?php echo $slidercek['slider_id']; ?>"><button class="btn btn-primary btn-xs">Düzenle</button></a>
                     </td>
-                    <td>
-                      <center><a href="../netting/islem.php?slider_id=<?php echo $slidercek['slider_id']; ?>&slidersil=ok&slider_resimyol=<?php echo $slidercek['slider_resimyol'] ?>"><button class="btn btn-danger btn-xs">Sil</button></a></center>
+                    <td class="text-center">
+                      <a href="../netting/islem.php?slider_id=<?php echo $slidercek['slider_id']; ?>&slidersil=ok&slider_resimyol=<?php echo $slidercek['slider_resimyol'] ?>"><button class="btn btn-danger btn-xs">Sil</button></a>
                     </td>
                   </tr>
                 <?php  }

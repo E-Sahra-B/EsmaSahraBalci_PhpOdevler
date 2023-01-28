@@ -61,7 +61,7 @@ error_reporting(0);
                 </div>
               </div>
               <input type="hidden" name="eski_yol" value="<?php echo $ayarcek['ayar_logo']; ?>">
-              <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+              <div class="text-right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                 <button type="submit" name="logoduzenle" class="btn btn-success">Logo Güncelle</button>
               </div>
             </form>
@@ -97,7 +97,7 @@ error_reporting(0);
               </div>
               <div class="ln_solid"></div>
               <div class="form-group">
-                <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <div class="text-right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <button type="submit" name="genelayarkaydet" class="btn btn-success">Güncelle</button>
                 </div>
               </div>

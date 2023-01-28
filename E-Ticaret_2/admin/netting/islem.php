@@ -1001,3 +1001,17 @@ if (isset($_POST['mailayarkaydet'])) {
 		Header("Location:../production/mail-ayar.php?durum=no");
 	}
 }
+
+if (isset($_GET['urunaktifpasif']) == "ok") {
+	$aktifPasif = $db->prepare("UPDATE urun SET
+		urun_durum=:urun_durum
+		WHERE urun_id={$_GET['urun_id']}");
+	$degistir = $aktifPasif->execute(array(
+		'urun_durum' => $_GET['durumdegis']
+	));
+	if ($degistir) {
+		Header("Location:../production/urun.php?durum=ok");
+	} else {
+		Header("Location:../production/urun.php?durum=no");
+	}
+}

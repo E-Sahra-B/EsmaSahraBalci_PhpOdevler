@@ -53,9 +53,9 @@ $kullanicisor->execute(['yetki' => 1]);
                     <td class="text-center">
                       <?php
                       if ($kullanicicek['kullanici_durum'] == 0) { ?>
-                        <a href="../netting/islem.php?kullanici_id=<?php echo $kullanicicek['kullanici_id'] ?>&durumdegis=1&aktifpasif=ok"><button class="btn btn-secondary btn-xs">Aktif Yap</button></a>
+                        <a href="../netting/islem.php?kullanici_id=<?php echo $kullanicicek['kullanici_id'] ?>&durumdegis=1&urunaktifpasif=ok"><button class="btn btn-secondary btn-xs">Aktif Yap</button></a>
                       <?php } elseif ($kullanicicek['kullanici_durum'] == 1) { ?>
-                        <a href="../netting/islem.php?kullanici_id=<?php echo $kullanicicek['kullanici_id'] ?>&durumdegis=0&aktifpasif=ok"><button class="btn btn-success btn-xs">Pasif Yap</button></a>
+                        <a href="../netting/islem.php?kullanici_id=<?php echo $kullanicicek['kullanici_id'] ?>&durumdegis=0&urunaktifpasif=ok"><button class="btn btn-success btn-xs">Pasif Yap</button></a>
                       <?php } ?>
                     </td>
                     <td class="text-center">
