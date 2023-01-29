@@ -11,6 +11,22 @@ require_once 'header.php';
           <div class="x_content">
             <div class="row top_tiles">
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <?php
+                $sehir = "İstanbul";
+                $apiKey = "387fdb4c7c24686fc26d09791f00bd89";
+                $url = "https://api.openweathermap.org/data/2.5/weather?q=$sehir&lang=tr&units=metric&appid=$apiKey";
+                $link = json_decode(file_get_contents($url));
+                $derece = round($link->main->temp);
+                $havaDurumu = ucwords($link->weather[0]->description);
+                ?>
+                <div class="tile-stats">
+                  <div class="icon"><i style="color:#1abb9c;" class="fa fa-cloud"></i></div>
+                  <div style="color:#1abb9c;" class="count"><?= $derece . ' C °'; ?></div>
+                  <h3><?= $havaDurumu; ?></h3>
+                  <p>İstanbul Hava Durumu</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i style="color:#1abb9c;" class="fa fa-turkish-lira"></i></div>
                   <div style="color:#1abb9c;" class="count">1.234,67</div>
@@ -34,15 +50,6 @@ require_once 'header.php';
                   <p>Lorem ipsum psdea itgum rixt.</p>
                 </div>
               </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i style="color:#1abb9c;" class="fa fa-comments-o"></i></div>
-                  <div style="color:#1abb9c;" class="count">1.234</div>
-                  <h3>Günlük Ziyaretci</h3>
-                  <p>Lorem ipsum psdea itgum rixt.</p>
-                </div>
-              </div>
-
 
             </div>
             <div class="row">
