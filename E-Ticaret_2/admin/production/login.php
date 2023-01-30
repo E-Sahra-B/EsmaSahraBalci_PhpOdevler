@@ -54,7 +54,7 @@
               <div class="clearfix"></div>
               <br />
               <div>
-                <h1><i class="fa fa-paw"></i> E ticaret</h1>
+                <h1><a href="../../index.php"><i class="fa fa-paw"></a></i>Esb-Ticaret</h1>
                 <p>©2023 Esma Sahra Balcı</p>
               </div>
             </div>

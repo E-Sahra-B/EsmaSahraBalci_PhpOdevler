@@ -12,7 +12,7 @@
 						<p>
 							Lorem ipsum, dolor sit amet consectetur adipisicing elit. In veritatis amet laudantium earum, id deserunt doloribus neque reiciendis. Quisquam, quo.
 						</p>
-						<button class="btn btn-default btn-info btn-lg">Sepete Git</button>
+						<a href="sepet" class="btn btn-default btn-info btn-lg"> Sepete Git</a>
 					</div>
 					<div class="inner">
 						<div class="pro-pricetag big-deal">

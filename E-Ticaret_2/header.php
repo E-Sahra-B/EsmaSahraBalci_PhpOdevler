@@ -222,7 +222,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                       ?>
                         <tr>
                           <td>
-                            <a href="urun-<?= seo($sonuruncek["urun_ad"]) . '-' . $sonuruncek["urun_id"] ?>"><img src="
+                            <a href="urun-<?= seo($uruncek["urun_ad"]) . '-' . $uruncek["urun_id"] ?>"><img src="
                             <?php
                             $urun_id = $sepetcek['urun_id'];
                             $urunfotosor = $db->prepare("SELECT * FROM urunfoto where urun_id=:urun_id order by urunfoto_sira ASC limit 1 ");
