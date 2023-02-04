@@ -6,7 +6,8 @@ if (isset($_POST['arama'])) {
 	$urunsor->execute(array("%$aranan%"));
 	$say = $urunsor->rowCount();
 } else {
-	Header("Location:index.php?durum=bos");
+	$urunsor = $db->prepare("SELECT * FROM urun");
+	$urunsor->execute();
 }
 ?>
 <div class="container">
