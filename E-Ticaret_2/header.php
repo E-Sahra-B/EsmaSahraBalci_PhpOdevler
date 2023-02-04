@@ -107,7 +107,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                 <div class="srchwrap">
                   <div class="row">
                     <div class="col-md-12">
-                      <form action="arama" method="POST" class="form-horizontal" role="form">
+                      <form action="urunler" method="POST" class="form-horizontal" role="form">
                         <div class="form-group">
                           <div class="col-sm-10">
                             <input type="text" name="aranan" minlength="3" class="form-control" id="search">

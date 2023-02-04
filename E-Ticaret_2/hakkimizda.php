@@ -27,14 +27,14 @@ $hakkimizdacek = $hakkimizdasor->fetch(PDO::FETCH_ASSOC);
 				<div class="title">Tanıtım Videosu</div>
 			</div>
 			<iframe width="660" height="415" src="https://www.youtube.com/embed/<?php echo $hakkimizdacek['hakkimizda_video'] ?>" frameborder="0" allowfullscreen></iframe>
-			<div class="title-bg">
+			<!-- <div class="title-bg">
 				<div class="title">Misyon</div>
 			</div>
 			<blockquote><?php echo $hakkimizdacek['hakkimizda_misyon']; ?></blockquote>
 			<div class="title-bg">
 				<div class="title">Vizyon</div>
 			</div>
-			<blockquote><?php echo $hakkimizdacek['hakkimizda_vizyon']; ?></blockquote>
+			<blockquote><?php echo $hakkimizdacek['hakkimizda_vizyon']; ?></blockquote> -->
 			<div class="title-bg">
 				<div class="title"><?php echo $hakkimizdacek['hakkimizda_baslik']; ?></div>
 			</div>

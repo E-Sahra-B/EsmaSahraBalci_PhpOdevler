@@ -79,7 +79,7 @@
 								<input type="hidden" name="urun_id" value="<?php echo $sepetcek['urun_id'] ?>">
 							</form>
 						</td>
-						<td style="vertical-align: middle;"><?php echo $uruncek['urun_fiyat'] ?></td>
+						<td style="vertical-align: middle;"><?php echo number_format(($uruncek['urun_fiyat']), '2', ',', '.') ?></td>
 					</tr>
 				<?php } ?>
 			</tbody>

@@ -186,14 +186,27 @@ if ($say == 0) {
 							<div class="pr-img">
 								<div class="hot"></div>
 								<a href="urun-<?= seo($urunaltcek["urun_ad"]) . '-' . $urunaltcek["urun_id"] ?>">
-									<img src="img/logo-yok.png" alt="" class="img-responsive"></a>
+									<img src="
+									<?php
+									$urun_id = $uruncek['urun_id'];
+									$urunfotosor = $db->prepare(" SELECT * FROM urunfoto where urun_id=:urun_id order by urunfoto_sira ASC limit 1 ");
+									$urunfotosor->execute(array(
+										'urun_id' => $urun_id
+									));
+									$urunfotocek = $urunfotosor->fetch(PDO::FETCH_ASSOC);
+									if (!empty($urunfotocek['urunfoto_resimyol'])) {
+										echo $urunfotocek['urunfoto_resimyol'];
+									} else {
+										echo " img\logo-yok.png";
+									} ?>
+									" alt="" class="img-responsive"></a>
 								<div class="pricetag on-sale">
 									<div class="inner on-sale">
 										<span class="onsale">
 											<span class="oldprice">
-												<?php echo number_format(($urunaltcek['urun_fiyat'] * 1.50), 2, ',', '.')  ?> ₺
+												<?php echo number_format(($urunaltcek['urun_fiyat'] * 1.50), 2, ',', '.')  ?>
 											</span>
-											<?php echo number_format($urunaltcek['urun_fiyat'], 2, ',', '.'); ?> ₺
+											<?php echo number_format($urunaltcek['urun_fiyat'], 2, ',', '.'); ?>
 										</span>
 									</div>
 								</div>

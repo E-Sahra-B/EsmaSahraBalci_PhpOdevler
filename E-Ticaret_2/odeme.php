@@ -58,7 +58,7 @@
 							<td style="vertical-align: middle;"><?php echo $uruncek['urun_ad'] ?></td>
 							<td style="vertical-align: middle;"><?php echo $uruncek['urun_id'] ?></td>
 							<td style="vertical-align: middle;"><?php echo $sepetcek['urun_adet'] ?></td>
-							<td style="vertical-align: middle;"><?php echo $uruncek['urun_fiyat'] ?></td>
+							<td style="vertical-align: middle;"><?php echo number_format($uruncek['urun_fiyat'], "2", ",", ".") ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>

@@ -15,7 +15,10 @@ $urunsor->execute();
             <div>
               <?php
               if ($_GET['sil'] == "ok") { ?>
-                <div class="alert alert-success">İşlem Başarılı</div>
+                <div class="alert alert-success alert-dismissible">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  Ürün Silme İşlemi Başarılı.
+                </div>
               <?php } elseif ($_GET['sil'] == "no") { ?>
                 <div class="alert alert-danger">İşlem Başarısız</div>
               <?php }
@@ -33,8 +36,8 @@ $urunsor->execute();
                 <tr>
                   <th>Ürün Ad</th>
                   <th>Kategori Id</th>
-                  <th>Ürün Stok</th>
-                  <th>Ürün Fiyat</th>
+                  <th class="text-right">Ürün Stok</th>
+                  <th class="text-right">Ürün Fiyat</th>
                   <th>Resim İşlemleri</th>
                   <th>Öne Çıkar</th>
                   <th>Durum</th>
@@ -60,8 +63,8 @@ $urunsor->execute();
                       ?>
                       <!-- Kategori Id'ye Göre Kategori Ad Getirme Bitiş -->
                     </td>
-                    <td><?php echo $uruncek['urun_stok'] ?></td>
-                    <td><?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.') ?></td>
+                    <td class="text-center"><?php echo $uruncek['urun_stok'] ?></td>
+                    <td class="text-right"><?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.') ?></td>
                     <td class="text-center">
                       <a href="urun-galeri.php?urun_id=<?php echo $uruncek['urun_id'] ?>"><button class="btn btn-info btn-xs"><i class="fa fa-camera"></i> Resim İşlemleri</button></a>
                     </td>
