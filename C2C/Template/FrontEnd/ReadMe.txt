@@ -1,0 +1,1 @@
+Ücretli bir template öğrenim haricinde kullanmayınız.
