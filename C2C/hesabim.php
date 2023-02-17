@@ -54,7 +54,6 @@
                                         <input class="form-control" name="kullanici_gsm" value="<?php echo $kullanicicek['kullanici_gsm'] ?>" id="last-name" type="text">
                                     </div>
                                 </div>
-                                <input class="form-control" name="kullanici_id" value="<?php echo $kullanicicek['kullanici_id'] ?>" id="company-name" type="hidden">
                                 <div class="form-group">
                                     <div class="text-right col-sm-12">
                                         <button class="update-btn" name="musteribilgiguncelle" id="login-update">Bilgileri Güncelle</button>

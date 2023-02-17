@@ -17,6 +17,9 @@ if (isset($_SESSION['userkullanici_mail'])) {
     ));
     $say = $kullanicisor->rowCount();
     $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+    if (!isset($_SESSION['userkullanici_id'])) {
+        $_SESSION['userkullanici_id'] = $kullanicicek['kullanici_id'];
+    }
 }
 ?>
 <!doctype html>

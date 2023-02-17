@@ -68,12 +68,11 @@ if (isset($_POST['musterigiris'])) {
 }
 
 if (isset($_POST['musteribilgiguncelle'])) {
-    $kullanici_id = $_POST['kullanici_id'];
     $kullaniciguncelle = $db->prepare("UPDATE kullanici SET
 		kullanici_ad=:kullanici_ad,
 		kullanici_soyad=:kullanici_soyad,
 		kullanici_gsm=:kullanici_gsm
-		WHERE kullanici_id={$_POST['kullanici_id']}");
+		WHERE kullanici_id={$_SESSION['userkullanici_id']}");
     $update = $kullaniciguncelle->execute(array(
         'kullanici_ad' => htmlspecialchars($_POST['kullanici_ad']),
         'kullanici_soyad' => htmlspecialchars($_POST['kullanici_soyad']),
