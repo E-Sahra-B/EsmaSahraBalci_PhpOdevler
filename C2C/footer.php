@@ -93,6 +93,8 @@
 <script src="js\jquery.meanmenu.min.js" type="text/javascript"></script>
 <!-- Srollup js -->
 <script src="js\jquery.scrollUp.min.js" type="text/javascript"></script>
+<!-- Select2 Js -->
+<script src="js\select2.min.js" type="text/javascript"></script>
 <!-- jquery.counterup js -->
 <script src="js\jquery.counterup.min.js"></script>
 <script src="js\waypoints.min.js"></script>

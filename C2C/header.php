@@ -81,6 +81,9 @@ if (isset($_SESSION['userkullanici_mail'])) {
     <!-- Modernizr Js -->
     <script src="js\modernizr-2.8.3.min.js"></script>
 
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="css\select2.min.css">
+
 </head>
 
 <body>
