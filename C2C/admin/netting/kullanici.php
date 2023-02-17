@@ -112,3 +112,41 @@ if (isset($_POST['musteriadresguncelle'])) {
         Header("Location:../../adres-bilgileri?durum=hata");
     }
 }
+
+if (isset($_POST['musterisifreguncelle'])) {
+    $kullanici_eskipassword = htmlspecialchars($_POST['kullanici_eskipassword']);
+    $kullanici_passwordone = htmlspecialchars($_POST['kullanici_passwordone']);
+    $kullanici_passwordtwo = htmlspecialchars($_POST['kullanici_passwordtwo']);
+    $kullanici_password = sha1(md5($kullanici_eskipassword));
+    $kullanicisor = $db->prepare("SELECT * from kullanici where kullanici_password=:password");
+    $kullanicisor->execute(array(
+        'password' => $kullanici_password
+    ));
+    $say = $kullanicisor->rowCount();
+    if ($say == 0) {
+        Header("Location:../../sifre-guncelle?durum=eskisifrehata");
+        exit;
+    }
+    if ($kullanici_passwordone == $kullanici_passwordtwo) {
+        if (strlen($kullanici_passwordone) >= 6) {
+            $sifre = sha1(md5($kullanici_passwordone));
+            $kullaniciguncelle = $db->prepare("UPDATE kullanici SET
+				kullanici_password=:kullanici_password
+				WHERE kullanici_id={$_SESSION['userkullanici_id']}");
+            $update = $kullaniciguncelle->execute(array(
+                'kullanici_password' => $sifre
+            ));
+            if ($update) {
+                Header("Location:../../sifre-guncelle?durum=ok");
+            } else {
+                Header("Location:../../sifre-guncelle?durum=hata");
+            }
+        } else {
+            Header("Location:../../sifre-guncelle?durum=eksiksifre");
+            exit;
+        }
+    } else {
+        Header("Location:../../sifre-guncelle?durum=sifreleruyusmuyor");
+        exit;
+    }
+}
