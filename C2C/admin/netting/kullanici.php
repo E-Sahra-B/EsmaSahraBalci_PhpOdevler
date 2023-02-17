@@ -84,3 +84,31 @@ if (isset($_POST['musteribilgiguncelle'])) {
         Header("Location:../../hesabim?durum=hata");
     }
 }
+
+if (isset($_POST['musteriadresguncelle'])) {
+    $kullaniciguncelle = $db->prepare("UPDATE kullanici SET
+		kullanici_tip=:kullanici_tip,
+		kullanici_tc=:kullanici_tc,
+		kullanici_unvan=:kullanici_unvan,
+		kullanici_vdaire=:kullanici_vdaire,
+		kullanici_vno=:kullanici_vno,
+		kullanici_adres=:kullanici_adres,
+		kullanici_il=:kullanici_il,
+		kullanici_ilce=:kullanici_ilce
+		WHERE kullanici_id={$_SESSION['userkullanici_id']}");
+    $update = $kullaniciguncelle->execute(array(
+        'kullanici_tip' => htmlspecialchars($_POST['kullanici_tip']),
+        'kullanici_tc' => htmlspecialchars($_POST['kullanici_tc']),
+        'kullanici_unvan' => htmlspecialchars($_POST['kullanici_unvan']),
+        'kullanici_vdaire' => htmlspecialchars($_POST['kullanici_vdaire']),
+        'kullanici_vno' => htmlspecialchars($_POST['kullanici_vno']),
+        'kullanici_adres' => htmlspecialchars($_POST['kullanici_adres']),
+        'kullanici_il' => htmlspecialchars($_POST['kullanici_il']),
+        'kullanici_ilce' => htmlspecialchars($_POST['kullanici_ilce'])
+    ));
+    if ($update) {
+        Header("Location:../../adres-bilgileri?durum=ok");
+    } else {
+        Header("Location:../../adres-bilgileri?durum=hata");
+    }
+}
