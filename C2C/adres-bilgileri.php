@@ -51,28 +51,32 @@ giriskontrol();
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">T.C</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" name="kullanici_tc" id="first-name" value="<?php echo $kullanicicek['kullanici_tc'] ?>" type="text">
+                                <div id="tc">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">T.C</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="kullanici_tc" id="first-name" value="<?php echo $kullanicicek['kullanici_tc'] ?>" type="text">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Firma Ünvan</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" name="kullanici_unvan" id="first-name" value="<?php echo $kullanicicek['kullanici_unvan'] ?>" type="text">
+                                <div id="kurumsal">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Firma Ünvan</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="kullanici_unvan" id="first-name" value="<?php echo $kullanicicek['kullanici_unvan'] ?>" type="text">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Firma V.Dairesi</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" name="kullanici_vdaire" id="first-name" value="<?php echo $kullanicicek['kullanici_vdaire'] ?>" type="text">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Firma V.Dairesi</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="kullanici_vdaire" id="first-name" value="<?php echo $kullanicicek['kullanici_vdaire'] ?>" type="text">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Firma V.No</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" name="kullanici_vno" id="first-name" value="<?php echo $kullanicicek['kullanici_vno'] ?>" type="text">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Firma V.No</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="kullanici_vno" id="first-name" value="<?php echo $kullanicicek['kullanici_vno'] ?>" type="text">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -108,3 +112,17 @@ giriskontrol();
 </div>
 <!-- Settings Page End Here -->
 <?php require_once 'footer.php'; ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#kullanici_tip").change(function() {
+            var tip = $("#kullanici_tip").val();
+            if (tip == "PERSONAL") {
+                $("#kurumsal").hide();
+                $("#tc").show();
+            } else if (tip == "PRIVATE_COMPANY") {
+                $("#kurumsal").show();
+                $("#tc").hide();
+            }
+        }).change();
+    });
+</script>
