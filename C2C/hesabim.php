@@ -1,4 +1,7 @@
-﻿<?php require_once 'header.php'; ?>
+﻿<?php
+require_once 'header.php';
+giriskontrol();
+?>
 <!-- Header Area End Here -->
 <!-- Inner Page Banner Area Start Here -->
 <div class="pagination-area bg-secondary">

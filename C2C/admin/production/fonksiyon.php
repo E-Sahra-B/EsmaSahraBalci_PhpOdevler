@@ -1,9 +1,17 @@
-<?php 
+<?php
 ob_start();
 session_start();
-function islemkontrol () {
+function islemkontrol()
+{
     if (empty($_SESSION['kullanici_mail'])) {
         Header("Location:../../?durum=izinsizerisim1");
+        exit;
+    }
+}
+function giriskontrol()
+{
+    if (empty($_SESSION['userkullanici_mail'])) {
+        Header("Location:404.php");
         exit;
     }
 }
