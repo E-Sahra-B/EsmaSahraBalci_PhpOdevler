@@ -107,6 +107,8 @@ if ($kullaniciGeldiMi == 0) {
                                 </li>
                                 <li><a href="menu.php"><i class="fa fa-list"></i> Menüler </a></li>
                                 <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda </a></li>
+                                <li><a href="magazalar.php"><i class="fa fa-truck"></i> Mağazalar</a></li>
+                                <li><a href="magaza-onay.php"><i class="fa fa-suitcase"></i> Mağaza Başvuruları </a></li>
                                 <li><a href="kullanici.php"><i class="fa fa-user"></i> Kullanıcılar </a></li>
                                 <li><a href="yorum.php"><i class="fa fa-comments"></i> Yorumlar </a></li>
                                 <li><a href="banka.php"><i class="fa fa-bank"></i> Bankalar </a></li>
