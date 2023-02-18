@@ -131,7 +131,12 @@ if (isset($_POST['kullaniciresimguncelle'])) {
         exit;
     }
     @$tmp_name = $_FILES['kullanici_magazafoto']["tmp_name"];
-    @$name = seo($_FILES['kullanici_magazafoto']["name"]);
+    @$name = $_FILES['kullanici_magazafoto']["name"];
+    include('SimpleImage.php');
+    $image = new SimpleImage();
+    $image->load($tmp_name);
+    $image->resize(128, 128);
+    $image->save($tmp_name);
     $uploads_dir = '../../img/userfoto';
     $uniq = uniqid();
     $refimgyol = substr($uploads_dir, 6) . "/" . $uniq . "." . $ext;
