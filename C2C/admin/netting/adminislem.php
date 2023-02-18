@@ -16,7 +16,7 @@ if (isset($_POST['logoduzenle'])) {
         Header("Location:../production/genel-ayar.php?durum=formathata");
         exit;
     }
-    $uploads_dir = '../../dimg';
+    $uploads_dir = '../../img';
     @$tmp_name = $_FILES['ayar_logo']["tmp_name"];
     @$name = $_FILES['ayar_logo']["name"];
     $benzersizsayi4 = rand(20000, 32000);
@@ -115,5 +115,38 @@ if (isset($_POST['magazaonaykayit'])) {
         Header("Location:../production/magazalar.php?durum=ok");
     } else {
         Header("Location:../production/magazalar.php?durum=no");
+    }
+}
+
+if (isset($_POST['kullaniciresimguncelle'])) {
+    if ($_FILES['kullanici_magazafoto']['size'] > 1048576) {
+        echo "Bu dosya boyutu çok büyük";
+        Header("Location:../../profil-resim-guncelle.php?durum=dosyabuyuk");
+    }
+    $izinli_uzantilar = array('jpg', 'png');
+    $ext = strtolower(substr($_FILES['kullanici_magazafoto']["name"], strpos($_FILES['kullanici_magazafoto']["name"], '.') + 1));
+    if (in_array($ext, $izinli_uzantilar) === false) {
+        echo "Bu uzantı kabul edilmiyor";
+        Header("Location:../../profil-resim-guncelle.php?durum=formathata");
+        exit;
+    }
+    @$tmp_name = $_FILES['kullanici_magazafoto']["tmp_name"];
+    @$name = seo($_FILES['kullanici_magazafoto']["name"]);
+    $uploads_dir = '../../img/userfoto';
+    $uniq = uniqid();
+    $refimgyol = substr($uploads_dir, 6) . "/" . $uniq . "." . $ext;
+    @move_uploaded_file($tmp_name, "$uploads_dir/$uniq.$ext");
+    $duzenle = $db->prepare("UPDATE kullanici SET
+		kullanici_magazafoto=:kullanici_magazafoto
+		WHERE kullanici_id={$_SESSION['userkullanici_id']}");
+    $update = $duzenle->execute(array(
+        'kullanici_magazafoto' => $refimgyol
+    ));
+    if ($update) {
+        $resimsilunlink = $_POST['eski_yol'];
+        unlink("../../$resimsilunlink");
+        Header("Location:../../profil-resim-guncelle.php?durum=ok");
+    } else {
+        Header("Location:../../profil-resim-guncelle.php?durum=hata");
     }
 }

@@ -211,7 +211,7 @@ if (isset($_SESSION['userkullanici_mail'])) {
                                             <div class="user-account-info">
                                                 <div class="user-account-info-controler">
                                                     <div class="user-account-img">
-                                                        <img class="img-responsive" src="img\profile\4.png" alt="profile">
+                                                        <img class="img-responsive" src="<?php echo $kullanicicek['kullanici_magazafoto'] ?>" alt="profile">
                                                     </div>
                                                     <div class="user-account-title">
                                                         <div class="user-account-name"><?php echo $kullanicicek['kullanici_ad'] . " " . substr($kullanicicek['kullanici_soyad'], 0, 1) ?>.</div>

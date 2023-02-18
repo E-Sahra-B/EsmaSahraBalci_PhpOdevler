@@ -8,6 +8,7 @@
         <li><a href="#">Siparişlerim</a></li>
         <li><a href="hesabim">Hesap Bilgilerim</a></li>
         <li><a href="adres-bilgileri">Adres Bilgilerim</a></li>
+        <li><a href="profil-resim-guncelle">Profil Resim Guncelle</a></li>
         <li><a href="sifre-guncelle">Şifre Guncelle</a></li>
     </ul>
     <?php
