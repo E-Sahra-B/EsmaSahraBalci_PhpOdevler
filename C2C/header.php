@@ -84,6 +84,9 @@ if (isset($_SESSION['userkullanici_mail'])) {
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="css\select2.min.css">
 
+    <!-- Ck Editör -->
+    <!-- <script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script> -->
+    <script src="admin/production/ckeditor/ckeditor.js"></script>
 </head>
 
 <body>
