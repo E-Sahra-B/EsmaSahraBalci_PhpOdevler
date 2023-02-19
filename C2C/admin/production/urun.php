@@ -36,9 +36,7 @@ $urunsor->execute();
                 <tr>
                   <th>Ürün Ad</th>
                   <th>Kategori Id</th>
-                  <th class="text-right">Ürün Stok</th>
                   <th class="text-right">Ürün Fiyat</th>
-                  <th>Resim İşlemleri</th>
                   <th>Öne Çıkar</th>
                   <th>Durum</th>
                   <th></th>
@@ -63,11 +61,7 @@ $urunsor->execute();
                       ?>
                       <!-- Kategori Id'ye Göre Kategori Ad Getirme Bitiş -->
                     </td>
-                    <td class="text-center"><?php echo $uruncek['urun_stok'] ?></td>
                     <td class="text-right"><?php echo number_format($uruncek['urun_fiyat'], 2, ',', '.') ?></td>
-                    <td class="text-center">
-                      <a href="urun-galeri.php?urun_id=<?php echo $uruncek['urun_id'] ?>"><button class="btn btn-info btn-xs"><i class="fa fa-camera"></i> Resim İşlemleri</button></a>
-                    </td>
                     <td class="text-center">
                       <?php
                       if ($uruncek['urun_onecikar'] == 0) { ?>
@@ -88,7 +82,7 @@ $urunsor->execute();
                       <a href="urun-duzenle.php?urun_id=<?php echo $uruncek['urun_id']; ?>"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Düzenle</button></a>
                     </td>
                     <td class="text-center">
-                      <a href="../netting/islem.php?urun_id=<?php echo $uruncek['urun_id']; ?>&urunsil=ok"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Sil</button></a>
+                      <a onclick="return confirm('Bu ürünü silmek istiyormusunuz? \nİşlem geri alınamaz...')" href="../netting/islem.php?urun_id=<?php echo $uruncek['urun_id']; ?>&urunsil=ok"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Sil</button></a>
                     </td>
                   </tr>
                 <?php  }
