@@ -283,3 +283,64 @@ if (isset($_GET['magazaurunsil']) == "ok") {
         Header("Location:../../urunlerim.php?durum=hata");
     }
 }
+
+if (isset($_POST['kategoriduzenle'])) {
+    $kategori_id = $_POST['kategori_id'];
+    $kategori_seourl = seo($_POST['kategori_ad']);
+    $kaydet = $db->prepare("UPDATE kategori SET
+		kategori_ad=:ad,
+		kategori_durum=:kategori_durum,	
+		kategori_seourl=:seourl,
+		kategori_onecikar=:kategori_onecikar,
+		kategori_sira=:sira
+		WHERE kategori_id={$_POST['kategori_id']}");
+    $update = $kaydet->execute(array(
+        'ad' => htmlspecialchars($_POST['kategori_ad']),
+        'kategori_durum' => htmlspecialchars($_POST['kategori_durum']),
+        'seourl' => $kategori_seourl,
+        'kategori_onecikar' => htmlspecialchars($_POST['kategori_onecikar']),
+        'sira' => $_POST['kategori_sira']
+    ));
+    if ($update) {
+        Header("Location:../production/kategori-duzenle.php?durum=ok&kategori_id=$kategori_id");
+    } else {
+        Header("Location:../production/kategori-duzenle.php?durum=no&kategori_id=$kategori_id");
+    }
+}
+
+if (isset($_GET['kategori_onecikar']) == "ok") {
+    $duzenle = $db->prepare("UPDATE kategori SET
+		kategori_onecikar=:kategori_onecikar
+		WHERE kategori_id={$_GET['kategori_id']}");
+    $update = $duzenle->execute(array(
+        'kategori_onecikar' => $_GET['kategori_one']
+    ));
+    if ($update) {
+        Header("Location:../production/kategori.php?durum=ok");
+    } else {
+        Header("Location:../production/kategori.php?durum=no");
+    }
+}
+
+if (isset($_POST['kategoriekle'])) {
+    $kategori_seourl = seo($_POST['kategori_ad']);
+    $kaydet = $db->prepare("INSERT INTO kategori SET
+		kategori_ad=:ad,
+		kategori_onecikar=:kategori_onecikar,	
+		kategori_durum=:kategori_durum,	
+		kategori_seourl=:seourl,
+		kategori_sira=:sira
+		");
+    $insert = $kaydet->execute(array(
+        'ad' => $_POST['kategori_ad'],
+        'kategori_onecikar' => $_POST['kategori_onecikar'],
+        'kategori_durum' => $_POST['kategori_durum'],
+        'seourl' => $kategori_seourl,
+        'sira' => $_POST['kategori_sira']
+    ));
+    if ($insert) {
+        Header("Location:../production/kategori-ekle.php?durum=ok");
+    } else {
+        Header("Location:../production/kategori-ekle.php?durum=no");
+    }
+}

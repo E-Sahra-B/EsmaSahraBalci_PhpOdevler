@@ -19,7 +19,7 @@ require_once 'header.php';
               <?php }
               ?>
             </div>
-            <h2>Kategori Düzenleme</h2>
+            <h2>Kategori Ekle</h2>
             <div class="text-right">
               <a href="kategori.php"><button class="btn btn-success btn-xs">Kategori Listesi</button></a>
             </div>
@@ -27,29 +27,7 @@ require_once 'header.php';
           </div>
           <div class="x_content">
             <br />
-            <form action="../netting/islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-              <!-- kategori seçme -->
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Ust Kategori Seç<span class="required">*</span></label>
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                  <?php
-                  $kategoriustsor = $db->prepare("select * from kategori where kategori_ust=:kategori_ust order by kategori_sira");
-                  $kategoriustsor->execute(array(
-                    'kategori_ust' => 0
-                  ));
-                  ?>
-                  <select class="select2_multiple form-control" required="" name="kategoriust_id">
-                    <option value="0">Ust Kategori</option>
-                    <?php
-                    while ($kategoriustcek = $kategoriustsor->fetch(PDO::FETCH_ASSOC)) {
-                      $kategori_id = $kategoriustcek['kategori_id'];
-                    ?>
-                      <option value="<?php echo $kategoriustcek['kategori_id']; ?>"><?php echo $kategoriustcek['kategori_ad']; ?></option>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-              <!-- kategori seçme bitiş -->
+            <form action="../netting/adminislem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori Ad <span class="required">*</span>
                 </label>
@@ -62,6 +40,16 @@ require_once 'header.php';
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <input type="text" id="first-name" name="kategori_sira" placeholder="Sıra giriniz" required="required" class="form-control col-md-7 col-xs-12">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Öne Çıkar<span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select id="heard" class="form-control" name="kategori_onecikar" required>
+                    <option value="1">Evet</option>
+                    <option value="0">Hayır</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">

@@ -34,8 +34,8 @@ $kategorisor->execute();
                 <tr>
                   <th>S.No</th>
                   <th>Kategori Ad</th>
-                  <th>Üst Kategori Ad</th>
                   <th>Kategori Sira</th>
+                  <th>Kategori Öneçıkar</th>
                   <th>Kategori Durum</th>
                   <th></th>
                   <th></th>
@@ -49,17 +49,15 @@ $kategorisor->execute();
                   <tr>
                     <td width="20"><?php echo $say ?></td>
                     <td><?php echo $kategoricek['kategori_ad'] ?></td>
-                    <td>
-                      <?php
-                      $kategoriustsor = $db->prepare("SELECT * FROM kategori where kategori_id=:id");
-                      $kategoriustsor->execute(array(
-                        'id' => $kategoricek['kategori_ust']
-                      ));
-                      $kategoriustcek = $kategoriustsor->fetch(PDO::FETCH_ASSOC);
-                      echo $kategoriustcek['kategori_ad']
-                      ?>
-                    </td>
                     <td><?php echo $kategoricek['kategori_sira'] ?></td>
+                    <td class="text-center">
+                      <?php
+                      if ($kategoricek['kategori_onecikar'] == 0) { ?>
+                        <a href="../netting/adminislem.php?kategori_id=<?php echo $kategoricek['kategori_id'] ?>&kategori_one=1&kategori_onecikar=ok"><button class="btn btn-dark btn-xs">Ön Çıkar</button></a>
+                      <?php } elseif ($kategoricek['kategori_onecikar'] == 1) { ?>
+                        <a href="../netting/adminislem.php?kategori_id=<?php echo $kategoricek['kategori_id'] ?>&kategori_one=0&kategori_onecikar=ok"><button class="btn btn-warning btn-xs">Kaldır</button></a>
+                      <?php } ?>
+                    </td>
                     <td class="text-center">
                       <?php
                       if ($kategoricek['kategori_durum'] == 1) { ?>
