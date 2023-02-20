@@ -1,7 +1,8 @@
-<?php 
+<?php
 ob_start();
 session_start();
-function islemkontrol () {
+function islemkontrol()
+{
     if (empty($_SESSION['kullanici_mail'])) {
         Header("Location:../../?durum=izinsizerisim1");
         exit;
@@ -86,4 +87,37 @@ function seo($str, $options = array())
     $str = mb_substr($str, 0, ($options['limit'] ? $options['limit'] : mb_strlen($str, 'UTF-8')), 'UTF-8');
     $str = trim($str, $options['delimiter']);
     return $options['lowercase'] ? mb_strtolower($str, 'UTF-8') : $str;
+}
+
+function baglan()
+{
+    static $db = false;
+    if ($db === false) {
+        try {
+            $db = new PDO("mysql:host=localhost;dbname=eticaret;charset=utf8", "Sahra", "1234");
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Bağlantı Hatası : " . $e->getMessage() . "<br>";
+        }
+    }
+    return $db;
+}
+
+function toplamKategoriSayisi()
+{
+    $db = baglan();
+    $sorgu = $db->prepare("select * from kategori");
+    $sorgu->execute();
+    return $sorgu->rowCount();
+}
+
+function minMax($deger, $min, $max)
+{
+    if ($deger < $min) {
+        return $min;
+    }
+    if ($deger > $max) {
+        return $max;
+    }
+    return $deger;
 }

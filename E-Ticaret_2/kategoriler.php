@@ -1,13 +1,10 @@
 ﻿<?php
 require_once 'header.php';
-$sayfada = 6;
-$sorgu = $db->prepare("select * from kategori");
-$sorgu->execute();
-$toplam_icerik = $sorgu->rowCount();
+$sayfada = 2;
+$toplam_icerik = toplamKategoriSayisi();
 $toplam_sayfa = ceil($toplam_icerik / $sayfada);
 $sayfa = isset($_GET['sayfa']) ? (int) $_GET['sayfa'] : 1;
-if ($sayfa < 1) $sayfa = 1;
-if ($sayfa > $toplam_sayfa) $sayfa = $toplam_sayfa;
+$sayfa = minMax($sayfa, 1, $toplam_sayfa);
 $limit = ($sayfa - 1) * $sayfada;
 
 if (isset($_GET['sef'])) {
@@ -95,23 +92,22 @@ if (isset($_GET['sef'])) {
                      </div><!--Products-->
                      <div class="text-right" class="col-md-12">
                             <ul class="pagination shop-pag">
-                                   <!-- <li><a href="#"><i class="fa fa-caret-left"></i></a></li> -->
                                    <?php
-                                   $s = 0;
-                                   while ($s < $toplam_sayfa) {
-                                          $s++;
-                                          if ($s == $sayfa) { ?>
-                                                 <li class="active">
-                                                        <a href="kategoriler?sayfa=<?php echo $s; ?>"><?php echo $s; ?></a>
-                                                 </li>
-                                          <?php } else { ?>
-                                                 <li>
-                                                        <a href="kategoriler?sayfa=<?php echo $s; ?>"><?php echo $s; ?></a>
-                                                 </li>
-                                   <?php   }
-                                   }
+                                   if ($sayfa > 1) { ?>
+                                          <li><a href="kategoriler?sayfa=1">İlk</a></li>
+                                          <li><a href="kategoriler?sayfa=<?= $sayfa - 1 ?>"><i class="fa fa-caret-left"></i> Önceki</a></li>
+                                   <?php } ?>
+                                   <?php
+                                   for ($i = 1; $i <= $toplam_sayfa; $i++) {
+                                          $active = ($i == $sayfa) ? 'active' : '';
                                    ?>
-                                   <!-- <li><a href="#"><i class="fa fa-caret-right"></i></a></li> -->
+                                          <li class="<?= $active ?>"><a href="kategoriler?sayfa=<?= $i ?>"><?= $i ?></a></li>
+                                   <?php } ?>
+                                   <?php
+                                   if ($sayfa != $toplam_sayfa) { ?>
+                                          <li><a href="kategoriler?sayfa=<?= $sayfa + 1 ?>">Sonraki <i class="fa fa-caret-right"></i></a></li>
+                                          <li><a href="kategoriler?sayfa=<?= $toplam_sayfa ?>">Son</a></li>
+                                   <?php } ?>
                             </ul>
                      </div>
               </div>
