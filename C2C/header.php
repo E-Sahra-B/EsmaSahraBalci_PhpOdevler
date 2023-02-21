@@ -4,11 +4,7 @@ session_start();
 error_reporting(0);
 require_once 'admin/netting/baglan.php';
 require_once 'admin/production/fonksiyon.php';
-$ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
-$ayarsor->execute(array(
-    'id' => 0
-));
-$ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
+$ayarcek = siteAyar();
 
 if (isset($_SESSION['userkullanici_mail'])) {
     $kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_mail=:mail");

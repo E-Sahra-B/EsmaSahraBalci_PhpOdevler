@@ -95,3 +95,27 @@ function seo($str, $options = array())
     $str = trim($str, $options['delimiter']);
     return $options['lowercase'] ? mb_strtolower($str, 'UTF-8') : $str;
 }
+
+function baglan()
+{
+    static $db = false;
+    if ($db === false) {
+        try {
+            $db = new PDO("mysql:host=localhost;dbname=c2c;charset=utf8", "Sahra", "1234");
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Bağlantı Hatası : " . $e->getMessage() . "<br>";
+        }
+    }
+    return $db;
+}
+
+function siteAyar()
+{
+    $db = baglan();
+    $ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
+    $ayarsor->execute(array(
+        'id' => 0
+    ));
+    return $ayarsor->fetch(PDO::FETCH_ASSOC);
+}
