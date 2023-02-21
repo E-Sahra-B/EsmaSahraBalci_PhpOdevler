@@ -17,29 +17,7 @@ giriskontrol();
         <div class="row settings-wrapper">
             <?php require_once 'hesap-sidebar.php' ?>
             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
-                <?php
-                if ($_GET['durum'] == "hata") { ?>
-                    <div class="alert alert-danger">
-                        <strong>Hata!</strong> İşlem Başarısız
-                    </div>
-                <?php } else if ($_GET['durum'] == "ok") { ?>
-                    <div class="alert alert-success">
-                        <strong>Bilgi!</strong> İşlem Başarılı
-                    </div>
-                <?php } else if ($_GET['durum'] == "eskisifrehata") { ?>
-                    <div class="alert alert-danger">
-                        <strong>Bilgi!</strong> Eski Şifreniz Hatalı
-                    </div>
-                <?php } else if ($_GET['durum'] == "sifreleruyusmuyor") { ?>
-                    <div class="alert alert-danger">
-                        <strong>Bilgi!</strong> Şifreler Uyuşmuyor
-                    </div>
-                <?php } else if ($_GET['durum'] == "eksiksifre") { ?>
-                    <div class="alert alert-danger">
-                        <strong>Bilgi!</strong> Şifreniz En Az 6 Karakter Olmalı!
-                    </div>
-                <?php }
-                ?>
+                <?php require_once 'alert.php'; ?>
                 <form action="admin/netting/kullanici.php" method="POST" class="form-horizontal" id="personal-info-form">
                     <div class="settings-details tab-content">
                         <div class="tab-pane fade active in" id="Personal">
