@@ -5,8 +5,8 @@
 <div class="main-banner2-area">
     <div class="container">
         <div class="main-banner2-wrapper">
-            <h1>Welcome To Foxtar Market Place!</h1>
-            <p>Premium WordPress Themes, Web Templates and Many More ...</p>
+            <h1>C2C Projesine Hoşgeldiniz</h1>
+            <p>Aramak istediğiniz ürünü lütfen giriniz...</p>
             <div class="banner-search-area input-group">
                 <input class="form-control" placeholder="Search Your Keywords . . ." type="text">
                 <span class="input-group-addon">
@@ -27,12 +27,10 @@
     <div class="container-fluid" id="isotope-container">
         <div class="isotope-classes-tab isotop-box-btn-white">
 
-            <a href="#" data-filter="*" class="current">All</a>
-            <a href="#" data-filter=".wordpress">WordPress</a>
-            <a href="#" data-filter=".joomla">Joomla</a>
-            <a href="#" data-filter=".plugins">Plugins</a>
-            <a href="#" data-filter=".component">Component</a>
-            <a href="#" data-filter=".psd">PSD</a>
+            <a href="#" data-filter="*" class="current">Yeni Gelenler</a>
+            <a href="#" data-filter=".wordpress">Öne Çıkanlar</a>
+            <a href="#" data-filter=".joomla">Çok Satanlar</a>
+
         </div>
         <div class="row featuredContainer">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 joomla plugins component">
