@@ -214,7 +214,14 @@
         </div>
         <div class="row featuredContainer">
             <?php
-            $urunsor = $db->prepare("SELECT urun.urun_ad,urun.kategori_id,urun.urun_id,urun.urun_fiyat,urun.urunfoto_resimyol,urun.kullanici_id,urun.urun_durum,urun.urun_onecikar,kategori.kategori_id,kategori.kategori_ad,kullanici.kullanici_id,kullanici.kullanici_ad,kullanici.kullanici_soyad,kullanici.kullanici_magazafoto FROM urun INNER JOIN kategori ON urun.kategori_id=kategori.kategori_id INNER JOIN kullanici ON urun.kullanici_id=kullanici.kullanici_id where urun_onecikar=:onecikar and urun_durum=:durum order by urun_zaman,urun_onecikar DESC limit 8");
+            $urunsor = $db->prepare("SELECT urun.*,kategori.*,kullanici.* 
+            FROM urun 
+            INNER JOIN kategori ON urun.kategori_id=kategori.kategori_id 
+            INNER JOIN kullanici ON urun.kullanici_id=kullanici.kullanici_id 
+            where urun_onecikar=:onecikar and urun_durum=:durum 
+            order by urun_zaman,urun_onecikar 
+            DESC 
+            limit 8");
             $urunsor->execute(array(
                 'onecikar' => 1,
                 'durum' => 1
