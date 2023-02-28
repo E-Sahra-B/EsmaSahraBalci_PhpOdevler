@@ -235,9 +235,9 @@
                         </div>
                         <div class="item-content">
                             <div class="item-info">
-                                <h3><a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>""><?php echo $uruncek['urun_ad'] ?></a></h3>
-                        <span><a href=" kategoriler-<?= seo($uruncek['kategori_ad']) . "-" . $uruncek['kategori_id'] ?>"><?php echo $uruncek['kategori_ad'] ?></a></span>
-                                    <div class="price"><?php echo $uruncek['urun_fiyat'] ?> TL</div>
+                                <h3><a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><?php echo $uruncek['urun_ad'] ?></a></h3>
+                                <span><a href=" kategoriler-<?= seo($uruncek['kategori_ad']) . "-" . $uruncek['kategori_id'] ?>"><?php echo $uruncek['kategori_ad'] ?></a></span>
+                                <div class="price"><?= number_format($uruncek['urun_fiyat'], 2, ",", ".") ?> TL</div>
                             </div>
                             <div class="item-profile">
                                 <div class="profile-title">
