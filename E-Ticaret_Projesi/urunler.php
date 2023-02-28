@@ -70,7 +70,13 @@ if ($tur == "yeni") {
                 if ($sorgu) {
                     foreach ($sorgu as $satir) {
                         $eskifiyat = $satir["fiyat"] * 1.50;
+                        $ortalamaHesapla = $baglan->select('urunler', ['avg(ziyaret)'])->run();
+                        foreach ($ortalamaHesapla as $key => $value) {
+                            $toplamUrunZiyaretOrtalama = $value['avg(ziyaret)'];
+                        }
                         $urunZiyaret = $satir["ziyaret"];
+                        $urunZiyaret = ($urunZiyaret < 1) ? $urunZiyaret = 1 : $urunZiyaret;
+                        $yildiz = ceil($urunZiyaret / $toplamUrunZiyaretOrtalama);
                         echo "<div class='col mb-5'>
                                 <div class='card h-100'>
                                 <div class='badge bg-dark text-white position-absolute' style='top: 0.5rem; right: 0.5rem'>$satir[durum]</div>
@@ -79,20 +85,8 @@ if ($tur == "yeni") {
                                 <div class='text-center'>
                                 <h5 class='fw-bolder'>$satir[baslik]</h5>
                                 <div class='d-flex justify-content-center small text-warning mb-2'>";
-                        if ($urunZiyaret > 5) {
-                            $urunZiyaret = 5;
-                            for ($i = 1; $i <= $urunZiyaret; $i++) {
-                                echo "<div class='bi-star-fill'></div>";
-                            }
-                        } elseif ($urunZiyaret < 1) {
-                            $urunZiyaret = 1;
-                            for ($i = 1; $i <= $urunZiyaret; $i++) {
-                                echo "<div class='bi-star-fill'></div>";
-                            }
-                        } else {
-                            for ($i = 1; $i <= $urunZiyaret; $i++) {
-                                echo "<div class='bi-star-fill'></div>";
-                            }
+                        for ($i = 1; $i <= $yildiz; $i++) {
+                            echo "<div class='bi-star-fill'></div>";
                         }
                         echo "
                                 </div>
