@@ -93,7 +93,7 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                                 <img src="img\profile\avatar.jpg" alt="product" class="img-responsive">
                                 <div class="sidebar-author-content">
                                     <h3><?= $uruncek['kullanici_ad'] . " " . substr($uruncek['kullanici_soyad'], 0, 1) ?>.</h3>
-                                    <a href="#" class="view-profile">Profil Sayfası</a>
+                                    <a href="satici-<?= seo($uruncek['kullanici_ad'] . "-" . $uruncek['kullanici_soyad']) . "-" . $uruncek['kullanici_id'] ?>" class="view-profile">Profil Sayfası</a>
                                 </div>
                             </div>
                             <!-- <ul class="sidebar-badges-item">
