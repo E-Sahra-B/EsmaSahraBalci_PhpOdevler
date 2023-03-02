@@ -248,6 +248,7 @@ if (isset($_SESSION['userkullanici_mail'])) {
                         <nav id="desktop-nav">
                             <ul>
                                 <li class="active"><a href="index">Anasayfa</a></li>
+                                <li><a href="kategoriler">Kategoriler</a></li>
                                 <?php
                                 $kategorisor = $db->prepare("SELECT * FROM kategori where kategori_onecikar=:onecikar order by kategori_sira ASC");
                                 $kategorisor->execute(array(
