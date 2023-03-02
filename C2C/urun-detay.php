@@ -73,7 +73,10 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                                 <hr>
                             </div>
                             <ul class="sidebar-product-btn">
-                                <li><a class="add-to-cart-btn" id="cart-button"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Satın Al</a></li>
+                                <form action="odeme" method="post">
+                                    <input type="hidden" name="urun_id" value="<?= $uruncek['urun_id']; ?>">
+                                    <li><button type="submit" class="add-to-cart-btn" id="cart-button"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Satın Al</button></li>
+                                </form>
                             </ul>
                         </div>
                     </div>
@@ -90,19 +93,19 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                         <div class="sidebar-item-inner">
                             <h3 class="sidebar-item-title">Satıcı</h3>
                             <div class="sidebar-author-info">
-                                <img src="img\profile\avatar.jpg" alt="product" class="img-responsive">
+                                <img style="width: 72px; height: 72px;" src="<?php echo $uruncek['kullanici_magazafoto'] ?>" alt="product" class="img-responsive">
                                 <div class="sidebar-author-content">
                                     <h3><?= $uruncek['kullanici_ad'] . " " . substr($uruncek['kullanici_soyad'], 0, 1) ?>.</h3>
                                     <a href="satici-<?= seo($uruncek['kullanici_ad'] . "-" . $uruncek['kullanici_soyad']) . "-" . $uruncek['kullanici_id'] ?>" class="view-profile">Profil Sayfası</a>
                                 </div>
                             </div>
-                            <!-- <ul class="sidebar-badges-item">
+                            <ul class="sidebar-badges-item">
                                 <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
                                 <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
                                 <li><img src="img\profile\badges3.png" alt="badges" class="img-responsive"></li>
                                 <li><img src="img\profile\badges4.png" alt="badges" class="img-responsive"></li>
                                 <li><img src="img\profile\badges5.png" alt="badges" class="img-responsive"></li>
-                            </ul> -->
+                            </ul>
                         </div>
                     </div>
                 </div>
