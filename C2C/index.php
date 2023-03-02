@@ -7,14 +7,16 @@
         <div class="main-banner2-wrapper">
             <h1>C2C Projesine Hoşgeldiniz</h1>
             <p>Aramak istediğiniz ürünü lütfen giriniz...</p>
-            <div class="banner-search-area input-group">
-                <input class="form-control" placeholder="Search Your Keywords . . ." type="text">
-                <span class="input-group-addon">
-                    <button type="submit">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
-            </div>
+            <form action="arama-detay" method="POST">
+                <div class="banner-search-area input-group">
+                    <input class="form-control" minlength="3" name="searchkeyword" placeholder="aradığınız ürün adını giriniz . . ." type="text">
+                    <span class="input-group-addon">
+                        <button type="submit" name="searchsayfa">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
         </div>
     </div>
 </div>
