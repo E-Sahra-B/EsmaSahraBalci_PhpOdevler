@@ -75,9 +75,9 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                                     <td colspan="2" class="hidden-xs"></td>
                                     <form action="admin/netting/kullanici.php" method="POST">
                                         <input type="hidden" name="kullanici_idsatici" value="<?= $uruncek['kullanici_id'] ?>">
-                                        <td class="hidden-xs text-center"><strong>Toplam <?= number_format($uruncek['urun_fiyat'], 2, ',', '.'); ?></strong></td>
-                                        <input type="hidden" name="urun_id" value="<?= $uruncek['urun_id']  ?>">
-                                        <input type="hidden" name="urun_fiyat" value="<?= $uruncek['urun_fiyat']  ?>">
+                                        <td class="hidden-xs text-center"><strong>Toplam <?= number_format($uruncek['urun_fiyat'], 2, ',', '.') ?></strong></td>
+                                        <input type="hidden" name="urun_id" value="<?= $uruncek['urun_id'] ?>">
+                                        <input type="hidden" name="urun_fiyat" value="<?= $uruncek['urun_fiyat'] ?>">
                                         <td><button name="sipariskaydet" type="submit" class="btn btn-success btn-block">Siparişi Tamamla <i class="fa fa-angle-right"></i></button></td>
                                     </form>
                                 </tr>

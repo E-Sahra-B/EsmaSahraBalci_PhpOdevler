@@ -190,3 +190,36 @@ if (isset($_POST['musterimagazabasvuru'])) {
         Header("Location:../../magaza-basvuru?durum=hata");
     }
 }
+
+if (isset($_POST['sipariskaydet'])) {
+    $kaydet = $db->prepare("INSERT INTO siparis SET
+		kullanici_id=:id,
+		kullanici_idsatici=:idsatici
+		");
+    $insert = $kaydet->execute(array(
+        'id' => htmlspecialchars($_SESSION['userkullanici_id']),
+        'idsatici' => htmlspecialchars($_POST['kullanici_idsatici'])
+    ));
+    if ($insert) {
+        $siparis_id = $db->lastInsertId();
+        $sipariskaydet = $db->prepare("INSERT INTO siparis_detay SET
+			siparis_id=:siparis_id,
+			kullanici_id=:id,
+			kullanici_idsatici=:idsatici,
+			urun_id=:urun_id,
+			urun_fiyat=:urun_fiyat
+			");
+        $insertkaydet = $sipariskaydet->execute(array(
+            'siparis_id' => $siparis_id,
+            'id' => htmlspecialchars($_SESSION['userkullanici_id']),
+            'idsatici' => htmlspecialchars($_POST['kullanici_idsatici']),
+            'urun_id' => htmlspecialchars($_POST['urun_id']),
+            'urun_fiyat' => htmlspecialchars($_POST['urun_fiyat'])
+        ));
+        if ($insertkaydet) {
+            Header("Location:../../siparislerim.php");
+        }
+    } else {
+        Header("Location:../../404.php");
+    }
+}
