@@ -233,11 +233,26 @@ if (isset($_GET['urunonay']) == "ok") {
         siparisdetay_onayzaman=:zaman
 		WHERE siparisdetay_id={$_GET['siparisdetay_id']}");
     $update = $siparis_detayguncelle->execute(array(
-        'siparisdetay_onay' => 1,
+        'siparisdetay_onay' => 2,
         'zaman' => $tarih
     ));
     if ($update) {
         Header("Location:../../siparis-detay.php?siparis_id=$siparis_id");
+    } else {
+        Header("Location:../../404.php");
+    }
+}
+
+if (isset($_GET['urunteslim']) == "ok") {
+    $siparis_id = $_GET['siparis_id'];
+    $siparis_detayguncelle = $db->prepare("UPDATE siparis_detay SET
+		siparisdetay_onay=:siparisdetay_onay
+		WHERE siparisdetay_id={$_GET['siparisdetay_id']}");
+    $update = $siparis_detayguncelle->execute(array(
+        'siparisdetay_onay' => 1
+    ));
+    if ($update) {
+        Header("Location:../../yeni-siparisler.php?siparis_id=$siparis_id");
     } else {
         Header("Location:../../404.php");
     }
