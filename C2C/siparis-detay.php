@@ -50,9 +50,9 @@ giriskontrol();
                   ?>
                     <tr>
                       <th scope="row"><?= $say ?></th>
-                      <td><?= $sipariscek['urun_ad'] ?></td>
+                      <td><?= metinKirp($sipariscek['urun_ad'], 50) ?></td>
                       <td><?= $sipariscek['kullanici_ad'] . " " . $sipariscek['kullanici_soyad'] ?></td>
-                      <td><?= $sipariscek['urun_fiyat'] ?></td>
+                      <td><?= fiyat($sipariscek['urun_fiyat']) ?></td>
                       <td>
                         <?php if ($sipariscek['siparisdetay_onay'] == 1) { ?>
                           <a onclick="return confirm('Ürüne Onay Veriyorsunuz Bu İşlem Geri Alınamaz');" href="admin/netting/kullanici.php?urunonay=ok&siparisdetay_id=<?= $sipariscek['siparisdetay_id'] ?>&siparis_id=<?= $sipariscek['siparis_id'] ?>">

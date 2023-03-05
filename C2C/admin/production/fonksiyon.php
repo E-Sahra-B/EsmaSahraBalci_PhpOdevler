@@ -119,3 +119,18 @@ function siteAyar()
     ));
     return $ayarsor->fetch(PDO::FETCH_ASSOC);
 }
+
+function tarih($tarih)
+{
+    return date("d.m.Y", strtotime($tarih));
+}
+
+function fiyat($fiyat)
+{
+    return number_format($fiyat, 2, ',', '.');
+}
+
+function metinKirp(string $metin, int $sayi, int $baslangic = 0): string
+{
+    return substr($metin, $baslangic, $sayi);
+}

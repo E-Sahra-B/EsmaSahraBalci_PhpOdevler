@@ -41,7 +41,7 @@ giriskontrol();
                                         $say++ ?>
                                         <tr>
                                             <th scope="row"><?= $say ?></th>
-                                            <td><?= date("d-m-Y", strtotime($sipariscek['siparis_zaman'])) ?></td>
+                                            <td><?= tarih($sipariscek['siparis_zaman']) ?></td>
                                             <td><?= $sipariscek['siparis_id'] ?></td>
                                             <td><a href="siparis-detay?siparis_id=<?= $sipariscek['siparis_id'] ?>"><button class="btn btn-primary btn-xs">Detay</button></a></td>
                                         </tr>
