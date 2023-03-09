@@ -134,3 +134,38 @@ function metinKirp(string $metin, int $sayi, int $baslangic = 0): string
 {
     return substr($metin, $baslangic, $sayi);
 }
+
+function post($name)
+{
+    if (isset($_POST[$name]) && !empty($_POST[$name])) {
+        return htmlspecialchars($_POST[$name]);
+    }
+} // $ad=$_POST['ad']; yerine $ad=post('ad');
+
+function kisalt($metin, $baslangic, $limit)
+{
+    if (strlen($metin) > $limit) {
+        return mb_substr($metin, $baslangic, $limit, 'utf-8') . '..';
+    } else {
+        return $metin;
+    }
+}
+
+function go($url, $time = 0)
+{
+    if ($time != 0) {
+        header("Refresh: $time;url=$url");
+    } else {
+        header("Location: $url");
+    }
+}
+
+function comeBack($time = 0)
+{
+    $url = $_SERVER["HTTP_REFERER"];
+    if ($time != 0) {
+        header("Refresh: $time;url=$url");
+    } else {
+        header("Location: $url");
+    }
+}
