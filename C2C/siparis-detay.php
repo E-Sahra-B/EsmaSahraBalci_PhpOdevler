@@ -47,6 +47,7 @@ giriskontrol();
                     $say++;
                     $siparisdetay_onay = $sipariscek['siparisdetay_onay'];
                     $urun_id = $sipariscek['urun_id'];
+                    $siparisdetay_yorum = $sipariscek['siparisdetay_yorum'];
                   ?>
                     <tr>
                       <th scope="row"><?= $say ?></th>
@@ -67,6 +68,43 @@ giriskontrol();
                   <?php } ?>
                 </tbody>
               </table>
+              <?php
+              if ($siparisdetay_onay == 2 && $siparisdetay_yorum == 0) { ?>
+                <form action="admin/netting/kullanici.php" method="POST" class="form-horizontal" id="personal-info-form">
+                  <div class="settings-details tab-content">
+                    <div class="tab-pane fade active in" id="Personal">
+                      <h2 class="title-section">Deneyimine Yorumla ve Puanla</h2>
+                      <div class="personal-info inner-page-padding">
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label">Puanla</label>
+                          <div class="col-sm-9">
+                            <input type="radio" name="yorum_puan" value="1"> 1
+                            <input type="radio" name="yorum_puan" value="2"> 2
+                            <input type="radio" name="yorum_puan" value="3"> 3
+                            <input type="radio" name="yorum_puan" value="4"> 4
+                            <input type="radio" name="yorum_puan" value="5"> 5
+                          </div>
+                        </div>
+                        <input type="hidden" value="<?php echo $urun_id ?>" name="urun_id">
+                        <input type="hidden" value="<?php echo $_GET['siparis_id'] ?>" name="siparis_id">
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label">Yorumunuz</label>
+                          <div class="col-sm-9">
+                            <textarea style="height: 200px;" class="form-control" name="yorum_detay" placeholder="Yorumunuzu Giriniz" required="" type="text"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="text-right col-sm-12">
+                            <button class="update-btn" name="puanyorumekle" id="login-update">Yorum ve Puanı Kaydet</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <?php } else if ($siparisdetay_onay == 2 and $siparisdetay_yorum == 1) { ?>
+                <p>Bu ürün için oylama ve yorum yapılmıştır.</p>
+              <?php } ?>
             </div>
           </div>
         </div>

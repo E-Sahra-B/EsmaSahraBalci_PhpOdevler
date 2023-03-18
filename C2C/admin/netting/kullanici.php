@@ -257,3 +257,30 @@ if (isset($_GET['urunteslim']) == "ok") {
         Header("Location:../../404.php");
     }
 }
+
+if (isset($_POST['puanyorumekle'])) {
+    $kaydet = $db->prepare("INSERT INTO yorumlar SET
+		yorum_puan=:yorum_puan,
+		urun_id=:urun_id,
+		yorum_detay=:yorum_detay,
+		kullanici_id=:kullanici_id
+		");
+    $insert = $kaydet->execute(array(
+        'yorum_puan' => htmlspecialchars($_POST['yorum_puan']),
+        'urun_id' => htmlspecialchars($_POST['urun_id']),
+        'yorum_detay' => htmlspecialchars($_POST['yorum_detay']),
+        'kullanici_id' => $_SESSION['userkullanici_id']
+    ));
+    $siparis_id = $_POST['siparis_id'];
+    if ($insert) {
+        $siparis_detayguncelle = $db->prepare("UPDATE siparis_detay SET
+			siparisdetay_yorum=:siparisdetay_yorum
+			WHERE siparis_id={$_POST['siparis_id']}");
+        $update = $siparis_detayguncelle->execute(array(
+            'siparisdetay_yorum' => 1
+        ));
+        Header("Location:../../siparis-detay?siparis_id=$siparis_id");
+    } else {
+        Header("Location:../../siparis-detay?siparis_id=$siparis_id");
+    }
+}

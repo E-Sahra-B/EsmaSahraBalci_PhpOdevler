@@ -53,7 +53,82 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                                         <p><?= $uruncek['urun_detay'] ?></p>
                                     </div>
                                     <div class="tab-pane fade" id="review">
-                                        <p>Porem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam.</p>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="comments-list">
+                                                        <?php
+                                                        $yorumsor = $db->prepare("SELECT yorumlar.*,kullanici.* 
+                                                        FROM yorumlar 
+                                                        INNER JOIN kullanici ON yorumlar.kullanici_id=kullanici.kullanici_id 
+                                                        where urun_id=:id order by yorum_zaman DESC");
+                                                        $yorumsor->execute(array(
+                                                            'id' => $_GET['urun_id']
+                                                        ));
+                                                        if (!$yorumsor->rowCount()) {
+                                                            echo "Bu ürün için henüz yorum girilmemiştir";
+                                                        }
+                                                        while ($yorumcek = $yorumsor->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                            <div class="media">
+                                                                <div class="media-body">
+                                                                    <h4 class="media-heading user_name"><img style="border-radius: 30px; float: left; margin-right: 10px;" width="32" height="32" class="img-responsive" src="<?php echo $yorumcek['kullanici_magazafoto'] ?>" alt="Profil Resmi"> <?php echo $yorumcek['kullanici_ad'] . " " . $yorumcek['kullanici_soyad'] ?>
+                                                                        <ul class="pull-right default-rating">
+                                                                            <?php
+                                                                            switch ($yorumcek['yorum_puan']) {
+                                                                                case '5': ?>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                <?php
+                                                                                    break;
+                                                                                case '4': ?>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                <?php
+                                                                                    break;
+                                                                                case '3': ?>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                <?php
+                                                                                    break;
+                                                                                case '2': ?>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                <?php
+                                                                                    break;
+                                                                                case '1': ?>
+                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
+                                                                            <?php
+                                                                                    break;
+                                                                            }
+                                                                            ?>
+                                                                            <li>(<span> <?php echo $yorumcek['yorum_puan'] ?></span> )</li>
+                                                                        </ul>
+                                                                    </h4>
+                                                                    <?php echo $yorumcek['yorum_detay'] ?>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
