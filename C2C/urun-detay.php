@@ -74,49 +74,12 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                                                                     <h4 class="media-heading user_name"><img style="border-radius: 30px; float: left; margin-right: 10px;" width="32" height="32" class="img-responsive" src="<?php echo $yorumcek['kullanici_magazafoto'] ?>" alt="Profil Resmi"> <?php echo $yorumcek['kullanici_ad'] . " " . $yorumcek['kullanici_soyad'] ?>
                                                                         <ul class="pull-right default-rating">
                                                                             <?php
-                                                                            switch ($yorumcek['yorum_puan']) {
-                                                                                case '5': ?>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                <?php
-                                                                                    break;
-                                                                                case '4': ?>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                <?php
-                                                                                    break;
-                                                                                case '3': ?>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                <?php
-                                                                                    break;
-                                                                                case '2': ?>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                <?php
-                                                                                    break;
-                                                                                case '1': ?>
-                                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                                    <li><i style="color:grey" class="fa fa-star" aria-hidden="true"></i></li>
-                                                                            <?php
-                                                                                    break;
-                                                                            }
-                                                                            ?>
+                                                                            for ($i = 1; $i <= $yorumcek['yorum_puan']; $i++) { ?>
+                                                                                <li><i class='fa fa-star' aria-hidden='true'></i></li>
+                                                                            <?php }
+                                                                            for ($j = 1; $j <= 5 - ($yorumcek['yorum_puan']); $j++) { ?>
+                                                                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                                                            <?php } ?>
                                                                             <li>(<span> <?php echo $yorumcek['yorum_puan'] ?></span> )</li>
                                                                         </ul>
                                                                     </h4>
