@@ -13,25 +13,45 @@ while ($uruncek = $urunsor->fetch(PDO::FETCH_ASSOC)) {
                     <span><?= $uruncek['kategori_ad'] ?></span>
                 </div>
                 <div class="item-sale-info">
-                    <div class="price"><small><?= number_format($uruncek['urun_fiyat'], 2, ",", ".") ?></small></div>
-                    <div class="sale-qty">Satış ( 0 )</div>
+                    <div class="price"><small><?= fiyat($uruncek['urun_fiyat']) ?></small></div>
+                    <div class="sale-qty">Satış (
+                        <?php
+                        $urunsay = $db->prepare("SELECT COUNT(urun_id) as say FROM siparis_detay where urun_id=:id");
+                        $urunsay->execute(array(
+                            'id' => $uruncek['urun_id']
+                        ));
+                        $urunsaycek = $urunsay->fetch(PDO::FETCH_ASSOC);
+                        echo $urunsaycek['say'];
+                        ?> )</div>
                 </div>
             </div>
             <div class="item-profile">
                 <div class="profile-title">
-                    <div class="img-wrapper"><img src="img\profile\1.jpg" alt="profile" class="img-responsive img-circle"></div>
+                    <div class="img-wrapper"><img src="<?= $uruncek['kullanici_magazafoto'] ?>" alt="profile" class="img-responsive img-circle"></div>
                     <span><?= $uruncek['kullanici_ad'] . " " . substr($uruncek['kullanici_soyad'], 0, 1) ?>.</span>
                 </div>
                 <div class="profile-rating-info">
                     <ul>
                         <li>
+                            <?php
+                            $yorumsor = $db->prepare("SELECT yorumlar.*,kullanici.* 
+                            FROM yorumlar 
+                            INNER JOIN kullanici ON yorumlar.kullanici_id=kullanici.kullanici_id 
+                            where urun_id=:id order by yorum_zaman DESC");
+                            $yorumsor->execute(array(
+                                'id' => $uruncek['urun_id']
+                            ));
+                            $yorumcek = $yorumsor->fetch(PDO::FETCH_ASSOC);
+                            ?>
                             <ul class="profile-rating">
-                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                <li>(<span> 05</span> )</li>
+                                <?php
+                                for ($i = 1; $i <= $yorumcek['yorum_puan']; $i++) { ?>
+                                    <li><i class='fa fa-star' aria-hidden='true'></i></li>
+                                <?php }
+                                for ($j = 1; $j <= 5 - ($yorumcek['yorum_puan']); $j++) { ?>
+                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                <?php } ?>
+                                <li>(<span> <?= $yorumcek['yorum_puan'] ?></span> )</li>
                             </ul>
                         </li>
                         <li><i class="fa fa-comment-o" aria-hidden="true"></i>( 10 )</li>

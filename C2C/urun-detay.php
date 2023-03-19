@@ -71,7 +71,7 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                                                         while ($yorumcek = $yorumsor->fetch(PDO::FETCH_ASSOC)) { ?>
                                                             <div class="media">
                                                                 <div class="media-body">
-                                                                    <h4 class="media-heading user_name"><img style="border-radius: 30px; float: left; margin-right: 10px;" width="32" height="32" class="img-responsive" src="<?php echo $yorumcek['kullanici_magazafoto'] ?>" alt="Profil Resmi"> <?php echo $yorumcek['kullanici_ad'] . " " . $yorumcek['kullanici_soyad'] ?>
+                                                                    <h4 class="media-heading user_name"><img style="border-radius: 30px; float: left; margin-right: 10px;" width="32" height="32" class="img-responsive" src="<?= $yorumcek['kullanici_magazafoto'] ?>" alt="Profil Resmi"> <?= $yorumcek['kullanici_ad'] . " " . $yorumcek['kullanici_soyad'] ?>
                                                                         <ul class="pull-right default-rating">
                                                                             <?php
                                                                             for ($i = 1; $i <= $yorumcek['yorum_puan']; $i++) { ?>
@@ -80,10 +80,10 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                                                                             for ($j = 1; $j <= 5 - ($yorumcek['yorum_puan']); $j++) { ?>
                                                                                 <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
                                                                             <?php } ?>
-                                                                            <li>(<span> <?php echo $yorumcek['yorum_puan'] ?></span> )</li>
+                                                                            <li>(<span> <?= $yorumcek['yorum_puan'] ?></span> )</li>
                                                                         </ul>
                                                                     </h4>
-                                                                    <?php echo $yorumcek['yorum_detay'] ?>
+                                                                    <?= $yorumcek['yorum_detay'] ?>
                                                                 </div>
                                                             </div>
                                                             <hr>
@@ -107,7 +107,7 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                                 <p class="text-center">Ürün Fiyatı</p>
                             </h3>
                             <div class="text-center">
-                                <b style="font-size:30px;"><?= number_format($uruncek['urun_fiyat'], 2, ",", ".") ?><span style="font-size:12px;"> TL</span></b>
+                                <b style="font-size:30px;"><?= fiyat($uruncek['urun_fiyat']) ?><span style="font-size:12px;"> TL</span></b>
                                 <hr>
                             </div>
                             <ul class="sidebar-product-btn">
@@ -126,7 +126,16 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                         <div class="sidebar-item-inner">
                             <ul class="sidebar-sale-info">
                                 <li><i class="fa fa-shopping-cart" aria-hidden="true"></i></li>
-                                <li>05</li>
+                                <li>
+                                    <?php
+                                    $urunsay = $db->prepare("SELECT COUNT(urun_id) as say FROM siparis_detay where urun_id=:id");
+                                    $urunsay->execute(array(
+                                        'id' => $_GET['urun_id']
+                                    ));
+                                    $urunsaycek = $urunsay->fetch(PDO::FETCH_ASSOC);
+                                    echo $urunsaycek['say'];
+                                    ?>
+                                </li>
                                 <li>Satış</li>
                             </ul>
                         </div>
@@ -135,18 +144,43 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                         <div class="sidebar-item-inner">
                             <h3 class="sidebar-item-title">Satıcı</h3>
                             <div class="sidebar-author-info">
-                                <img style="width: 72px; height: 72px;" src="<?php echo $uruncek['kullanici_magazafoto'] ?>" alt="product" class="img-responsive">
+                                <img style="width: 72px; height: 72px;" src="<?= $uruncek['kullanici_magazafoto'] ?>" alt="product" class="img-responsive">
                                 <div class="sidebar-author-content">
                                     <h3><?= $uruncek['kullanici_ad'] . " " . substr($uruncek['kullanici_soyad'], 0, 1) ?>.</h3>
                                     <a href="satici-<?= seo($uruncek['kullanici_ad'] . "-" . $uruncek['kullanici_soyad']) . "-" . $uruncek['kullanici_id'] ?>" class="view-profile">Profil Sayfası</a>
                                 </div>
                             </div>
                             <ul class="sidebar-badges-item">
-                                <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
-                                <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
-                                <li><img src="img\profile\badges3.png" alt="badges" class="img-responsive"></li>
-                                <li><img src="img\profile\badges4.png" alt="badges" class="img-responsive"></li>
-                                <li><img src="img\profile\badges5.png" alt="badges" class="img-responsive"></li>
+                                <?php
+                                $rozetsay = $db->prepare("SELECT 
+                                COUNT(kullanici_idsatici) as rozet 
+                                FROM siparis_detay 
+                                where kullanici_idsatici=:id");
+                                $rozetsay->execute(array(
+                                    'id' => $uruncek['kullanici_id']
+                                ));
+                                $saycek = $rozetsay->fetch(PDO::FETCH_ASSOC);
+                                if ($saycek['rozet'] > 1 and $saycek['rozet'] <= 9) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                <?php } else if ($saycek['rozet'] > 9 and $saycek['rozet'] <= 99) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
+                                <?php } else if ($saycek['rozet'] > 99 and $saycek['rozet'] <= 999) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges3.png" alt="badges" class="img-responsive"></li>
+                                <?php } else if ($saycek['rozet'] > 999 and $saycek['rozet'] <= 9999) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges3.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges4.png" alt="badges" class="img-responsive"></li>
+                                <?php } else if ($saycek['rozet'] > 9999) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges3.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges4.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges5.png" alt="badges" class="img-responsive"></li>
+                                <?php } ?>
                             </ul>
                         </div>
                     </div>

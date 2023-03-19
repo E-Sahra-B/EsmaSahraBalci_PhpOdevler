@@ -42,24 +42,51 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                         </div>
                         <div class="single-item">
                             <div class="item-title">Kayıt Tarihi</div>
-                            <div class="item-details"><?= date('d-m-Y H:i:s', strtotime($kullanicicek['kullanici_zaman'])) ?></div>
+                            <div class="item-details"><?= tarih($kullanicicek['kullanici_zaman']) ?></div>
                         </div>
                         <div class="single-item">
                             <div class="item-title">Puan:</div>
                             <div class="item-details">
+                                <?php
+                                $puansay = $db->prepare("SELECT 
+                                COUNT(yorumlar.yorum_puan) as say,
+                                SUM(yorumlar.yorum_puan) as topla, 
+                                yorumlar.*,urun.* 
+                                FROM yorumlar 
+                                INNER JOIN urun ON yorumlar.urun_id=urun.urun_id
+                                WHERE urun.kullanici_id=:id");
+                                $puansay->execute(array(
+                                    'id' => $_GET["kullanici_id"]
+                                ));
+                                $puancek = $puansay->fetch(PDO::FETCH_ASSOC);
+                                $deger = round($puancek['topla'] / $puancek['say']);
+                                ?>
                                 <ul class="default-rating">
-                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                    <li>(<span>05</span> )</li>
+                                    <?php
+                                    for ($i = 1; $i <= $deger; $i++) { ?>
+                                        <li><i class='fa fa-star' aria-hidden='true'></i></li>
+                                    <?php }
+                                    for ($j = 1; $j <= 5 - $deger; $j++) { ?>
+                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <?php } ?>
+                                    <li>(<span> <?= $deger ?></span> )</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="text-center single-item">
                             <div class="item-title">Toplam Satış:</div>
-                            <div class="item-name">100</div>
+                            <div class="item-name">
+                                <?php
+                                $urunsay = $db->prepare("SELECT 
+                                COUNT(kullanici_idsatici) as say 
+                                FROM siparis_detay where kullanici_idsatici=:id");
+                                $urunsay->execute(array(
+                                    'id' => $_GET['kullanici_id']
+                                ));
+                                $saycek = $urunsay->fetch(PDO::FETCH_ASSOC);
+                                echo $saycek['say'];
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +98,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                             <h3 class="sidebar-item-title">Satıcı</h3>
                             <div class="sidebar-author-info">
                                 <div class="sidebar-author-img">
-                                    <img src="img\profile\avatar.jpg" alt="product" class="img-responsive">
+                                    <img src="<?= $kullanicicek['kullanici_magazafoto'] ?>" alt="product" class="img-responsive">
                                 </div>
                                 <div class="sidebar-author-content">
                                     <h3><?= $kullanicicek['kullanici_ad'] . " " . $kullanicicek['kullanici_soyad'] ?></h3>
@@ -79,11 +106,36 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                             <ul class="sidebar-badges-item">
-                                <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
-                                <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
-                                <li><img src="img\profile\badges3.png" alt="badges" class="img-responsive"></li>
-                                <li><img src="img\profile\badges4.png" alt="badges" class="img-responsive"></li>
-                                <li><img src="img\profile\badges5.png" alt="badges" class="img-responsive"></li>
+                                <?php
+                                $rozetsay = $db->prepare("SELECT 
+                                COUNT(kullanici_idsatici) as rozet 
+                                FROM siparis_detay 
+                                where kullanici_idsatici=:id");
+                                $rozetsay->execute(array(
+                                    'id' =>  $_GET["kullanici_id"]
+                                ));
+                                $saycek = $rozetsay->fetch(PDO::FETCH_ASSOC);
+                                if ($saycek['rozet'] > 1 and $saycek['rozet'] <= 9) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                <?php } else if ($saycek['rozet'] > 9 and $saycek['rozet'] <= 99) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
+                                <?php } else if ($saycek['rozet'] > 99 and $saycek['rozet'] <= 999) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges3.png" alt="badges" class="img-responsive"></li>
+                                <?php } else if ($saycek['rozet'] > 999 and $saycek['rozet'] <= 9999) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges3.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges4.png" alt="badges" class="img-responsive"></li>
+                                <?php } else if ($saycek['rozet'] > 9999) { ?>
+                                    <li><img src="img\profile\badges1.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges2.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges3.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges4.png" alt="badges" class="img-responsive"></li>
+                                    <li><img src="img\profile\badges5.png" alt="badges" class="img-responsive"></li>
+                                <?php } ?>
                             </ul>
                         </div>
                     </div>
@@ -135,7 +187,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                                             <div class="more-product-item-details">
                                                 <h4><a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><?= mb_substr($uruncek['urun_ad'], 0, 20, 'UTF-8') ?></a></h4>
                                                 <div class="p-title"><?= $uruncek['kategori_ad'] ?></div>
-                                                <div class="p-price"><?= number_format($uruncek['urun_fiyat'], 2, ',', '.') ?> TL</div>
+                                                <div class="p-price"><?= fiyat($uruncek['urun_fiyat']) ?> TL</div>
                                             </div>
                                         </div>
                                     </div>
