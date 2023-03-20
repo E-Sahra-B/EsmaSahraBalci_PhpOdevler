@@ -4,25 +4,7 @@
     <div class="container">
         <h2 class="title-section">Üye Kayıt İşlemleri</h2>
         <div class="registration-details-area inner-page-padding">
-            <?php
-            if ($_GET['durum'] == "farklisifre") { ?>
-                <div class="alert alert-danger">
-                    <strong>Hata!</strong> Girdiğiniz şifreler eşleşmiyor.
-                </div>
-            <?php } elseif ($_GET['durum'] == "eksiksifre") { ?>
-                <div class="alert alert-danger">
-                    <strong>Hata!</strong> Şifreniz minimum 6 karakter uzunluğunda olmalıdır.
-                </div>
-            <?php } elseif ($_GET['durum'] == "mukerrerkayit") { ?>
-                <div class="alert alert-danger">
-                    <strong>Hata!</strong> Bu kullanıcı daha önce kayıt edilmiş.
-                </div>
-            <?php } elseif ($_GET['durum'] == "basarisiz") { ?>
-                <div class="alert alert-danger">
-                    <strong>Hata!</strong> Kayıt Yapılamadı Sistem Yöneticisine Danışınız.
-                </div>
-            <?php }
-            ?>
+            <?php require_once 'alert.php'; ?>
             <form action="admin/netting/kullanici.php" method="POST" id="personal-info-form">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

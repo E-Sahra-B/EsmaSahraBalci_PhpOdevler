@@ -17,12 +17,7 @@ giriskontrol();
         <div class="row settings-wrapper">
             <?php require_once 'hesap-sidebar.php' ?>
             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
-                <?php
-                if ($_GET['durum'] == "hata") { ?>
-                    <div class="alert alert-danger">
-                        <strong>Hata!</strong> İşlem Başarısız
-                    </div>
-                <?php } ?>
+                <?php require_once 'alert.php'; ?>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
                 <form action="admin/netting/adminislem.php" method="POST" enctype="multipart/form-data" class="form-horizontal" id="personal-info-form">

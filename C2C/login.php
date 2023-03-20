@@ -4,20 +4,7 @@
     <div class="container">
         <h2 class="title-section">Üye Giriş İşlemleri</h2>
         <div class="registration-details-area inner-page-padding">
-            <?php
-            if ($_GET['durum'] == "hata") { ?>
-                <div class="alert alert-danger">
-                    <strong>Hata!</strong> Hatalı Giriş
-                </div>
-            <?php } else if ($_GET['durum'] == "exit") { ?>
-                <div class="alert alert-success">
-                    <strong>Bilgi!</strong> Başarıyla Çıkış Yapıldı
-                </div>
-            <?php } else if ($_GET['durum'] == "kayitok") { ?>
-                <div class="alert alert-success">
-                    <strong>Bilgi!</strong> Kaydınız başarılı giriş yapabilirsiniz.
-                </div>
-            <?php } ?>
+            <?php require_once 'alert.php'; ?>
             <form action="admin/netting/kullanici.php" method="POST" id="personal-info-form">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
