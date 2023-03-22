@@ -8,6 +8,8 @@
         <li><a href="siparislerim">Siparişlerim</a></li>
         <li><a href="hesabim">Hesap Bilgilerim</a></li>
         <li><a href="adres-bilgileri">Adres Bilgilerim</a></li>
+        <li><a href="gelen-mesajlar">Gelen Mesajlar</a></li>
+        <li><a href="giden-mesajlar">Giden Mesajlar</a></li>
         <li><a href="profil-resim-guncelle">Profil Resim Guncelle</a></li>
         <li><a href="sifre-guncelle">Şifre Guncelle</a></li>
     </ul>
@@ -21,7 +23,6 @@
             <li><a href="urunlerim">Ürünlerim</a></li>
             <li><a href="yeni-siparisler">Yeni Siparişler</a></li>
             <li><a href="tamamlanan-siparisler">Tamamlanan Siparişler</a></li>
-            <li><a href="mesajlar">Mesajlar</a></li>
             <li><a href="sifre-guncelle">Ayarlar</a></li>
         </ul>
     <?php } ?>

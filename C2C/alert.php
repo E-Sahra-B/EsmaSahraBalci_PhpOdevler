@@ -21,4 +21,8 @@ if ($_GET['sil'] == "ok") { ?>
     <div class="alert alert-danger"> <strong>Hata!</strong> Bu kullanıcı daha önce kayıt edilmiş.</div>
 <?php } elseif ($_GET['durum'] == "basarisiz") { ?>
     <div class="alert alert-danger"><strong>Hata!</strong> Kayıt Yapılamadı Sistem Yöneticisine Danışınız.</div>
+<?php } elseif ($_GET['durum'] == "mesajtamam") { ?>
+    <div class="alert alert-success"><strong>Bilgi!</strong>Mesaj Gönderme İşlem Başarılı</div>
+<?php } elseif ($_GET['durum'] == "mesajhata") { ?>
+    <div class="alert alert-danger"><strong>Hata!</strong>Mesaj Gönderme İşlem Hatalı</div>
 <?php } ?>

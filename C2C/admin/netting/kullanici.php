@@ -284,3 +284,22 @@ if (isset($_POST['puanyorumekle'])) {
         Header("Location:../../siparis-detay?siparis_id=$siparis_id");
     }
 }
+
+if (isset($_POST['mesajgonder'])) {
+    $kullanici_gel = $_POST['kullanici_gel'];
+    $kaydet = $db->prepare("INSERT INTO mesaj SET
+		mesaj_detay=:mesaj_detay,
+		kullanici_gel=:kullanici_gel,
+		kullanici_gon=:kullanici_gon
+		");
+    $insert = $kaydet->execute(array(
+        'mesaj_detay' => $_POST['mesaj_detay'],
+        'kullanici_gel' => htmlspecialchars($_POST['kullanici_gel']),
+        'kullanici_gon' => htmlspecialchars($_SESSION['userkullanici_id'])
+    ));
+    if ($insert) {
+        Header("Location:../../mesaj-gonder?durum=mesajtamam&kullanici_gel=$kullanici_gel");
+    } else {
+        Header("Location:../../mesaj-gonder?durum=mesajhata&kullanici_gel=$kullanici_gel");
+    }
+}
