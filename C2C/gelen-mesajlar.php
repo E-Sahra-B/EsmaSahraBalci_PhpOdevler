@@ -48,7 +48,7 @@ giriskontrol();
                   ?>
                     <tr>
                       <th scope="row"><?= $say ?></th>
-                      <td><?= tarih($mesajcek['mesaj_zaman']); ?></td>
+                      <td><?= uzuntarih($mesajcek['mesaj_zaman']); ?></td>
                       <td><?= $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] ?></td>
                       <td>
                         <?php

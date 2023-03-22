@@ -25,4 +25,8 @@ if ($_GET['sil'] == "ok") { ?>
     <div class="alert alert-success"><strong>Bilgi!</strong>Mesaj Gönderme İşlem Başarılı</div>
 <?php } elseif ($_GET['durum'] == "mesajhata") { ?>
     <div class="alert alert-danger"><strong>Hata!</strong>Mesaj Gönderme İşlem Hatalı</div>
+<?php } elseif ($_GET['durum'] == "siltamam") { ?>
+    <div class="alert alert-success"><strong>Bilgi!</strong>Silme İşlem Başarılı</div>
+<?php } elseif ($_GET['durum'] == "silhata") { ?>
+    <div class="alert alert-danger"><strong>Hata!</strong>Silme İşlem Hatalı</div>
 <?php } ?>

@@ -169,3 +169,8 @@ function comeBack($time = 0)
         header("Location: $url");
     }
 }
+
+function uzuntarih($tarih)
+{
+    return date("d.m.Y H:i:s", strtotime($tarih));
+}

@@ -322,3 +322,27 @@ if (isset($_POST['mesajcevapver'])) {
         Header("Location:../../gelen-mesajlar?durum=mesajhata");
     }
 }
+
+if (isset($_GET['gidenmesajsil']) == "ok") {
+    $sil = $db->prepare("DELETE from mesaj where mesaj_id=:mesaj_id");
+    $kontrol = $sil->execute(array(
+        'mesaj_id' => $_GET['mesaj_id']
+    ));
+    if ($kontrol) {
+        Header("Location:../../giden-mesajlar.php?durum=siltamam");
+    } else {
+        Header("Location:../../giden-mesajlar.php?durum=silhata");
+    }
+}
+
+if (isset($_GET['gelenmesajsil']) == "ok") {
+    $sil = $db->prepare("DELETE from mesaj where mesaj_id=:mesaj_id");
+    $kontrol = $sil->execute(array(
+        'mesaj_id' => $_GET['mesaj_id']
+    ));
+    if ($kontrol) {
+        Header("Location:../../gelen-mesajlar.php?durum=siltamam");
+    } else {
+        Header("Location:../../gelen-mesajlar.php?durum=silhata");
+    }
+}
