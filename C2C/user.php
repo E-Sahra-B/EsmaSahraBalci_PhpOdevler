@@ -30,67 +30,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 <div class="profile-page-area bg-secondary section-space-bottom">
     <div class="container">
         <div class="row">
-            <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 col-lg-push-3 col-md-push-4 col-sm-push-4">
-                <div class="inner-page-main-body">
-                    <div class="single-banner">
-                        <img src="img\banner\1.jpg" alt="product" class="img-responsive">
-                    </div>
-                    <div class="author-summery">
-                        <div class="single-item">
-                            <div class="item-title">Bölge:</div>
-                            <div class="item-details"><?= $kullanicicek['kullanici_ilce'] . " / " . $kullanicicek['kullanici_il'] ?></div>
-                        </div>
-                        <div class="single-item">
-                            <div class="item-title">Kayıt Tarihi</div>
-                            <div class="item-details"><?= tarih($kullanicicek['kullanici_zaman']) ?></div>
-                        </div>
-                        <div class="single-item">
-                            <div class="item-title">Puan:</div>
-                            <div class="item-details">
-                                <?php
-                                $puansay = $db->prepare("SELECT 
-                                COUNT(yorumlar.yorum_puan) as say,
-                                SUM(yorumlar.yorum_puan) as topla, 
-                                yorumlar.*,urun.* 
-                                FROM yorumlar 
-                                INNER JOIN urun ON yorumlar.urun_id=urun.urun_id
-                                WHERE urun.kullanici_id=:id");
-                                $puansay->execute(array(
-                                    'id' => $_GET["kullanici_id"]
-                                ));
-                                $puancek = $puansay->fetch(PDO::FETCH_ASSOC);
-                                $deger = round($puancek['topla'] / $puancek['say']);
-                                ?>
-                                <ul class="default-rating">
-                                    <?php
-                                    for ($i = 1; $i <= $deger; $i++) { ?>
-                                        <li><i class='fa fa-star' aria-hidden='true'></i></li>
-                                    <?php }
-                                    for ($j = 1; $j <= 5 - $deger; $j++) { ?>
-                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    <?php } ?>
-                                    <li>(<span> <?= $deger ?></span> )</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="text-center single-item">
-                            <div class="item-title">Toplam Satış:</div>
-                            <div class="item-name">
-                                <?php
-                                $urunsay = $db->prepare("SELECT 
-                                COUNT(kullanici_idsatici) as say 
-                                FROM siparis_detay where kullanici_idsatici=:id");
-                                $urunsay->execute(array(
-                                    'id' => $_GET['kullanici_id']
-                                ));
-                                $saycek = $urunsay->fetch(PDO::FETCH_ASSOC);
-                                echo $saycek['say'];
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php require_once 'user-header.php' ?>
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 col-lg-pull-9 col-md-pull-8 col-sm-pull-8">
                 <div class="fox-sidebar">
                     <div class="sidebar-item">
@@ -146,26 +86,21 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                         <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
                     </ul>
                     <ul class="sidebar-product-btn">
-                        <li><a href="#" class="buy-now-btn" id="buy-button"><i class="fa fa-envelope-o" aria-hidden="true"></i> Mesaj Gönder</a></li>
+                        <?php
+                        if (empty($_SESSION['userkullanici_id'])) { ?>
+                            <li><a href="login" class="buy-now-btn" id="buy-button"><i class="fa fa-envelope-o" aria-hidden="true"></i> Mesaj Gönder</a></li>
+                        <?php } else if ($_SESSION['userkullanici_id'] == $_GET['kullanici_id']) { ?>
+                            <li><button disabled="" class="buy-now-btn" id="buy-button"><i class="fa fa-ban" aria-hidden="true"></i> Mesaj Gönder</button></li>
+                        <?php } else { ?>
+                            <li><a href="mesaj-gonder?kullanici_gel=<?php echo $_GET['kullanici_id'] ?>" class="buy-now-btn" id="buy-button"><i class="fa fa-envelope-o" aria-hidden="true"></i> Mesaj Gönder</a></li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="row profile-wrapper">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <ul class="profile-title">
-                    <li><a href="#Products" data-toggle="tab" aria-expanded="false"><i class="fa fa-briefcase" aria-hidden="true"></i> Ürünleri (
-                            <?php
-                            $urunsay = $db->prepare("SELECT COUNT(kategori_id) as say FROM urun where kullanici_id=:id");
-                            $urunsay->execute(array(
-                                'id' => $kullanicicek['kullanici_id']
-                            ));
-                            $saycek = $urunsay->fetch(PDO::FETCH_ASSOC);
-                            echo $saycek['say'];
-                            ?>
-                            )</a></li>
-                    <!-- <li><a href="#Message" data-toggle="tab" aria-expanded="false"><i class="fa fa-envelope-o" aria-hidden="true"></i> Menü Adı</a></li>-->
-                </ul>
+                <?php require_once 'user-sidebar.php' ?>
             </div>
             <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
                 <div class="tab-content">
