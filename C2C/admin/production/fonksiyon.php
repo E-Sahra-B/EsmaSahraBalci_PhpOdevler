@@ -174,3 +174,11 @@ function uzuntarih($tarih)
 {
     return date("d.m.Y H:i:s", strtotime($tarih));
 }
+
+function guvenlik($deger)
+{
+    $boslukSil = trim($deger);
+    $tagTemizle = strip_tags($boslukSil);
+    $etkisizYap = htmlspecialchars($tagTemizle, ENT_QUOTES);
+    return $etkisizYap;
+}

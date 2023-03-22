@@ -32,9 +32,9 @@ if (isset($_SESSION['userkullanici_mail'])) {
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="<?php echo $ayarcek['ayar_description'] ?>">
-    <meta name="keywords" content="<?php echo $ayarcek['ayar_keywords'] ?>">
-    <meta name="author" content="<?php echo $ayarcek['ayar_author'] ?>">
+    <meta name="description" content="<?= $ayarcek['ayar_description'] ?>">
+    <meta name="keywords" content="<?= $ayarcek['ayar_keywords'] ?>">
+    <meta name="author" content="<?= $ayarcek['ayar_author'] ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicon -->
@@ -104,7 +104,7 @@ if (isset($_SESSION['userkullanici_mail'])) {
                         <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs">
                                 <div class="logo-area">
-                                    <a href="index.php"><img class="img-responsive" src="<?php echo $ayarcek['ayar_logo'] ?>" alt="logo"></a>
+                                    <a href="index.php"><img class="img-responsive" src="<?= $ayarcek['ayar_logo'] ?>" alt="logo"></a>
                                 </div>
                             </div>
                             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
@@ -159,47 +159,46 @@ if (isset($_SESSION['userkullanici_mail'])) {
                                         </li>
                                         <li>
                                             <div class="notify-message">
-                                                <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i><span>5</span></a>
+                                                <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i><span>
+                                                        <?php
+                                                        $mesajsay = $db->prepare("SELECT COUNT(mesaj_okunma) as say FROM mesaj where mesaj_okunma=:id and kullanici_gel=:kullanici_id");
+                                                        $mesajsay->execute(array(
+                                                            'id' => 0,
+                                                            'kullanici_id' => $_SESSION['userkullanici_id']
+                                                        ));
+                                                        $saycek = $mesajsay->fetch(PDO::FETCH_ASSOC);
+                                                        echo $saycek['say'];
+                                                        ?>
+                                                    </span></a>
                                                 <ul>
-                                                    <li>
-                                                        <div class="notify-message-img">
-                                                            <img class="img-responsive" src="img\profile\1.png" alt="profile">
-                                                        </div>
-                                                        <div class="notify-message-info">
-                                                            <div class="notify-message-sender">Kazi Fahim</div>
-                                                            <div class="notify-message-subject">Need WP Help!</div>
-                                                            <div class="notify-message-date">01 Dec, 2016</div>
-                                                        </div>
-                                                        <div class="notify-message-sign">
-                                                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="notify-message-img">
-                                                            <img class="img-responsive" src="img\profile\2.png" alt="profile">
-                                                        </div>
-                                                        <div class="notify-message-info">
-                                                            <div class="notify-message-sender">Richi Lenal</div>
-                                                            <div class="notify-message-subject">Need HTML Help!</div>
-                                                            <div class="notify-message-date">01 Dec, 2016</div>
-                                                        </div>
-                                                        <div class="notify-message-sign">
-                                                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="notify-message-img">
-                                                            <img class="img-responsive" src="img\profile\3.png" alt="profile">
-                                                        </div>
-                                                        <div class="notify-message-info">
-                                                            <div class="notify-message-sender">PsdBosS</div>
-                                                            <div class="notify-message-subject">Psd Template Help!</div>
-                                                            <div class="notify-message-date">01 Dec, 2016</div>
-                                                        </div>
-                                                        <div class="notify-message-sign">
-                                                            <i class="fa fa-reply" aria-hidden="true"></i>
-                                                        </div>
-                                                    </li>
+                                                    <?php
+                                                    $mesajsor = $db->prepare("SELECT mesaj.*,kullanici.* FROM mesaj INNER JOIN kullanici ON mesaj.kullanici_gon=kullanici.kullanici_id where mesaj.kullanici_gel=:id and mesaj.mesaj_okunma=:okunma order by mesaj_okunma,mesaj_zaman DESC limit 5");
+                                                    $mesajsor->execute(array(
+                                                        'id' => $_SESSION['userkullanici_id'],
+                                                        'okunma' => 0
+                                                    ));
+                                                    if ($mesajsor->rowCount() == 0) { ?>
+                                                        <li>
+                                                            <div class="notify-message-info">
+                                                                <div style="color:black !important" class="notify-message-subject">Hiç Mesajınız Yok</div>
+                                                            </div>
+                                                        </li>
+                                                    <?php }
+                                                    while ($mesajcek = $mesajsor->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                        <li>
+                                                            <div class="notify-message-img">
+                                                                <img class="img-responsive" src="<?= $mesajcek['kullanici_magazafoto']; ?>" alt="profile">
+                                                            </div>
+                                                            <div class="notify-message-info">
+                                                                <div class="notify-message-sender"><?= $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] ?></div>
+                                                                <div class="notify-message-subject"><?= metinKirp($mesajcek['mesaj_detay'], 15) . "..."; ?></div>
+                                                                <div class="notify-message-date"><?= uzuntarih($mesajcek['mesaj_zaman']); ?></div>
+                                                            </div>
+                                                            <div class="notify-message-sign">
+                                                                <a href="mesaj-detay?mesaj_id=<?= $mesajcek['mesaj_id'] ?>&kullanici_gon=<?= $mesajcek['kullanici_gon'] ?>"><i style="color:#ef6c00; !important" class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                                                            </div>
+                                                        </li>
+                                                    <?php } ?>
                                                 </ul>
                                             </div>
                                         </li>
@@ -210,10 +209,10 @@ if (isset($_SESSION['userkullanici_mail'])) {
                                             <div class="user-account-info">
                                                 <div class="user-account-info-controler">
                                                     <div class="user-account-img">
-                                                        <img style="border-radius: 30px; width:32px; height:32px;" class="img-responsive" src="<?php echo $kullanicicek['kullanici_magazafoto'] ?>" alt="profile">
+                                                        <img style="border-radius: 30px; width:32px; height:32px;" class="img-responsive" src="<?= $kullanicicek['kullanici_magazafoto'] ?>" alt="profile">
                                                     </div>
                                                     <div class="user-account-title">
-                                                        <div class="user-account-name"><?php echo $kullanicicek['kullanici_ad'] . " " . substr($kullanicicek['kullanici_soyad'], 0, 1) ?>.</div>
+                                                        <div class="user-account-name"><?= $kullanicicek['kullanici_ad'] . " " . substr($kullanicicek['kullanici_soyad'], 0, 1) ?>.</div>
                                                         <div class="user-account-balance">$171.00</div>
                                                     </div>
                                                     <div class="user-account-dropdown">
@@ -255,7 +254,7 @@ if (isset($_SESSION['userkullanici_mail'])) {
                                     'onecikar' => 1
                                 ));
                                 while ($kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC)) { ?>
-                                    <li><a href="kategoriler-<?= seo($kategoricek['kategori_ad']) . "-" . $kategoricek['kategori_id'] ?>"><?php echo $kategoricek['kategori_ad'] ?></a></li>
+                                    <li><a href="kategoriler-<?= seo($kategoricek['kategori_ad']) . "-" . $kategoricek['kategori_id'] ?>"><?= $kategoricek['kategori_ad'] ?></a></li>
                                 <?php } ?>
                             </ul>
                         </nav>
