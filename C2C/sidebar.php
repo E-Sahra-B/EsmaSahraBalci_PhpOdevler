@@ -1,3 +1,8 @@
+<?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    exit("Bu sayfaya erişim yasak");
+}
+?>
 <div class="fox-sidebar">
     <div class="sidebar-item">
         <div class="sidebar-item-inner">

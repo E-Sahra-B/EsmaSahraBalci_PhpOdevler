@@ -1,3 +1,8 @@
+<?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    exit("Bu sayfaya erişim yasak");
+}
+?>
 <!-- Footer Area Start Here -->
 <footer>
     <div class="footer-area-top">

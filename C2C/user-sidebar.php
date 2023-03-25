@@ -1,3 +1,8 @@
+<?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    exit("Bu sayfaya erişim yasak");
+}
+?>
 <ul class="profile-title">
     <li><a href="#Products" data-toggle="tab" aria-expanded="false"><i class="fa fa-briefcase" aria-hidden="true"></i> Ürünleri (
             <?php

@@ -17,6 +17,19 @@ if (isset($_SESSION['userkullanici_mail'])) {
         $_SESSION['userkullanici_id'] = $kullanicicek['kullanici_id'];
     }
 }
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    exit("Bu sayfaya erişim yasak");
+}
+/*
+if (basename($_SERVER['PHP_SELF'])==basename(__FILE__)) {
+    echo basename($_SERVER['PHP_SELF']);
+    echo basename(__FILE__);
+    exit("Bu sayfaya erişim yasak");
+} else {//index.php çağrıldığında
+    echo basename($_SERVER['PHP_SELF']);//index.php 
+    echo basename(__FILE__);//header.php eklenen dosya include edilen
+}
+*/
 ?>
 <!doctype html>
 <html class="no-js" lang="">

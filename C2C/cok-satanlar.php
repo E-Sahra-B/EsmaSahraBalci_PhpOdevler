@@ -1,3 +1,8 @@
+<?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    exit("Bu sayfaya erişim yasak");
+}
+?>
 <div class="container">
     <h2 class="title-default">Çok Satanlar</h2>
 </div>
