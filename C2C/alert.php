@@ -29,4 +29,6 @@ if ($_GET['sil'] == "ok") { ?>
     <div class="alert alert-success"><strong>Bilgi!</strong>Silme İşlem Başarılı</div>
 <?php } elseif ($_GET['durum'] == "silhata") { ?>
     <div class="alert alert-danger"><strong>Hata!</strong>Silme İşlem Hatalı</div>
+<?php } elseif ($_GET['durum'] == "kayitok") { ?>
+    <div class="alert alert-success"><strong>Bilgi!</strong>Kayıt İşlemi Başarılı Giriş Yapabilirsiniz.</div>
 <?php } ?>

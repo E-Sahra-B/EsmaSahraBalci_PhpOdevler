@@ -113,7 +113,10 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                             <ul class="sidebar-product-btn">
                                 <form action="odeme" method="post">
                                     <input type="hidden" name="urun_id" value="<?= $uruncek['urun_id']; ?>">
-                                    <?php if ($_SESSION['userkullanici_id'] == $uruncek['kullanici_id']) { ?>
+                                    <?php
+                                    if (empty($_SESSION['userkullanici_id'])) { ?>
+                                        <li><a href="login" class="buy-now-btn" id="buy-button"><i class="fa fa-ban" aria-hidden="true"></i> Giriş Yapın</a></li>
+                                    <?php } elseif ($_SESSION['userkullanici_id'] == $uruncek['kullanici_id']) { ?>
                                         <li><a class="add-to-cart-btn" id="cart-button"><i class="fa fa-ban" aria-hidden="true"></i> Kendi Ürününüz</a></li>
                                     <?php } else { ?>
                                         <li><button type="submit" class="add-to-cart-btn" id="cart-button"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Satın Al</button></li>
