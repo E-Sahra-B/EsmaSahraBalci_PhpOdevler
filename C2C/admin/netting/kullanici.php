@@ -1,6 +1,7 @@
 <?php
 ob_start();
 session_start();
+date_default_timezone_set('Europe/Istanbul');
 require_once 'baglan.php';
 include '../production/fonksiyon.php';
 
@@ -60,10 +61,22 @@ if (isset($_POST['musterigiris'])) {
     ));
     $say = $kullanicisor->rowCount();
     if ($say == 1) {
+        $kullanici_ip = $_SERVER['REMOTE_ADDR'];
+        $zamanguncelle = $db->prepare("UPDATE kullanici SET
+			kullanici_sonzaman=:kullanici_sonzaman,
+			kullanici_sonip=:kullanici_sonip
+			WHERE kullanici_mail='$kullanici_mail'");
+        $update = $zamanguncelle->execute(array(
+            'kullanici_sonzaman' => date("Y-m-d H:i:s"),
+            'kullanici_sonip' => $kullanici_ip
+        ));
+        $_SESSION['userkullanici_sonzaman'] = strtotime(date("Y-m-d H:i:s"));
         $_SESSION['userkullanici_mail'] = $kullanici_mail;
         header("Location:../../index.php?durum=girisbasarili");
+        exit;
     } else {
         header("Location:../../login?durum=hata");
+        exit;
     }
 }
 
