@@ -45,10 +45,11 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                                     <?php
                                     $kullanici_sonzaman = strtotime($kullanicicek['kullanici_sonzaman']);
                                     $suan = time();
-                                    echo $fark = ($suan - $kullanici_sonzaman);
+                                    $fark = ($suan - $kullanici_sonzaman);
                                     if ($fark < 600) { ?>
                                         <a href="#" class="view-profile"><i class="fa fa-circle" aria-hidden="true"></i> online</a>
-                                    <?php } else { ?>
+                                    <?php } else {
+                                        echo date('i', $fark) . " Dk."; ?>
                                         <a href="#" class="view-profile"><i style="color:red" class="fa fa-circle" aria-hidden="true"></i> offline</a>
                                     <?php } ?>
                                 </div>

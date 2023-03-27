@@ -63,12 +63,10 @@ if (isset($_POST['musterigiris'])) {
     if ($say == 1) {
         $kullanici_ip = $_SERVER['REMOTE_ADDR'];
         $zamanguncelle = $db->prepare("UPDATE kullanici SET
-			kullanici_sonzaman=:kullanici_sonzaman,
-			kullanici_sonip=:kullanici_sonip
+			kullanici_sonzaman=:kullanici_sonzaman
 			WHERE kullanici_mail='$kullanici_mail'");
         $update = $zamanguncelle->execute(array(
-            'kullanici_sonzaman' => date("Y-m-d H:i:s"),
-            'kullanici_sonip' => $kullanici_ip
+            'kullanici_sonzaman' => date("Y-m-d H:i:s")
         ));
         $_SESSION['userkullanici_sonzaman'] = strtotime(date("Y-m-d H:i:s"));
         $_SESSION['userkullanici_mail'] = $kullanici_mail;

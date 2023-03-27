@@ -31,17 +31,19 @@ if (basename($_SERVER['PHP_SELF'])==basename(__FILE__)) {
     echo basename(__FILE__);//header.php eklenen dosya include edilen
 }
 */
-$kullanici_sonzaman = $_SESSION['userkullanici_sonzaman'];
-$suan = time();
-$fark = ($suan - $kullanici_sonzaman);
-if ($fark > 600) {
-    $zamanguncelle = $db->prepare("UPDATE kullanici SET
+if (isset($_SESSION['userkullanici_sonzaman'])) {
+    $kullanici_sonzaman = $_SESSION['userkullanici_sonzaman'];
+    $suan = time();
+    $fark = ($suan - $kullanici_sonzaman);
+    if ($fark > 600) {
+        $zamanguncelle = $db->prepare("UPDATE kullanici SET
         kullanici_sonzaman=:kullanici_sonzaman
         WHERE kullanici_id={$_SESSION['userkullanici_id']}");
-    $update = $zamanguncelle->execute(array(
-        'kullanici_sonzaman' => date("Y-m-d H:i:s")
-    ));
-    $kullanici_sonzaman = $_SESSION['userkullanici_sonzaman'];
+        $update = $zamanguncelle->execute(array(
+            'kullanici_sonzaman' => date("Y-m-d H:i:s")
+        ));
+        $kullanici_sonzaman = $_SESSION['userkullanici_sonzaman'];
+    }
 }
 ?>
 <!doctype html>
