@@ -13,13 +13,7 @@ $kategorisor->execute();
         <div class="x_panel">
           <div class="x_title">
             <div>
-              <?php
-              if ($_GET['sil'] == "ok") { ?>
-                <div class="alert alert-success">İşlem Başarılı</div>
-              <?php } elseif ($_GET['sil'] == "no") { ?>
-                <div class="alert alert-danger">İşlem Başarısız</div>
-              <?php }
-              ?>
+              <div class="alert alert-<?= $_GET['sil']; ?>"><?= ($_GET['sil'] == "danger") ? "İşlem Başarısız" : "İşlem Başarılı"; ?></div>
             </div>
             <h2>Kategori Listeleme</h2>
             <div class="clearfix"></div>

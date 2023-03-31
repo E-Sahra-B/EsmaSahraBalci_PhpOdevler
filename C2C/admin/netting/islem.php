@@ -502,9 +502,9 @@ if (isset($_GET['kategorisil']) == "ok") {
 		'kategori_id' => $_GET['kategori_id']
 	));
 	if ($kontrol) {
-		Header("Location:../production/kategori.php?sil=ok");
+		Header("Location:../production/kategori.php?sil=success");
 	} else {
-		Header("Location:../production/kategori.php?sil=no");
+		Header("Location:../production/kategori.php?sil=danger");
 	}
 }
 
