@@ -13,7 +13,7 @@ $kategorisor->execute();
         <div class="x_panel">
           <div class="x_title">
             <div>
-              <div class="alert alert-<?= $_GET['sil']; ?>"><?= ($_GET['sil'] == "danger") ? "İşlem Başarısız" : "İşlem Başarılı"; ?></div>
+              <div class="alert alert-<?= $_GET['sil']; ?>"><?= !empty($_GET['sil']) ? (($_GET['sil'] == "danger") ? "İşlem Başarısız" : "İşlem Başarılı") : ""; ?></div>
             </div>
             <h2>Kategori Listeleme</h2>
             <div class="clearfix"></div>
