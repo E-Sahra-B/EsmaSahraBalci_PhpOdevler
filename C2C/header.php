@@ -309,61 +309,19 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                         <div class="col-md-12">
                             <div class="mobile-menu">
                                 <nav id="dropdown">
-                                    <ul>
-                                        <li class="active"><a href="#">Home</a>
-                                            <ul>
-                                                <li><a href="index.htm">Home 1</a></li>
-                                                <li><a href="index2.htm">Home 2</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="about.htm">About</a></li>
-                                        <li><a href="#">Pages</a>
-                                            <ul class="mega-menu-area">
-                                                <li>
-                                                    <a href="index.htm">Home 1</a>
-                                                    <a href="index2.htm">Home 2</a>
-                                                    <a href="about.htm">About</a>
-                                                    <a href="product-page-grid.htm">Product Grid</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product-page-list.htm">Product List</a>
-                                                    <a href="product-category-grid.htm">Category Grid</a>
-                                                    <a href="product-category-list.htm">Category List</a>
-                                                    <a href="single-product.htm">Product Details</a>
-                                                </li>
-                                                <li>
-                                                    <a href="profile.htm">Profile</a>
-                                                    <a href="favourites-grid.htm">Favourites Grid</a>
-                                                    <a href="favourites-list.htm">Favourites List</a>
-                                                    <a href="settings.htm">Settings</a>
-                                                </li>
-                                                <li>
-                                                    <a href="upload-products.htm">Upload Products</a>
-                                                    <a href="sales-statement.htm">Sales Statement</a>
-                                                    <a href="withdrawals.htm">Withdrawals</a>
-                                                    <a href="404.htm">404</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="product-page-grid.htm">WordPress</a></li>
-                                        <li><a href="product-category-grid.htm">Joomla</a></li>
-                                        <li><a href="product-category-list.htm">Plugins</a></li>
-                                        <li><a href="product-page-list.htm">Components</a></li>
-                                        <li><a href="product-category-grid.htm">PSD</a></li>
-                                        <li><a href="#">Blog</a>
-                                            <ul>
-                                                <li><a href="blog.htm">Blog</a></li>
-                                                <li><a href="single-blog.htm">Blog Details</a></li>
-                                                <li class="has-child-menu"><a href="#">Second Level</a>
-                                                    <ul class="thired-level">
-                                                        <li><a href="index.htm">Thired Level 1</a></li>
-                                                        <li><a href="index.htm">Thired Level 2</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact.htm">Contact</a></li>
-                                        <li><a href="help.htm">Help</a></li>
+                                    <ul><!-- Mobile / Responsive Web Design Tester Chrome Eklentisi -->
+                                        <li class="active"><a href="index.php">Anasayfa</a></li>
+                                        <li><a href="login">Üye Giriş</a></li>
+                                        <li><a href="register">Üye Kayıt</a></li>
+                                        <li><a href="kategoriler">Kategoriler</a></li>
+                                        <?php
+                                        $kategorisor = $db->prepare("SELECT * FROM kategori where kategori_onecikar=:onecikar order by kategori_sira ASC");
+                                        $kategorisor->execute(array(
+                                            'onecikar' => 1
+                                        ));
+                                        while ($kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC)) { ?>
+                                            <li><a href="kategoriler-<?= seo($kategoricek['kategori_ad']) . "-" . $kategoricek['kategori_id'] ?>"><?php echo $kategoricek['kategori_ad'] ?></a></li>
+                                        <?php } ?>
                                     </ul>
                                 </nav>
                             </div>
