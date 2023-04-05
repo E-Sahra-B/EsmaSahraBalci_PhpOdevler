@@ -241,7 +241,20 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                                     </div>
                                                     <div class="user-account-title">
                                                         <div class="user-account-name"><?= $kullanicicek['kullanici_ad'] . " " . substr($kullanicicek['kullanici_soyad'], 0, 1) ?>.</div>
-                                                        <div class="user-account-balance">$171.00</div>
+                                                        <div class="user-account-balance">
+                                                            <?php
+                                                            $siparissor = $db->prepare("SELECT SUM(urun_fiyat) as toplam FROM siparis_detay where kullanici_idsatici=:kullanici_id ");
+                                                            $siparissor->execute(array(
+                                                                'kullanici_id' => $_SESSION['userkullanici_id']
+                                                            ));
+                                                            $sipariscek = $siparissor->fetch(PDO::FETCH_ASSOC);
+                                                            if (isset($sipariscek['toplam'])) {
+                                                                echo fiyat($sipariscek['toplam']) . " ₺";
+                                                            } else {
+                                                                echo "0,00 ₺";
+                                                            }
+                                                            ?>
+                                                        </div>
                                                     </div>
                                                     <div class="user-account-dropdown">
                                                         <i class="fa fa-angle-down" aria-hidden="true"></i>
