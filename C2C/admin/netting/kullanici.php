@@ -50,6 +50,12 @@ if (isset($_POST['musterikaydet'])) {
 }
 
 if (isset($_POST['musterigiris'])) {
+    require_once '../../securimage/securimage.php';
+    $securimage = new Securimage();
+    if ($securimage->check($_POST['captcha_code']) == false) {
+        header("Location:../../login?durum=captchahata");
+        exit;
+    }
     $kullanici_mail = htmlspecialchars($_POST['kullanici_mail']);
     $kullanici_password = sha1(md5(htmlspecialchars($_POST['kullanici_password'])));
     $kullanicisor = $db->prepare("select * from kullanici where kullanici_mail=:mail and kullanici_yetki=:yetki and kullanici_password=:password and kullanici_durum=:durum");
