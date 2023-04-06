@@ -58,7 +58,7 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
         }
         ?>
     </title>
-    <meta charset="utf-8">
+    <meta charset="utf-8"><!-- Türkçe karakter sorunu olmasın diye eklenmeli -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?= $ayarcek['ayar_description'] ?>">
     <meta name="keywords" content="<?= $ayarcek['ayar_keywords'] ?>">
