@@ -13,8 +13,7 @@ RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php
 
 #404 hata sayfası yönlendirme kodu
-#ErrorDocument 404 http://www.ErrorSayfasiAdresi.com
-
+ErrorDocument 404 http://localhost/php/phpodev/c2c/404.php
 #RewriteRule ^urun-([0-9a-zA-Z-_]+)  urun-detay.php?sef=$1 [L,QSA]
 # RewriteRule ^kategoriler-([0-9a-zA-Z-_]+)  kategoriler.php?sef=$1 [L,QSA]
 RewriteRule ^sayfa-([0-9a-zA-Z-_]+)  menu-detay.php?sef=$1 [L,QSA]
