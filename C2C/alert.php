@@ -33,4 +33,6 @@ if ($_GET['sil'] == "ok") { ?>
     <div class="alert alert-success"><strong>Bilgi!</strong>Kayıt İşlemi Başarılı Giriş Yapabilirsiniz.</div>
 <?php } elseif ($_GET['durum'] == "captchahata") { ?>
     <div class="alert alert-danger"><strong>Hata!</strong>Güvenlik Kodu Hatalı</div>
+<?php } else if ($_GET['durum'] == "mailno") { ?>
+    <div class="alert alert-danger"><strong>Hata!</strong> Mail sunucumuzda problem var lütfen daha sonra tekrar deneyiniz...</div>
 <?php } ?>

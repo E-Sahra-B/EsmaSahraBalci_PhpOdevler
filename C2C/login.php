@@ -35,9 +35,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="pLace-order">
-                            <button class="update-btn btn-block disabled" type="submit" name="musterigiris">Giriş</button>
+                            <button class="apply-now-btn-color btn-block disabled" data-toggle="modal" data-target="#sifremiunuttum" type="submit" name="musterigiris">Şifremi Unuttum</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="pLace-order">
+                            <button class="apply-now-btn btn-block disabled" type="submit" name="musterigiris">Giriş</button>
                         </div>
                     </div>
                 </div>
@@ -45,5 +50,31 @@
         </div>
     </div>
 </div>
+<!-- Modal Başlangıç -->
+<div class="modal fade" id="sifremiunuttum" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Şifre Sıfırlama</h4>
+            </div>
+            <div class="modal-body">
+                <form action="mailphp/sifremi-unuttum.php" method="POST">
+                    <div class="form-group">
+                        <p><strong>Uyarı:</strong> Girdiğiniz mail adresi kayıtlarımızda varsa şifreniz mail adresinize gönderilecektir.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Mail Adresiniz:</label>
+                        <input type="email" class="form-control" name="kullanici_mail" id="recipient-name">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" name="sifremiunuttum" class="btn btn-primary">Şifre Talep Et</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Bitiş -->
 <!-- Registration Page Area End Here -->
 <?php require_once 'footer.php' ?>
