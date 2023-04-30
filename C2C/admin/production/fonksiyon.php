@@ -182,3 +182,8 @@ function guvenlik($deger)
     $etkisizYap = htmlspecialchars($tagTemizle, ENT_QUOTES);
     return $etkisizYap;
 }
+
+// function numaraKontrol($n){
+//     $rgx=preg_replace('/^[0-9]*\.?[0-9]*$/');
+//     return $n.match($rgx);
+// }
