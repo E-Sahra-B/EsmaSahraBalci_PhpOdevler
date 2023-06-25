@@ -75,7 +75,7 @@
                                     }
                                 } else {
                                     $sayfada = 6;
-                                    $sorgu = $db->prepare("select * from urun");
+                                    $sorgu = $db->prepare("SELECT * FROM urun");
                                     $sorgu->execute();
                                     $say = $sorgu->rowCount();
                                     if ($say == 0) {
@@ -104,26 +104,28 @@
                                         require 'kategoriIcerik.php';
                                     }
                                 }
+                                if ($toplam_icerik > $sayfada) {
                                 ?>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <ul class="pagination-align-left">
-                                            <?php
-                                            $s = 0;
-                                            while ($s < $toplam_sayfa) {
-                                                $s++; ?>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <ul class="pagination-align-left">
                                                 <?php
-                                                if (!empty($_GET['kategori_id'])) {
-                                                    $active = ($s == $sayfa) ? 'background-color: #e74c3c; color:#fff;' : ''; ?>
-                                                    <li><a style="<?= $active ?>" href="kategoriler-<?= $_GET['sef']; ?>-<?= $_GET['kategori_id'] ?>?sayfa=<?= $s; ?>"><?= $s; ?></a></li>
-                                                <?php
-                                                } else { ?>
-                                                    <li><a style="<?= $active ?>" href="kategoriler?sayfa=<?= $s; ?>"><?= $s; ?></a></li>
+                                                $s = 0;
+                                                while ($s < $toplam_sayfa) {
+                                                    $s++; ?>
+                                                    <?php
+                                                    if (!empty($_GET['kategori_id'])) {
+                                                        $active = ($s == $sayfa) ? 'background-color: #e74c3c; color:#fff;' : ''; ?>
+                                                        <li><a style="<?= $active ?>" href="kategoriler-<?= $_GET['sef']; ?>-<?= $_GET['kategori_id'] ?>?sayfa=<?= $s; ?>"><?= $s; ?></a></li>
+                                                    <?php
+                                                    } else { ?>
+                                                        <li><a style="<?= $active ?>" href="kategoriler?sayfa=<?= $s; ?>"><?= $s; ?></a></li>
+                                                    <?php } ?>
                                                 <?php } ?>
-                                            <?php } ?>
-                                        </ul>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

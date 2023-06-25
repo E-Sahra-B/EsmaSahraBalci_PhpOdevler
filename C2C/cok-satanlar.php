@@ -26,7 +26,7 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
                     <a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><img style="width: 451px; height: 252px;" src="<?= $uruncek['urunfoto_resimyol'] ?>" alt="product" class="img-responsive"></a>
                     <div class="trending-sign" data-tips="Öne Çıkan Ürün"><i class="fa fa-bolt" aria-hidden="true"></i></div>
                 </div>
-                <div class="item-content">
+                <div class="item-content" style="height: 200px;">
                     <div class="item-info">
                         <h3><a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><?= $uruncek['urun_ad'] ?></a></h3>
                         <span><a href=" kategoriler-<?= seo($uruncek['kategori_ad']) . "-" . $uruncek['kategori_id'] ?>"><?= $uruncek['kategori_ad'] ?></a></span>

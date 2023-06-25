@@ -101,7 +101,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                         <?php } else if ($_SESSION['userkullanici_id'] == $_GET['kullanici_id']) { ?>
                             <li><button disabled="" class="buy-now-btn" id="buy-button"><i class="fa fa-ban" aria-hidden="true"></i> Mesaj Gönder</button></li>
                         <?php } else { ?>
-                            <li><a href="mesaj-gonder?kullanici_gel=<?php echo $_GET['kullanici_id'] ?>" class="buy-now-btn" id="buy-button"><i class="fa fa-envelope-o" aria-hidden="true"></i> Mesaj Gönder</a></li>
+                            <li><a href="mesaj-gonder?kullanici_gel=<?= $_GET['kullanici_id'] ?>" class="buy-now-btn" id="buy-button"><i class="fa fa-envelope-o" aria-hidden="true"></i> Mesaj Gönder</a></li>
                         <?php } ?>
                     </ul>
                 </div>
@@ -109,12 +109,12 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
         </div>
         <div class="row profile-wrapper">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <?php require_once 'user-sidebar.php' ?>
+
             </div>
             <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="Products">
-                        <h3 class="title-inner-section">Ürünleri</h3>
+                        <?php require_once 'user-sidebar.php' ?>
                         <div class="inner-page-main-body">
                             <div class="row more-product-item-wrapper">
                                 <?php

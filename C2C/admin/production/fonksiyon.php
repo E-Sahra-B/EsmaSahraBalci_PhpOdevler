@@ -1,6 +1,6 @@
 <?php
 ob_start();
-session_start();
+@session_start();
 function islemkontrol()
 {
     if (empty($_SESSION['kullanici_mail'])) {

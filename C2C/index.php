@@ -52,19 +52,19 @@
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 yenigelen plugins">
                     <div class="single-item-grid">
                         <div class="item-img">
-                            <a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><img style="width: 451px; height: 252px;" src="<?php echo $uruncek['urunfoto_resimyol'] ?>" alt="product" class="img-responsive"></a>
+                            <a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><img style="width: 451px; height: 252px;" src="<?= $uruncek['urunfoto_resimyol'] ?>" alt="product" class="img-responsive"></a>
                             <div class="trending-sign" data-tips="Öne Çıkan Ürün"><i class="fa fa-bolt" aria-hidden="true"></i></div>
                         </div>
-                        <div class="item-content">
+                        <div class="item-content flex" style="height: 200px;">
                             <div class="item-info">
-                                <h3><a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><?php echo $uruncek['urun_ad'] ?></a></h3>
-                                <span><a href=" kategoriler-<?= seo($uruncek['kategori_ad']) . "-" . $uruncek['kategori_id'] ?>"><?php echo $uruncek['kategori_ad'] ?></a></span>
-                                <div class="price"><?= number_format($uruncek['urun_fiyat'], 2, ",", ".") ?> TL</div>
+                                <h3><a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><?= $uruncek['urun_ad'] ?></a></h3>
+                                <span><a href=" kategoriler-<?= seo($uruncek['kategori_ad']) . "-" . $uruncek['kategori_id'] ?>"><?= $uruncek['kategori_ad'] ?></a></span>
+                                <div class="price"><?= fiyat($uruncek['urun_fiyat']) ?> TeLe</div>
                             </div>
                             <div class="item-profile">
                                 <div class="profile-title">
-                                    <div class="img-wrapper"><img style="width: 38px; height: 38px;" src="<?php echo $uruncek['kullanici_magazafoto'] ?>" alt="profile" class="img-responsive img-circle"></div>
-                                    <span><?php echo $uruncek['kullanici_ad'] . " " . $uruncek['kullanici_soyad'] ?></span>
+                                    <div class="img-wrapper"><img style="width: 38px; height: 38px;" src="<?= $uruncek['kullanici_magazafoto'] ?>" alt="profile" class="img-responsive img-circle"></div>
+                                    <span><?= $uruncek['kullanici_ad'] . " " . kisalt($uruncek['kullanici_soyad'], 0, 1) ?></span>
                                 </div>
                                 <div class="profile-rating">
                                     <!-- <a href="#"><b>Tüm Ürünleri</b></a> -->

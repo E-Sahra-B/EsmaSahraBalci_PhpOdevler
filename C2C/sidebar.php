@@ -9,7 +9,7 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
             <h3 class="sidebar-item-title">Kategoriler</h3>
             <ul class="sidebar-categories-list">
                 <?php
-                $kategorisor = $db->prepare("SELECT * FROM kategori where kategori_durum=:durum order by kategori_sira ASC");
+                $kategorisor = $db->prepare("SELECT * FROM kategori WHERE kategori_durum=:durum ORDER BY kategori_sira ASC");
                 $kategorisor->execute(array(
                     'durum' => 1
                 ));
@@ -19,9 +19,10 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
                     <li><a href="kategoriler-<?= seo($kategoricek['kategori_ad']) . "-" . $kategoricek['kategori_id'] ?>"><?php echo $kategoricek['kategori_ad'] ?>
                             <span>(
                                 <?php
-                                $urunsay = $db->prepare("SELECT COUNT(kategori_id) as say FROM urun where kategori_id=:id");
+                                $urunsay = $db->prepare("SELECT COUNT(kategori_id) AS say FROM urun WHERE urun_durum=:durum AND kategori_id=:id");
                                 $urunsay->execute(array(
-                                    'id' => $kategori_id
+                                    'id' => $kategori_id,
+                                    'durum' => 1
                                 ));
                                 $saycek = $urunsay->fetch(PDO::FETCH_ASSOC);
                                 echo $saycek['say'];

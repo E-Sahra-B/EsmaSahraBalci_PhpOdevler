@@ -59,9 +59,9 @@ giriskontrol();
                           <a onclick="return confirm('Ürüne Onay Veriyorsunuz Bu İşlem Geri Alınamaz');" href="admin/netting/kullanici.php?urunonay=ok&siparisdetay_id=<?= $sipariscek['siparisdetay_id'] ?>&siparis_id=<?= $sipariscek['siparis_id'] ?>">
                             <button class="btn btn-warning btn-xs"> Onay Ver</button></a>
                         <?php } elseif ($sipariscek['siparisdetay_onay'] == 2) { ?>
-                          <button class="btn btn-success btn-xs"> Onaylandı</button>
+                          <a href="javascript:void(0);" class="btn btn-success btn-xs"> Onaylandı</a>
                         <?php } elseif ($sipariscek['siparisdetay_onay'] == 0) { ?>
-                          <button class="btn btn-warning btn-xs"> Teslim Edilmesi Bekleniyor</button>
+                          <a href="javascript:void(0);" class="btn btn-warning btn-xs"> Teslim Edilmesi Bekleniyor</a>
                         <?php } ?>
                       </td>
                     </tr>
