@@ -4,36 +4,40 @@ session_start();
 date_default_timezone_set('Europe/Istanbul');
 require_once 'baglan.php';
 include '../production/fonksiyon.php';
-
+require_once 'auth.php';
+$user = new Auth();
 if (isset($_POST['musterikaydet'])) {
     $kullanici_mail = htmlspecialchars(trim($_POST['kullanici_mail']));
     $kullanici_passwordone = htmlspecialchars(trim($_POST['kullanici_passwordone']));
     $kullanici_passwordtwo = htmlspecialchars(trim($_POST['kullanici_passwordtwo']));
     if ($kullanici_passwordone == $kullanici_passwordtwo) {
         if (strlen($kullanici_passwordone) >= 6) {
-            $kullanicisor = $db->prepare("select * from kullanici where kullanici_mail=:mail");
-            $kullanicisor->execute(array(
-                'mail' => $kullanici_mail
-            ));
-            $say = $kullanicisor->rowCount();
-            if ($say == 0) {
+            // $kullanicisor = $db->prepare("select * from kullanici where kullanici_mail=:mail");
+            // $kullanicisor->execute(array(
+            //     'mail' => $kullanici_mail
+            // ));
+            // $say = $kullanicisor->rowCount();
+            //if ($say == 0) {
+            if (!$user->user_exist($kullanici_mail)) {
                 $password = sha1(md5($kullanici_passwordone));
                 $kullanici_yetki = 1;
-                $kullanicikaydet = $db->prepare("INSERT INTO kullanici SET
-					kullanici_ad=:kullanici_ad,
-					kullanici_soyad=:kullanici_soyad,
-					kullanici_mail=:kullanici_mail,
-					kullanici_password=:kullanici_password,
-					kullanici_yetki=:kullanici_yetki
-					");
-                $insert = $kullanicikaydet->execute(array(
-                    'kullanici_ad' => htmlspecialchars($_POST['kullanici_ad']),
-                    'kullanici_soyad' => htmlspecialchars($_POST['kullanici_soyad']),
-                    'kullanici_mail' => $kullanici_mail,
-                    'kullanici_password' => $password,
-                    'kullanici_yetki' => $kullanici_yetki
-                ));
-                if ($insert) {
+                $name = htmlspecialchars($_POST['kullanici_ad']);
+                $sname = htmlspecialchars($_POST['kullanici_soyad']);
+                // $kullanicikaydet = $db->prepare("INSERT INTO kullanici SET
+                // 	kullanici_ad=:kullanici_ad,
+                // 	kullanici_soyad=:kullanici_soyad,
+                // 	kullanici_mail=:kullanici_mail,
+                // 	kullanici_password=:kullanici_password,
+                // 	kullanici_yetki=:kullanici_yetki
+                // 	");
+                // $insert = $kullanicikaydet->execute(array(
+                //     'kullanici_ad' => htmlspecialchars($_POST['kullanici_ad']),
+                //     'kullanici_soyad' => htmlspecialchars($_POST['kullanici_soyad']),
+                //     'kullanici_mail' => $kullanici_mail,
+                //     'kullanici_password' => $password,
+                //     'kullanici_yetki' => $kullanici_yetki
+                // ));
+                if ($user->register($name, $sname, $kullanici_mail, $password, $kullanici_yetki)) {
                     header("Location:../../login?durum=kayitok");
                 } else {
                     header("Location:../../register?durum=basarisiz");
@@ -68,13 +72,11 @@ if (isset($_POST['musterigiris'])) {
     $say = $kullanicisor->rowCount();
     if ($say == 1) {
         $kullanici_ip = $_SERVER['REMOTE_ADDR']; //IP adresi ogrenme
-        $zamanguncelle = $db->prepare("UPDATE kullanici SET
-			kullanici_sonzaman=:kullanici_sonzaman,
-			kullanici_sonip=:kullanici_sonip
-			WHERE kullanici_mail='$kullanici_mail'");
+        //$zamanguncelle = $db->prepare("UPDATE kullanici SET kullanici_sonzaman=:kullanici_sonzaman,kullanici_sonip=:kullanici_sonip WHERE kullanici_mail='$kullanici_mail'");
+        $zamanguncelle = $db->prepare("UPDATE kullanici SET kullanici_sonzaman=:kullanici_sonzaman WHERE kullanici_mail='$kullanici_mail'");
         $update = $zamanguncelle->execute(array(
-            'kullanici_sonzaman' => date("Y-m-d H:i:s"),
-            'kullanici_sonip' => $kullanici_ip
+            'kullanici_sonzaman' => date("Y-m-d H:i:s")
+            // 'kullanici_sonip' => $kullanici_ip
         ));
         $_SESSION['userkullanici_sonzaman'] = strtotime(date("Y-m-d H:i:s"));
         $_SESSION['userkullanici_mail'] = $kullanici_mail;
