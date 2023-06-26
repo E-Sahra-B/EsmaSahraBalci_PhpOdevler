@@ -111,6 +111,13 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
     <!-- Ck Editör -->
     <!-- <script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script> -->
     <script src="admin/production/ckeditor/ckeditor.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+
 </head>
 
 <body>
