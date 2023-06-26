@@ -5,12 +5,12 @@
         <h2 class="title-section">Üye Giriş İşlemleri</h2>
         <div class="registration-details-area inner-page-padding">
             <?php require_once 'alert.php'; ?>
-            <form action="admin/netting/kullanici.php" method="POST" id="personal-info-form">
+            <form method="POST" id="login-form">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label class="control-label" for="first-name">Mail Adresiniz *</label>
-                            <input type="text" id="first-name" required="" placeholder="Mail Adresinizi Giriniz.." name="kullanici_mail" class="form-control">
+                            <label class="control-label" for="kullanici_mail">Mail Adresiniz *</label>
+                            <input type="text" id="kullanici_mail" required="" placeholder="Mail Adresinizi Giriniz.." name="kullanici_mail" class="form-control">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -23,14 +23,14 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label class="control-label" for="last-name">Şifreniz Tekrar *</label>
-                            <input type="password" id="last-name" required="" placeholder="Şifrenizi Tekrar Giriniz..." name="kullanici_password" class="form-control">
+                            <label class="control-label" for="kullanici_password">Şifreniz Tekrar *</label>
+                            <input type="password" id="kullanici_password" required="" placeholder="Şifrenizi Tekrar Giriniz..." name="kullanici_password" class="form-control">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label class="control-label" for="last-name">Güvenlik Kodunu Giriniz *</label>
-                            <input type="text" id="last-name" required="" placeholder="Güvenlik Kodunu Giriniz" name="captcha_code" class="form-control">
+                            <label class="control-label" for="captcha_code">Güvenlik Kodunu Giriniz *</label>
+                            <input type="text" id="captcha_code" required="" placeholder="Güvenlik Kodunu Giriniz" name="captcha_code" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="pLace-order">
-                            <button class="apply-now-btn btn-block disabled" type="submit" name="musterigiris">Giriş</button>
+                            <button class="apply-now-btn btn-block disabled" type="submit" id="login-btn">Giriş</button>
                         </div>
                     </div>
                 </div>
@@ -76,5 +76,33 @@
     </div>
 </div>
 <!-- Modal Bitiş -->
+<script>
+    var site_url = '<?= URL; ?>';
+    $(document).ready(function() {
+        $('#login-btn').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: site_url + '/admin/netting/kullanici.php',
+                data: $("#login-form").serialize() + '&musterigiris',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.danger) {
+                        Swal.fire({
+                            title: "Hatalı İşlem",
+                            text: data.danger,
+                            icon: "error",
+                            position: "top-center",
+                            timer: 2500,
+                            showConfirmButton: false,
+                        });
+                    } else if (data.success) {
+                        window.location = site_url + '/index.php';
+                    }
+                }
+            });
+        })
+    });
+</script>
 <!-- Registration Page Area End Here -->
 <?php require_once 'footer.php' ?>

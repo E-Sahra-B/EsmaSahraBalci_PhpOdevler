@@ -5,10 +5,10 @@ date_default_timezone_set('Europe/Istanbul');
 require_once 'baglan.php';
 include '../production/fonksiyon.php';
 
+require_once 'auth.php';
+$user = new Auth();
+$msg = [];
 if (isset($_POST['musterikaydet'])) {
-    require_once 'auth.php';
-    $user = new Auth();
-    $msg = [];
     $kullanici_mail = $user->guvenlik($_POST['kullanici_mail']);
     $kullanici_passwordone = $user->guvenlik($_POST['kullanici_passwordone']);
     $kullanici_passwordtwo = $user->guvenlik($_POST['kullanici_passwordtwo']);
@@ -57,6 +57,30 @@ if (isset($_POST['musterikaydet'])) {
 }
 
 if (isset($_POST['musterigiris'])) {
+    require_once '../../securimage/securimage.php';
+    $securimage = new Securimage();
+    if ($securimage->check($_POST['captcha_code']) == false) {
+        $msg["danger"] = "captchahata";
+    }
+    $kullanici_mail = $user->guvenlik($_POST['kullanici_mail']);
+    $kullanici_password = $user->guvenlik($_POST['kullanici_password']);
+    $loggedInUser = $user->login($kullanici_mail);
+    if ($loggedInUser != null) {
+        if (password_verify($kullanici_password, $loggedInUser['kullanici_password'])) {
+            $user->userTimeUpdate($kullanici_mail);
+            $_SESSION['userkullanici_sonzaman'] = strtotime(date("Y-m-d H:i:s"));
+            $_SESSION['userkullanici_mail'] = $kullanici_mail;
+            $msg["success"] = "girisbasarili";
+        } else {
+            $msg["danger"] = "hatalikullanimail";
+        }
+    } else {
+        $msg["danger"] = "hatalikullanimail";
+    }
+
+    echo json_encode($msg);
+}
+if (isset($_POST['musterigirisEski'])) {
     require_once '../../securimage/securimage.php';
     $securimage = new Securimage();
     if ($securimage->check($_POST['captcha_code']) == false) {

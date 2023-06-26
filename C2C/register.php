@@ -1,8 +1,4 @@
-﻿<?php
-require_once 'header.php';
-$url = "http://" . $_SERVER["SERVER_NAME"] . dirname($_SERVER["PHP_SELF"]);
-define("URL", $url);
-?>
+﻿<?php require_once 'header.php'; ?>
 <!-- Registration Page Area Start Here -->
 <div class="registration-page-area bg-secondary section-space-bottom">
     <div class="container">
@@ -81,7 +77,6 @@ define("URL", $url);
 
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data);
                     if (data.danger) {
                         Swal.fire({
                             title: "Hatalı İşlem",

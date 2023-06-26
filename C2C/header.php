@@ -6,6 +6,8 @@ date_default_timezone_set('Europe/Istanbul');
 require_once 'admin/netting/baglan.php';
 require_once 'admin/production/fonksiyon.php';
 $ayarcek = siteAyar();
+$url = "http://" . $_SERVER["SERVER_NAME"] . dirname($_SERVER["PHP_SELF"]);
+define("URL", $url);
 
 if (isset($_SESSION['userkullanici_mail'])) {
     $kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_mail=:mail");

@@ -20,4 +20,21 @@ class Auth extends Database
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function login($email)
+    {
+        $sql = "SELECT kullanici_mail, kullanici_password FROM kullanici WHERE kullanici_mail=:email AND kullanici_durum !=0";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function userTimeUpdate($email)
+    {
+        $sql = "UPDATE kullanici SET kullanici_sonzaman=:kullanici_sonzaman WHERE kullanici_mail='$email'";
+        $stmt = $this->baglan->prepare($sql);
+        $result = $stmt->execute(['kullanici_sonzaman' => date("Y-m-d H:i:s")]);
+        return $result;
+    }
 }
