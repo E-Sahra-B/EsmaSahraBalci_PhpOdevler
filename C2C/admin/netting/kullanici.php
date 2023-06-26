@@ -9,9 +9,9 @@ if (isset($_POST['musterikaydet'])) {
     require_once 'auth.php';
     $user = new Auth();
     $msg = [];
-    $kullanici_mail = htmlspecialchars(trim($_POST['kullanici_mail']));
-    $kullanici_passwordone = htmlspecialchars(trim($_POST['kullanici_passwordone']));
-    $kullanici_passwordtwo = htmlspecialchars(trim($_POST['kullanici_passwordtwo']));
+    $kullanici_mail = $user->guvenlik($_POST['kullanici_mail']);
+    $kullanici_passwordone = $user->guvenlik($_POST['kullanici_passwordone']);
+    $kullanici_passwordtwo = $user->guvenlik($_POST['kullanici_passwordtwo']);
     if ($kullanici_passwordone == $kullanici_passwordtwo) {
         if (strlen($kullanici_passwordone) >= 6) {
             // $kullanicisor = $db->prepare("select * from kullanici where kullanici_mail=:mail");
@@ -21,10 +21,10 @@ if (isset($_POST['musterikaydet'])) {
             // $say = $kullanicisor->rowCount();
             //if ($say == 0) {
             if (!$user->user_exist($kullanici_mail)) {
-                $password = sha1(md5($kullanici_passwordone));
+                $password = password_hash($kullanici_passwordone, PASSWORD_DEFAULT);
                 $kullanici_yetki = 1;
-                $name = htmlspecialchars($_POST['kullanici_ad']);
-                $sname = htmlspecialchars($_POST['kullanici_soyad']);
+                $name = $user->guvenlik($_POST['kullanici_ad']);
+                $sname = $user->guvenlik($_POST['kullanici_soyad']);
                 // $kullanicikaydet = $db->prepare("INSERT INTO kullanici SET
                 // 	kullanici_ad=:kullanici_ad,
                 // 	kullanici_soyad=:kullanici_soyad,

@@ -15,6 +15,22 @@ class Database
             echo "Bağlantı Hatası : " . $e->getMessage() . "<br>";
         }
     }
+
+    public function guvenlik($deger)
+    {
+        $boslukSil = trim($deger);
+        $tagTemizle = strip_tags($boslukSil);
+        $etkisizYap = htmlspecialchars($tagTemizle, ENT_QUOTES);
+        return $etkisizYap;
+    }
+
+    public function sonuc($result, $message)
+    {
+        return '<div class="alert alert-' . $result . ' alert-dismissible">
+        <button class="close" data-dismiss="alert" aria-label="close">&times;</button>
+        <strong class="text-center">' . $message . '</strong></div>';
+    }
+
     public function __destruct()
     {
         $this->baglan = null;
