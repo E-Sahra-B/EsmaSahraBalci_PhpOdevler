@@ -28,7 +28,7 @@ while ($uruncek = $urunsor->fetch(PDO::FETCH_ASSOC)) {
             <div class="item-profile">
                 <div class="profile-title">
                     <div class="img-wrapper"><img src="<?= $uruncek['kullanici_magazafoto'] ?>" alt="profile" class="img-responsive img-circle"></div>
-                    <span><?= $uruncek['kullanici_ad'] . " " . substr($uruncek['kullanici_soyad'], 0, 1) ?>.</span>
+                    <span><?= $uruncek['kullanici_ad'] . " " . kisalt($uruncek['kullanici_soyad'], 0, 1) ?>.</span>
                 </div>
                 <div class="profile-rating-info">
                     <ul>

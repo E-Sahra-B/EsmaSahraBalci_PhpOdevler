@@ -25,60 +25,55 @@
                             <div class="product-list-view">
                                 <?php
                                 if (isset($_POST['searchsayfa'])) {
-                                    $searchkeyword = $_POST['searchkeyword'];
-                                    $sayfada = 5;
-                                    $sorgu = $db->prepare("SELECT * from urun where urun_ad like ? or  urun_detay like ?");
+                                    $searchkeyword = guvenlik($_POST['searchkeyword']);
+                                    $sayfada = 3;
+                                    $sorgu = $db->prepare("SELECT * FROM urun WHERE urun_ad LIKE ? OR  urun_detay LIKE ?");
                                     $sorgu->execute(array(
                                         "%$searchkeyword%",
                                         "%$searchkeyword%"
                                     ));
                                     $toplam_icerik = $sorgu->rowCount();
-                                    $toplam_sayfa = ceil($toplam_icerik / $sayfada);
-                                    $sayfa = isset($_GET['sayfa']) ? (int) $_GET['sayfa'] : 1;
-                                    if ($sayfa < 1) $sayfa = 1;
-                                    if ($sayfa > $toplam_sayfa) $sayfa = $toplam_sayfa;
-                                    $limit = ($sayfa - 1) * $sayfada;
-                                    // $urunsor = $db->prepare("SELECT urun.*,kategori.*,kullanici.* 
-                                    // FROM urun 
-                                    // INNER JOIN kategori ON urun.kategori_id=kategori.kategori_id 
-                                    // INNER JOIN kullanici ON urun.kullanici_id=kullanici.kullanici_id 
-                                    // WHERE urun_durum=:urun_durum and urun.urun_ad 
-                                    // LIKE '%$searchkeyword%' 
-                                    // order by urun_zaman 
-                                    // DESC limit $limit,$sayfada ");
-                                    // $urunsor->execute(array(
-                                    //     'urun_durum' => 1
-                                    // ));
-                                    $urunsor = $db->prepare("SELECT * FROM urun 
-                                    INNER JOIN kategori ON urun.kategori_id=kategori.kategori_id 
-                                    INNER JOIN kullanici ON urun.kullanici_id=kullanici.kullanici_id
-                                    WHERE urun.urun_ad LIKE '%$searchkeyword%' ");
-                                    $urunsor->execute(array(
-                                        'urun_durum' => 1
-                                    ));
+                                    if ($toplam_icerik < 1) {
+                                        echo "Aradığınız Ürün Bulunamadı.";
+                                    } else {
+                                        $toplam_sayfa = ceil($toplam_icerik / $sayfada);
+                                        $sayfa = isset($_GET['sayfa']) ? (int) $_GET['sayfa'] : 1;
+                                        if ($sayfa < 1) $sayfa = 1;
+                                        if ($sayfa > $toplam_sayfa) $sayfa = $toplam_sayfa;
+                                        $limit = ($sayfa - 1) * $sayfada;
+                                        $urunsor = $db->prepare("SELECT urun.*,kategori.*,kullanici.* 
+                                        FROM urun 
+                                        INNER JOIN kategori ON urun.kategori_id=kategori.kategori_id 
+                                        INNER JOIN kullanici ON urun.kullanici_id=kullanici.kullanici_id
+                                        WHERE urun_durum=:urun_durum and urun.urun_ad 
+                                        LIKE '%$searchkeyword%' OR urun.urun_detay LIKE '%$searchkeyword%'
+                                        order by urun_zaman 
+                                        DESC limit $limit,$sayfada");
+                                        $urunsor->execute(array(
+                                            'urun_durum' => 1
+                                        ));
+                                        require 'kategoriIcerik.php';
+                                    }
                                 }
-                                $say = $sorgu->rowCount();
-                                if ($say == 0) {
-                                    echo "Aradığınız Ürün Bulunamadı.";
-                                }
-                                require 'kategoriIcerik.php';
                                 ?>
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <ul class="pagination-align-left">
                                             <?php
-                                            $s = 0;
-                                            while ($s < $toplam_sayfa) {
-                                                $s++; ?>
-                                                <?php
-                                                if (!empty($_GET['kategori_id'])) {
-                                                    $active = ($s == $sayfa) ? 'background-color: #e74c3c; color:#fff;' : ''; ?>
-                                                    <li><a style="<?= $active ?>" href="kategoriler-<?= $_GET['sef']; ?>-<?= $_GET['kategori_id'] ?>?sayfa=<?= $s; ?>"><?= $s; ?></a></li>
-                                                <?php
-                                                } else { ?>
-                                                    <li><a style="<?= $active ?>" href="kategoriler?sayfa=<?= $s; ?>"><?= $s; ?></a></li>
+                                            $s = 1;
+                                            if ($toplam_sayfa > $sayfada) :
+                                                while ($s < $toplam_sayfa) {
+
+                                                    if (!empty($_GET['kategori_id'])) {
+                                                        $active = ($s == $sayfa) ? 'background-color: #e74c3c; color:#fff;' : ''; ?>
+                                                        <li><a style="<?= $active ?>" href="kategoriler-<?= $_GET['sef']; ?>-<?= $_GET['kategori_id'] ?>?sayfa=<?= $s; ?>"><?= $s; ?></a></li>
+                                                    <?php
+                                                    } else { ?>
+                                                        <li><a style="<?= $active ?>" href="kategoriler?sayfa=<?= $s; ?>"><?= $s; ?></a></li>
+                                                    <?php }
+                                                    $s++; ?>
                                                 <?php } ?>
-                                            <?php } ?>
+                                            <?php endif ?>
                                         </ul>
                                     </div>
                                 </div>
