@@ -5,7 +5,7 @@ date_default_timezone_set('Europe/Istanbul');
 require_once 'baglan.php';
 include '../production/fonksiyon.php';
 
-if (isset($_GET['musterikaydet'])) {
+if (isset($_POST['musterikaydet'])) {
     require_once 'auth.php';
     $user = new Auth();
     $msg = [];

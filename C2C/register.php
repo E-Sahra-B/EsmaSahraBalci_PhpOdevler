@@ -10,7 +10,7 @@ define("URL", $url);
         <div class="registration-details-area inner-page-padding">
             <?php require_once 'alert.php'; ?>
             <p id="result"></p>
-            <form action="admin/netting/kullanici.php" method="POST" id="personal-info-form">
+            <form method="POST" id="register-form">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
@@ -62,22 +62,23 @@ define("URL", $url);
     var site_url = '<?= URL; ?>';
     $(document).ready(function() {
         $('#register-btn').click(function(e) {
+
             e.preventDefault();
-            var kullanici_ad = $('#kullanici_ad').val();
-            var kullanici_soyad = $('#kullanici_soyad').val();
-            var kullanici_mail = $('#kullanici_mail').val();
-            var kullanici_passwordone = $('#kullanici_passwordone').val();
-            var kullanici_passwordtwo = $('#kullanici_passwordtwo').val();
+            // var kullanici_ad = $('#kullanici_ad').val();
+            // var kullanici_soyad = $('#kullanici_soyad').val();
+            // var kullanici_mail = $('#kullanici_mail').val();
+            // var kullanici_passwordone = $('#kullanici_passwordone').val();
+            // var kullanici_passwordtwo = $('#kullanici_passwordtwo').val();
             $.ajax({
                 type: 'POST',
-                url: site_url + '/admin/netting/kullanici.php?musterikaydet',
-                data: {
-                    kullanici_ad: kullanici_ad,
-                    kullanici_soyad: kullanici_soyad,
-                    kullanici_mail: kullanici_mail,
-                    kullanici_passwordone: kullanici_passwordone,
-                    kullanici_passwordtwo: kullanici_passwordtwo
-                },
+                url: site_url + '/admin/netting/kullanici.php',
+                data: $("#register-form").serialize() + '&musterikaydet',
+                // kullanici_ad: kullanici_ad,
+                // kullanici_soyad: kullanici_soyad,
+                // kullanici_mail: kullanici_mail,
+                // kullanici_passwordone: kullanici_passwordone,
+                // kullanici_passwordtwo: kullanici_passwordtwo
+
                 dataType: 'json',
                 success: function(data) {
                     console.log(data);
