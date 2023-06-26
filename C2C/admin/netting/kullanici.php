@@ -4,9 +4,11 @@ session_start();
 date_default_timezone_set('Europe/Istanbul');
 require_once 'baglan.php';
 include '../production/fonksiyon.php';
-require_once 'auth.php';
-$user = new Auth();
-if (isset($_POST['musterikaydet'])) {
+
+if (isset($_GET['musterikaydet'])) {
+    require_once 'auth.php';
+    $user = new Auth();
+    $msg = [];
     $kullanici_mail = htmlspecialchars(trim($_POST['kullanici_mail']));
     $kullanici_passwordone = htmlspecialchars(trim($_POST['kullanici_passwordone']));
     $kullanici_passwordtwo = htmlspecialchars(trim($_POST['kullanici_passwordtwo']));
@@ -38,19 +40,20 @@ if (isset($_POST['musterikaydet'])) {
                 //     'kullanici_yetki' => $kullanici_yetki
                 // ));
                 if ($user->register($name, $sname, $kullanici_mail, $password, $kullanici_yetki)) {
-                    header("Location:../../login?durum=kayitok");
+                    $msg["success"] = "kayitok";
                 } else {
-                    header("Location:../../register?durum=basarisiz");
+                    $msg["danger"] = "basarisiz";
                 }
             } else {
-                header("Location:../../register?durum=mukerrerkayit");
+                $msg["danger"] = "mukerrerkayit";
             }
         } else {
-            header("Location:../../register.php?durum=eksiksifre");
+            $msg["danger"] = "eksiksifre";
         }
     } else {
-        header("Location:../../register.php?durum=farklisifre");
+        $msg["danger"] = "farklisifre";
     }
+    echo json_encode($msg);
 }
 
 if (isset($_POST['musterigiris'])) {
