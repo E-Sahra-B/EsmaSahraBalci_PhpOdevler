@@ -37,4 +37,37 @@ class Auth extends Database
         $result = $stmt->execute(['kullanici_sonzaman' => date("Y-m-d H:i:s")]);
         return $result;
     }
+
+    //Is there a user
+    public function currentUser($email)
+    {
+        $sql = "SELECT * FROM kullanici WHERE kullanici_mail=:email AND kullanici_durum !=0";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    //Forgot Password
+    public function forgotPassword($token, $email)
+    {
+        $sql = "UPDATE kullanici SET kullanici_token=:token, token_expire=DATE_ADD(NOW(),INTERVAL 10 MINUTE) WHERE kullanici_mail=:email";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['token' => $token, 'email' => $email]);
+        return true;
+    }
+    //Reset Password User Auth
+    public function resetPassAuth($email, $token)
+    {
+        $sql = "SELECT id FROM kullanici WHERE 
+        kullanici_mail=:email AND 
+        kullanici_token=:token AND 
+        kullanici_token!='' AND 
+        token_expire > NOW() AND 
+        kullanici_durum !=0";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['email' => $email, 'token' => $token]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

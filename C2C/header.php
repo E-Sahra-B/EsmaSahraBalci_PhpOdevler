@@ -54,12 +54,14 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
 <head>
     <title>
         <?php if (empty($title)) {
-            echo $ayarcek['ayar_title'];
+            //echo $ayarcek['ayar_title']; 
+            echo ucfirst(basename($_SERVER['PHP_SELF'], '.php')) . ' | ' . $ayarcek['ayar_title'];
         } else {
-            echo $title;
+            echo $title . ' | ' . $ayarcek['ayar_title'];
         }
         ?>
     </title>
+    <!-- <title><?= ucfirst(basename($_SERVER['PHP_SELF'], '.php')) . ' | ' . $ayarcek['ayar_title']; ?></title> -->
     <meta charset="utf-8"><!-- Türkçe karakter sorunu olmasın diye eklenmeli -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?= $ayarcek['ayar_description'] ?>">
@@ -301,8 +303,8 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                     <div class="container">
                         <nav id="desktop-nav">
                             <ul>
-                                <li class="active"><a href="index">Anasayfa</a></li>
-                                <li><a href="kategoriler">Kategoriler</a></li>
+                                <li class="<?= (basename($_SERVER['PHP_SELF'], '.php') == "index") ? "active" : ""; ?>"><a href="index">Anasayfa</a></li>
+                                <li class="<?= (basename($_SERVER['PHP_SELF'], '.php') == "kategoriler") ? "active" : ""; ?>"><a href="kategoriler">Kategoriler</a></li>
                                 <?php
                                 $kategorisor = $db->prepare("SELECT * FROM kategori where kategori_onecikar=:onecikar order by kategori_sira ASC");
                                 $kategorisor->execute(array(
