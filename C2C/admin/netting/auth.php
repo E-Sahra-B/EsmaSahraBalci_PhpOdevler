@@ -70,4 +70,38 @@ class Auth extends Database
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function addProduct($kategori_id, $kullanici_id, $urun_ad, $urun_detay, $urun_fiyat, $urunfoto_resimyol)
+    {
+        $sql = "INSERT INTO urun SET
+		kategori_id=:kategori_id,
+		kullanici_id=:kullanici_id,
+		urun_ad=:urun_ad,
+		urun_detay=:urun_detay,
+		urun_fiyat=:urun_fiyat,
+		urunfoto_resimyol=:urunfoto_resimyol
+		";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute([
+            'kategori_id' => $kategori_id,
+            'kullanici_id' => $kullanici_id,
+            'urun_ad' => $urun_ad,
+            'urun_detay' => $urun_detay,
+            'urun_fiyat' => $urun_fiyat,
+            'urunfoto_resimyol' => $urunfoto_resimyol
+        ]);
+        return true;
+    }
+    public function upload_file($file)
+    {
+        if (isset($file)) {
+            $extension = pathinfo($file["name"], PATHINFO_EXTENSION);
+            @$tmp_name = $_FILES['urunfoto_resimyol']["tmp_name"];
+            $uploads_dir = '../../img/product';
+            $uniq = uniqid();
+            $refimgyol = substr($uploads_dir, 6) . "/" . $uniq  . "." . $extension;
+            @move_uploaded_file($tmp_name, "$uploads_dir/$uniq.$extension");
+            return $refimgyol;
+        }
+    }
 }

@@ -80,6 +80,31 @@ if (isset($_POST['musterigiris'])) {
 
     echo json_encode($msg);
 }
+if (isset($_POST['magazaurunekle'])) {
+    if ($_FILES['urunfoto_resimyol']['size'] > 1048576) {
+        $msg["warning"] = "Bu dosya boyutu çok büyük";
+    } else {
+        $izinli_uzantilar = array('jpg', 'png', 'gif', 'jpeg', 'webp', 'PNG', 'JPG', 'JPEG', 'WEBP');
+        $ext = pathinfo($_FILES['urunfoto_resimyol']["name"], PATHINFO_EXTENSION);
+        if (in_array($ext, $izinli_uzantilar) === false) {
+            $msg["warning"] = "Bu uzantı kabul edilmiyor";
+        } else {
+            $urunfoto_resimyol = $user->upload_file($_FILES['urunfoto_resimyol']);
+
+            $kategori_id = $user->guvenlik($_POST['kategori_id']);
+            $kullanici_id = $user->guvenlik($_SESSION['userkullanici_id']);
+            $urun_ad = $user->guvenlik($_POST['urun_ad']);
+            $urun_detay = $_POST['urun_detay'];
+            $urun_fiyat = $user->guvenlik($_POST['urun_fiyat']);
+            if ($user->addProduct($kategori_id, $kullanici_id, $urun_ad, $urun_detay, $urun_fiyat, $urunfoto_resimyol)) {
+                $msg["success"] = "Urun Ekleme Islemi Tamamlandi";
+            } else {
+                $msg["danger"] = "Urun Yuklenemedi";
+            }
+        }
+    }
+    echo json_encode($msg);
+}
 if (isset($_POST['musterigirisEski'])) {
     require_once '../../securimage/securimage.php';
     $securimage = new Securimage();
