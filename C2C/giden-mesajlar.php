@@ -27,8 +27,9 @@ giriskontrol();
                     <th scope="col">#</th>
                     <th scope="col">Mesaj Tarihi</th>
                     <th scope="col">Gönderilen Kullanıcı</th>
+                    <th scope="col">İçerik</th>
                     <th scope="col">Detay</th>
-                    <th></th>
+                    <th scope="col">Sil</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,7 @@ giriskontrol();
                       <th scope="row"><?= $say ?></th>
                       <td><?= uzuntarih($mesajcek['mesaj_zaman']); ?></td>
                       <td><?= $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] ?></td>
+                      <td><?= guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) ?></td>
                       <td><a href="mesaj-detay?gidenmesaj=ok&mesaj_id=<?= $mesajcek['mesaj_id'] ?>&kullanici_gon=<?= $mesajcek['kullanici_gon'] ?>"><button class="btn btn-primary btn-xs">Mesajı Oku</button></a></td>
                       <td><a onclick="return confirm('Bu mesajı silmek istiyormusunuz? \n İşlem geri alınamaz...')" href="nedmin/netting/kullanici.php?gidenmesajsil=ok&mesaj_id=<?= $mesajcek['mesaj_id'] ?>"><button class="btn btn-danger btn-xs">Sil</button></a></td>
                     </tr>

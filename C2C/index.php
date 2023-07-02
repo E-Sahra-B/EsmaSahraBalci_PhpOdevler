@@ -57,9 +57,9 @@
                         </div>
                         <div class="item-content flex" style="height: 200px;">
                             <div class="item-info">
-                                <h3><a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><?= $uruncek['urun_ad'] ?></a></h3>
+                                <h3><a href="urun-<?= seo($uruncek['urun_ad']) . "-" . $uruncek['urun_id'] ?>"><?= kisalt($uruncek['urun_ad'], 0, 15) ?></a></h3>
                                 <span><a href=" kategoriler-<?= seo($uruncek['kategori_ad']) . "-" . $uruncek['kategori_id'] ?>"><?= $uruncek['kategori_ad'] ?></a></span>
-                                <div class="price"><?= fiyat($uruncek['urun_fiyat']) ?> TeLe</div>
+                                <div class="price"><?= fiyat($uruncek['urun_fiyat']) ?> ₺</div>
                             </div>
                             <div class="item-profile">
                                 <div class="profile-title">
@@ -85,7 +85,7 @@
 <!-- Newest Products Area End Here -->
 
 <!-- Why Choose Area Start Here -->
-<div class="why-choose-area bg-primaryText section-space-default">
+<!-- <div class="why-choose-area bg-primaryText section-space-default">
     <div class="container">
         <h2 class="title-textPrimary">Why You Choose Foxtar Market Place?</h2>
     </div>
@@ -114,7 +114,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Why Choose Area End Here -->
 
 <!-- Author Banner Area Start Here -->
@@ -122,71 +122,71 @@
     <div class="author-banner-wrapper">
         <div id="ri-grid" class="author-banner-bg ri-grid header text-center">
             <ul class="ri-grid-list">
-                <li><a href="#"><img src="img\banner\2.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\3.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\4.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\5.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\6.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\7.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\2.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\3.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\5.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\6.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\7.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\2.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\3.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\4.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\5.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\6.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\7.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\2.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\3.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\5.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\6.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\7.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\7.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\2.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\3.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\5.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\6.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\7.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\2.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\3.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\5.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\6.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\7.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\7.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\8.jpg" alt=""></a></li>
-                <li><a href="#"><img src="img\banner\9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/2.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/3.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/4.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/5.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/6.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/7.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/2.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/3.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/5.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/6.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/7.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/2.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/3.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/4.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/5.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/6.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/7.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/2.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/3.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/5.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/6.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/7.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/7.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/2.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/3.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/5.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/6.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/7.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/2.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/3.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/5.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/6.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/7.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/7.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/banner/9.jpg" alt=""></a></li>
             </ul>
         </div>
         <div class="author-banner-content">
             <ul>
                 <li>
-                    <p>Over <span> 20,000</span> Author Are Involved Here!</p>
+                    <p>Aylık <span> 20.000</span> Alıcı/Satıcı Buluşturuyor!</p>
                 </li>
-                <li><a href="#" class="btn-fill-textPrimary">Become A Author</a></li>
+                <li><a href="kategoriler" class="btn-fill-textPrimary">Ürünlere Git</a></li>
             </ul>
         </div>
     </div>

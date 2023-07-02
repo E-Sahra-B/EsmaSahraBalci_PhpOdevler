@@ -277,14 +277,18 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                                     </div>
                                                 </div>
                                                 <ul>
+                                                    <li><a href="siparislerim">Siparişlerim</a></li>
+                                                    <li><a href="gelen-mesajlar">Gelen Mesajlar</a></li>
+                                                    <li><a href="giden-mesajlar">Giden Mesajlar</a></li>
                                                     <li><a href="hesabim">Hesap Bilgilerim</a></li>
-                                                    <li><a href="#">Portfolio</a></li>
-                                                    <li><a href="#">Account Setting</a></li>
-                                                    <li><a href="#">Downloads</a></li>
-                                                    <li><a href="#">Wishlist</a></li>
-                                                    <li><a href="#">Upload Item</a></li>
-                                                    <li><a href="#">Statement</a></li>
-                                                    <li><a href="#">Withdraws</a></li>
+                                                    <li><a href="adres-bilgileri">Adres Bilgilerim</a></li>
+                                                    <li><a href="profil-resim-guncelle">Resim Güncelle</a></li>
+                                                    <li><a href="sifre-guncelle">Şifre Güncelle</a></li>
+                                                    <hr>
+                                                    <li><a href="urunlerim">Ürünlerim</a></li>
+                                                    <li><a href="urun-ekle">Ürün Ekle</a></li>
+                                                    <li><a href="yeni-siparisler">Yeni Siparişler</a></li>
+                                                    <li><a href="tamamlanan-siparisler">Tamamlanan Siparişler</a></li>
                                                 </ul>
                                             </div>
                                         </li>

@@ -27,6 +27,7 @@ giriskontrol();
                     <th scope="col">#</th>
                     <th scope="col">Mesaj Tarihi</th>
                     <th scope="col">Gönderen</th>
+                    <th scope="col">İçerik</th>
                     <th scope="col">Durum</th>
                     <th scope="col">Detay</th>
                     <th></th>
@@ -50,10 +51,11 @@ giriskontrol();
                       <th scope="row"><?= $say ?></th>
                       <td><?= uzuntarih($mesajcek['mesaj_zaman']); ?></td>
                       <td><?= $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] ?></td>
+                      <td><?= guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) ?></td>
                       <td>
                         <?php
                         if ($mesajcek['mesaj_okunma'] == 0) { ?>
-                          <i style="color:green" class="fa fa-circle" aria-hidden="true">
+                          <i style="color:orange" class="fa fa-circle" aria-hidden="true">
                           <?php } else { ?>
                             <i class="fa fa-circle" aria-hidden="true">
                             <?php } ?>
