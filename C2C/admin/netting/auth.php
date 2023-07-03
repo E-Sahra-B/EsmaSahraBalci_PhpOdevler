@@ -104,4 +104,16 @@ class Auth extends Database
             return $refimgyol;
         }
     }
+
+    public function Delete($x, $id)
+    {
+        $sql = "DELETE FROM " . $x . " WHERE " . $x . "_id=:id";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return true;
+    }
+    public function messageDelete($x, $id)
+    {
+        return $this->Delete($x, $id);
+    }
 }
