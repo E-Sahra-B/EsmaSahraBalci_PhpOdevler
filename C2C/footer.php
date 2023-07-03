@@ -109,6 +109,22 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 <script src="js\jquery.gridrotator.js" type="text/javascript"></script>
 <!-- Custom Js -->
 <script src="js\main.js" type="text/javascript"></script>
+<!-- Datatables -->
+<script src="admin/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="admin/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="admin/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="admin/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="admin/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="admin/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="admin/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="admin/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="admin/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="admin/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="admin/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="admin/vendors/datatables.net-scroller/js/datatables.scroller.min.js"></script>
+<script src="admin/vendors/jszip/dist/jszip.min.js"></script>
+<script src="admin/vendors/pdfmake/build/pdfmake.min.js"></script>
+<script src="admin/vendors/pdfmake/build/vfs_fonts.js"></script>
 </body>
 
 </html>

@@ -122,6 +122,13 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
     <!-- SweetAlert2 -->
     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
 
+    <!-- Datatables -->
+    <link href="admin/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="admin/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="admin/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="admin/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="admin/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>

@@ -66,6 +66,7 @@ giriskontrol();
 <script>
   var site_url = '<?= URL; ?>';
   $(document).ready(function() {
+    $("table").DataTable();
     $('.deleteBtn').click(function(e) {
       e.preventDefault();
       del_id = $(this).attr('id');
