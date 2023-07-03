@@ -404,3 +404,14 @@ if (isset($_POST['mesajsil'])) {
     }
     echo json_encode($msg);
 }
+
+if (isset($_POST['urunsil'])) {
+    if ($user->productDelete($user->guvenlik('urun'), $user->guvenlik($_POST['urunsil']))) {
+        $resimsilunlink = $_POST['resimyol'];
+        unlink("../../$resimsilunlink");
+        $msg["success"] = "Ürün Silme islemi Tamamlandi";
+    } else {
+        $msg["danger"] = "Ürün Silme islemi Tamamlanamadi";
+    }
+    echo json_encode($msg);
+}

@@ -116,4 +116,9 @@ class Auth extends Database
     {
         return $this->Delete($x, $id);
     }
+
+    public function productDelete($x, $id)
+    {
+        return $this->Delete($x, $id);
+    }
 }
