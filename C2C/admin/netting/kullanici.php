@@ -415,3 +415,17 @@ if (isset($_POST['urunsil'])) {
     }
     echo json_encode($msg);
 }
+
+if (isset($_POST['SendUser'])) {
+    $data = $user->OtherUser($user->guvenlik($_SESSION['userkullanici_id']));
+    $output = '';
+    if ($data) {
+        $output .= '<select class="form-control">';
+        $output .= '<option selected>Kullanıcı Seciniz...</option>';
+        foreach ($data as $row) {
+            $output .= '<option value="' . $row['kullanici_id'] . '">' . $row['kullanici_ad'] . ' ' . $row['kullanici_soyad'] . '</option>';
+        }
+        $output .= '</select>';
+    }
+    echo $output;
+}

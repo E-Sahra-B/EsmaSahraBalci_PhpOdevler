@@ -121,4 +121,13 @@ class Auth extends Database
     {
         return $this->Delete($x, $id);
     }
+
+    public function OtherUser($id)
+    {
+        $sql = "SELECT * FROM kullanici WHERE kullanici_id NOT IN (:id)";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
