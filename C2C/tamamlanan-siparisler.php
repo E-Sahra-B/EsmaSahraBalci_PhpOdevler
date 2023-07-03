@@ -19,7 +19,7 @@ giriskontrol();
       <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
         <div class="settings-details tab-content">
           <div class="tab-pane fade active in" id="Personal">
-            <h2 class="title-section">Yeni Siparişler</h2>
+            <h2 class="title-section">Tamamlanan Siparişler</h2>
             <div class="personal-info inner-page-padding">
               <table class="table table-striped">
                 <thead>
