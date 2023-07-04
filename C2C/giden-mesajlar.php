@@ -76,6 +76,48 @@ giriskontrol();
                 </div>
               </div>
               <!-- Modal End -->
+
+              <!-- Modal Detail -->
+              <div class="modal fade" id="detailMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <form method="POST" enctype="multipart/form-data" class="form-horizontal" id="detailModalForm">
+                      <div class="settings-details tab-content">
+                        <div class="tab-pane fade active in" id="Personal">
+                          <h2 class="title-section">Mesaj Detay</h2>
+                          <div class="personal-info inner-page-padding">
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label">Mesaj Saati</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" id="detailSendTime" value="">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label">Gönderilen Kullanıcı</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" id="detailSendUserId" value="">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label">Mesajınız</label>
+                              <div class="col-sm-9">
+                                <textarea class="form-control" rows="8" id="detailSendMessage"></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="text-right col-sm-12">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Kapat</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal Detail End -->
+
               <div class="table-responsive" id="showMessage"></div>
               <!-- <table class="table table-striped">
                 <thead>
@@ -146,8 +188,8 @@ giriskontrol();
         },
         success: function(data) {
           $('#showMessage').html(data);
-          // $("table").DataTable({
-          //   order: [0, 'desc']
+          // $("table").DataTable({ 
+          //   order: [0, 'desc']   //Datatable  0. index order list
           // })
         }
       });
@@ -219,7 +261,8 @@ giriskontrol();
         confirmButtonColor: '#d33',
         cancelButtonColor: '#ccc',
         canselButtonText: 'iptal',
-        confirmButtonText: 'Evet Sil!'
+        confirmButtonText: 'Evet Sil!',
+        cancelButtonText: 'İptal'
       }).then((result) => {
         if (result.isConfirmed) {
           $.ajax({
@@ -252,6 +295,27 @@ giriskontrol();
               }
             }
           });
+        }
+      })
+    })
+
+    $("body").on("click", ".detailBtn", function(e) {
+      e.preventDefault();
+      detail_id = $(this).attr('id');
+      $.ajax({
+        type: 'POST',
+        url: site_url + '/admin/netting/kullanici.php',
+        dataType: 'json',
+        data: {
+          mesaj_id: detail_id,
+          action: 'mesaggeDetail'
+        },
+        success: function(result) {
+          //success: function(data) {
+          //result = JSON.parse(data); //dataType: 'json' olunca gerek yok
+          $('#detailSendUserId').val(result.kullanici_ad + ' ' + result.kullanici_soyad);
+          $('#detailSendTime').val(result.mesaj_zaman);
+          $('#detailSendMessage').val(result.mesaj_detay);
         }
       })
     })

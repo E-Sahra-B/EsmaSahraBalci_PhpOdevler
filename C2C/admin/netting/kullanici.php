@@ -463,7 +463,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'getAllMessage') {
                 <td>' . $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] . '</td>
                 <td>' . guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) . '</td>';
             // <td><a href="mesaj-detay?gidenmesaj=ok&mesaj_id=' . $mesajcek['mesaj_id'] . '&kullanici_gon=' . $mesajcek['kullanici_gon'] . '"><button class="btn btn-primary btn-sm">Mesajı Oku</button></a></td>
-            $output .= '<td><a href="#" id=' . $mesajcek['mesaj_id'] . '" class="detailBtn"><button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#detailMessage">Mesajı Oku</button></a></td>
+            $output .= '<td><a href="#" id="' . $mesajcek['mesaj_id'] . '" class="detailBtn"><button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#detailMessage">Mesajı Oku</button></a></td>
                 
                 <td><a href="#" id="' . $mesajcek['mesaj_id'] . '" class="deleteBtn"><button class="btn btn-danger btn-sm">Sil</button></a></td>
             </tr>';
@@ -473,4 +473,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'getAllMessage') {
         $output .= '<h3 class="text-center text-danger"> Mesaj Bulunmamaktadir</h3>';
     }
     echo $output;
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'mesaggeDetail') {
+    $row = $user->getMessageByUserID($user->guvenlik($_POST['mesaj_id']), $user->guvenlik($_SESSION['userkullanici_id']));
+    echo json_encode($row);
 }
