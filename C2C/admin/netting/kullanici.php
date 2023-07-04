@@ -441,7 +441,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'getAllMessage') {
     $output = '';
     $data = $user->getAllMessageByUser($user->guvenlik($_SESSION['userkullanici_id']));
     if ($data) {
-        $output .= '<table class="table table-striped">
+        $output .= '<table class="table table-striped listTable">
         <thead>
             <tr>
                 <th scope="col">#</th>

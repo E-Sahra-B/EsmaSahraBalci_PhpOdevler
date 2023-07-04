@@ -163,7 +163,7 @@ giriskontrol();
 <script>
   var site_url = '<?= URL; ?>';
   $(document).ready(function(e) {
-    $("table").DataTable();
+    // $(".listTable").DataTable();
     displayAllMessage();
     $('.addModalBtn').click(function(e) {
       e.preventDefault();
@@ -188,9 +188,9 @@ giriskontrol();
         },
         success: function(data) {
           $('#showMessage').html(data);
-          // $("table").DataTable({ 
-          //   order: [0, 'desc']   //Datatable  0. index order list
-          // })
+          $(".listTable").DataTable({
+            order: [2, 'asc'] //Datatable  0. index order list
+          })
         }
       });
     }
