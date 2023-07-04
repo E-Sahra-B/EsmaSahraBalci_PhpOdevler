@@ -130,4 +130,19 @@ class Auth extends Database
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function addMessage($mesaj_detay, $kullanici_gel, $kullanici_gon)
+    {
+        $sql = "INSERT INTO mesaj SET
+		mesaj_detay=:mesaj_detay,
+		kullanici_gel=:kullanici_gel,
+		kullanici_gon=:kullanici_gon
+		";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute([
+            'mesaj_detay' => $mesaj_detay,
+            'kullanici_gel' => $kullanici_gel,
+            'kullanici_gon' => $kullanici_gon
+        ]);
+        return true;
+    }
 }

@@ -358,7 +358,7 @@ if (isset($_POST['puanyorumekle'])) {
     }
 }
 
-if (isset($_POST['mesajgonder'])) {
+if (isset($_POST['mesajgonderEski'])) {
     $kullanici_gel = $_POST['kullanici_gel'];
     $kaydet = $db->prepare("INSERT INTO mesaj SET
 		mesaj_detay=:mesaj_detay,
@@ -428,4 +428,13 @@ if (isset($_POST['SendUser'])) {
         $output .= '</select>';
     }
     echo $output;
+}
+
+if (isset($_POST['mesajgonder'])) {
+    if ($user->addMessage($user->guvenlik($_POST['mesaj_detay']), $user->guvenlik($_POST['kullanici_gel']), $user->guvenlik($_SESSION['userkullanici_id']))) {
+        $msg["success"] = "Mesaj Gonderme islemi Tamamlandi";
+    } else {
+        $msg["danger"] = "Mesaj Gonderme islemi Tamamlanamadi";
+    }
+    echo json_encode($msg);
 }

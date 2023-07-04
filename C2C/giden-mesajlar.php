@@ -32,7 +32,7 @@ giriskontrol();
               <div class="modal fade" id="addMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
-                    <form action="admin/netting/kullanici.php" method="POST" enctype="multipart/form-data" class="form-horizontal" id="personal-info-form">
+                    <form method="POST" enctype="multipart/form-data" class="form-horizontal" id="addModalForm">
                       <div class="settings-details tab-content">
                         <div class="tab-pane fade active in" id="Personal">
                           <h2 class="title-section">Mesaj Gönderme İşlemleri</h2>
@@ -60,10 +60,10 @@ giriskontrol();
                                 forcePasteAsPlainText: true
                               });
                             </script>
-                            <input type="hidden" name="kullanici_gel" value="<?php echo $_GET['kullanici_gel'] ?>">
+                            <!-- <input type="hidden" name="kullanici_gel" value="<?php echo $_GET['kullanici_gel'] ?>"> -->
                             <div class="form-group">
                               <div class="text-right col-sm-12">
-                                <button class="update-btn" name="mesajgonder" id="login-update">Mesaj Gönder</button>
+                                <button class="update-btn" name="mesajgonder" id="messageSendBtn">Mesaj Gönder</button>
                               </div>
                             </div>
                           </div>
@@ -133,6 +133,59 @@ giriskontrol();
         }
       })
     });
+
+    // let sendUserId = document.getElementById('sendUserId');
+    // sendUserId.addEventListener("change", function() {
+    //   var kullanici_gel = $(this).children("option:selected").val();
+    //   console.log(kullanici_gel);
+    // });
+
+    // $("select.kullanici_gel").on('change', function() {
+    //   let kullanici_gel = $(this).children("option:selected").val();
+    // });
+
+    $("body").on("click", "#messageSendBtn", function(e) {
+      e.preventDefault();
+      var myData = $('#addModalForm').serializeArray();
+      myData.push({
+        name: 'mesaj_detay',
+        value: CKEDITOR.instances.msjCkEditor.getData()
+      });
+      myData.push({
+        name: 'mesajgonder',
+        value: 'mesajgonder'
+      });
+      $.ajax({
+        type: 'POST',
+        url: site_url + '/admin/netting/kullanici.php',
+        data: myData,
+        dataType: 'json',
+        success: function(data) {
+          if (data.danger) {
+            Swal.fire({
+              title: "Hatalı İşlem",
+              text: data.danger,
+              icon: "error",
+              position: "top-center",
+              timer: 2500,
+              showConfirmButton: false,
+            });
+          } else if (data.success) {
+            $("#addModalForm").trigger("reset");
+            CKEDITOR.instances.msjCkEditor.setData('');
+            $("#addMessage").modal('hide');
+            Swal.fire({
+              title: "İşlemi Tamam",
+              text: data.success,
+              icon: "success",
+              position: "top-center",
+              timer: 2500,
+              showConfirmButton: false,
+            });
+          }
+        }
+      })
+    })
 
     $('.deleteBtn').click(function(e) {
       e.preventDefault();
