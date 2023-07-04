@@ -479,3 +479,46 @@ if (isset($_POST['action']) && $_POST['action'] == 'mesaggeDetail') {
     $row = $user->getMessageByUserID($user->guvenlik($_POST['mesaj_id']), $user->guvenlik($_SESSION['userkullanici_id']));
     echo json_encode($row);
 }
+
+if (isset($_POST['action']) && $_POST['action'] == 'getAllMessageInbox') {
+    $output = '';
+    $data = $user->getAllInboxByUser($user->guvenlik($_SESSION['userkullanici_id']));
+    if ($data) {
+        $output .= '
+        <table class="table table-responsive table-striped listTable">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mesaj Tarihi</th>
+                    <th scope="col">Gönderen</th>
+                    <th scope="col">İçerik</th>
+                    <th scope="col">Durum</th>
+                    <th scope="col">Detay</th>
+                    <th></th>
+                </tr>
+            </thead>
+        <tbody>';
+        $say = 0;
+        foreach ($data as $mesajcek) {
+            $say++;
+            $output .= ' 
+            <tr>
+                <th scope="row">' . $say . '</th>
+                <td>' . tarih($mesajcek['mesaj_zaman']) . '</td>
+                <td>' . $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] . '</td>
+                <td>' . guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) . '</td><td>';
+            if ($mesajcek['mesaj_okunma'] == 0) {
+                $output .= ' <i style="color:orange" class="fa fa-circle" aria-hidden="true">';
+            } else {
+                $output .= ' <i class="fa fa-circle" aria-hidden="true">';
+            }
+            $output .= '</td><td><a href="#" id="' . $mesajcek['mesaj_id'] . '" class="detailBtn"><button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#detailMessage">Mesajı Oku</button></a></td>
+                <td><a href="#" id="' . $mesajcek['mesaj_id'] . '" class="deleteBtn"><button class="btn btn-danger btn-sm">Sil</button></a></td>
+            </tr>';
+        }
+        $output .= "</tbody></table>";
+    } else {
+        $output .= '<h3 class="text-center text-danger"> Mesaj Bulunmamaktadir</h3>';
+    }
+    echo $output;
+}

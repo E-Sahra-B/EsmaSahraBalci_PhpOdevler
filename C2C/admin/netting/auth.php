@@ -170,4 +170,16 @@ class Auth extends Database
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function getAllInboxByUser($id)
+    {
+        $sql = "SELECT mesaj.*,kullanici.* 
+        FROM mesaj 
+        INNER JOIN kullanici ON mesaj.kullanici_gon=kullanici.kullanici_id 
+        WHERE mesaj.kullanici_gel=:id 
+        ORDER BY mesaj_okunma,mesaj_zaman DESC";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
