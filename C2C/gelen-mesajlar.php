@@ -50,7 +50,7 @@ giriskontrol();
       });
     }
 
-    $('.deleteBtn').click(function(e) {
+    $("body").on("click", ".deleteBtn", function(e) {
       e.preventDefault();
       del_id = $(this).attr('id');
       Swal.fire({
@@ -90,6 +90,7 @@ giriskontrol();
                   timer: 2500,
                   showConfirmButton: false,
                 });
+                displayAllMessage();
               }
             }
           });
