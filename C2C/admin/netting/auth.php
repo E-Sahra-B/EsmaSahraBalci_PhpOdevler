@@ -145,4 +145,17 @@ class Auth extends Database
         ]);
         return true;
     }
+
+    public function getAllMessageByUser($id)
+    {
+        $sql = "SELECT mesaj.*,kullanici.* 
+        FROM mesaj 
+        INNER JOIN kullanici ON mesaj.kullanici_gel=kullanici.kullanici_id 
+        WHERE mesaj.kullanici_gon=:id 
+        ORDER BY mesaj_okunma,mesaj_zaman DESC";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

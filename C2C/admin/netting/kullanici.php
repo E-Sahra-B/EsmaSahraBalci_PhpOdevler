@@ -420,12 +420,10 @@ if (isset($_POST['SendUser'])) {
     $data = $user->OtherUser($user->guvenlik($_SESSION['userkullanici_id']));
     $output = '';
     if ($data) {
-        $output .= '<select class="form-control">';
-        $output .= '<option selected>Kullanıcı Seciniz...</option>';
+        $output .= '<option>Kullanıcı Seciniz...</option>';
         foreach ($data as $row) {
             $output .= '<option value="' . $row['kullanici_id'] . '">' . $row['kullanici_ad'] . ' ' . $row['kullanici_soyad'] . '</option>';
         }
-        $output .= '</select>';
     }
     echo $output;
 }
@@ -437,4 +435,42 @@ if (isset($_POST['mesajgonder'])) {
         $msg["danger"] = "Mesaj Gonderme islemi Tamamlanamadi";
     }
     echo json_encode($msg);
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'getAllMessage') {
+    $output = '';
+    $data = $user->getAllMessageByUser($user->guvenlik($_SESSION['userkullanici_id']));
+    if ($data) {
+        $output .= '<table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Mesaj Tarihi</th>
+                <th scope="col">Gönderilen Kullanıcı</th>
+                <th scope="col">İçerik</th>
+                <th scope="col">Detay</th>
+                <th scope="col">Sil</th>
+            </tr>
+        </thead>
+        <tbody>';
+        $say = 0;
+        foreach ($data as $mesajcek) {
+            $say++;
+            $output .= ' 
+            <tr>
+                <th scope="row">' . $say . '</th>
+                <td>' . tarih($mesajcek['mesaj_zaman']) . '</td>
+                <td>' . $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] . '</td>
+                <td>' . guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) . '</td>';
+            // <td><a href="mesaj-detay?gidenmesaj=ok&mesaj_id=' . $mesajcek['mesaj_id'] . '&kullanici_gon=' . $mesajcek['kullanici_gon'] . '"><button class="btn btn-primary btn-sm">Mesajı Oku</button></a></td>
+            $output .= '<td><a href="#" id=' . $mesajcek['mesaj_id'] . '" class="detailBtn"><button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#detailMessage">Mesajı Oku</button></a></td>
+                
+                <td><a href="#" id="' . $mesajcek['mesaj_id'] . '" class="deleteBtn"><button class="btn btn-danger btn-sm">Sil</button></a></td>
+            </tr>';
+        }
+        $output .= "</tbody></table>";
+    } else {
+        $output .= '<h3 class="text-center text-danger"> Mesaj Bulunmamaktadir</h3>';
+    }
+    echo $output;
 }

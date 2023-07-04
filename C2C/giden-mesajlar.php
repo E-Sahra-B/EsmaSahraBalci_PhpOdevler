@@ -39,8 +39,10 @@ giriskontrol();
                           <div class="personal-info inner-page-padding">
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Gönderilen Kullanıcı</label>
-                              <div class="col-sm-9" id="sendUserId">
+                              <div class="col-sm-9">
                                 <!-- <input disabled="" class="form-control" required="" name="urun_ad" id="first-name" value="<?php echo $kullanicicek['kullanici_ad'] . " " . $kullanicicek['kullanici_soyad'] ?>" type="text"> -->
+                                <select class="form-control" id="sendUserId" name="kullanici_gel">
+                                </select>
                               </div>
                             </div>
                             <div class="form-group">
@@ -74,8 +76,8 @@ giriskontrol();
                 </div>
               </div>
               <!-- Modal End -->
-
-              <table class="table table-striped">
+              <div class="table-responsive" id="showMessage"></div>
+              <!-- <table class="table table-striped">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -86,29 +88,29 @@ giriskontrol();
                     <th scope="col">Sil</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <?php
-                  $mesajsor = $db->prepare("SELECT mesaj.*,kullanici.* FROM mesaj INNER JOIN kullanici ON mesaj.kullanici_gel=kullanici.kullanici_id where mesaj.kullanici_gon=:id order by mesaj_okunma,mesaj_zaman DESC");
-                  $mesajsor->execute(array(
-                    'id' => $_SESSION['userkullanici_id']
-                  ));
-                  $say = 0;
-                  while ($mesajcek = $mesajsor->fetch(PDO::FETCH_ASSOC)) {
-                    $say++;
-                    $kullanici_gon = $mesajcek['kullanici_gon'];
-                  ?>
-                    <tr>
-                      <th scope="row"><?= $say ?></th>
-                      <td><?= uzuntarih($mesajcek['mesaj_zaman']); ?></td>
-                      <td><?= $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] ?></td>
-                      <td><?= guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) ?></td>
-                      <td><a href="mesaj-detay?gidenmesaj=ok&mesaj_id=<?= $mesajcek['mesaj_id'] ?>&kullanici_gon=<?= $mesajcek['kullanici_gon'] ?>"><button class="btn btn-primary btn-sm">Mesajı Oku</button></a></td>
-                      <!-- <td><a onclick="return confirm('Bu mesajı silmek istiyormusunuz? \n İşlem geri alınamaz...')" href="admin/netting/kullanici.php?gidenmesajsil=ok&mesaj_id=<?= $mesajcek['mesaj_id'] ?>"><button class="btn btn-danger btn-sm">Sil</button></a></td> -->
-                      <td><a href="#" id="<?= $mesajcek['mesaj_id'] ?>" class="deleteBtn"><button class="btn btn-danger btn-sm">Sil</button></a></td>
-                    </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
+                <tbody> -->
+              <!-- <?php
+                    $mesajsor = $db->prepare("SELECT mesaj.*,kullanici.* FROM mesaj INNER JOIN kullanici ON mesaj.kullanici_gel=kullanici.kullanici_id where mesaj.kullanici_gon=:id order by mesaj_okunma,mesaj_zaman DESC");
+                    $mesajsor->execute(array(
+                      'id' => $_SESSION['userkullanici_id']
+                    ));
+                    $say = 0;
+                    while ($mesajcek = $mesajsor->fetch(PDO::FETCH_ASSOC)) {
+                      $say++;
+                      $kullanici_gon = $mesajcek['kullanici_gon'];
+                    ?> -->
+              <!-- <tr>
+                <th scope="row"><?= $say ?></th>
+                <td><?= uzuntarih($mesajcek['mesaj_zaman']); ?></td>
+                <td><?= $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] ?></td>
+                <td><?= guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) ?></td>
+                <td><a href="mesaj-detay?gidenmesaj=ok&mesaj_id=<?= $mesajcek['mesaj_id'] ?>&kullanici_gon=<?= $mesajcek['kullanici_gon'] ?>"><button class="btn btn-primary btn-sm">Mesajı Oku</button></a></td> -->
+              <!-- <td><a onclick="return confirm('Bu mesajı silmek istiyormusunuz? \n İşlem geri alınamaz...')" href="admin/netting/kullanici.php?gidenmesajsil=ok&mesaj_id=<?= $mesajcek['mesaj_id'] ?>"><button class="btn btn-danger btn-sm">Sil</button></a></td> -->
+              <!-- <td><a href="#" id="<?= $mesajcek['mesaj_id'] ?>" class="deleteBtn"><button class="btn btn-danger btn-sm">Sil</button></a></td>
+              </tr>
+            <?php } ?> -->
+              <!-- </tbody>
+            </table> -->
             </div>
           </div>
         </div>
@@ -118,8 +120,9 @@ giriskontrol();
 </div>
 <script>
   var site_url = '<?= URL; ?>';
-  $(document).ready(function() {
+  $(document).ready(function(e) {
     $("table").DataTable();
+    displayAllMessage();
     $('.addModalBtn').click(function(e) {
       e.preventDefault();
       $.ajax({
@@ -133,6 +136,22 @@ giriskontrol();
         }
       })
     });
+
+    function displayAllMessage() {
+      $.ajax({
+        type: 'POST',
+        url: site_url + '/admin/netting/kullanici.php',
+        data: {
+          action: 'getAllMessage'
+        },
+        success: function(data) {
+          $('#showMessage').html(data);
+          // $("table").DataTable({
+          //   order: [0, 'desc']
+          // })
+        }
+      });
+    }
 
     // let sendUserId = document.getElementById('sendUserId');
     // sendUserId.addEventListener("change", function() {
@@ -182,12 +201,14 @@ giriskontrol();
               timer: 2500,
               showConfirmButton: false,
             });
+            displayAllMessage();
           }
         }
       })
     })
 
-    $('.deleteBtn').click(function(e) {
+    $("body").on("click", ".deleteBtn", function(e) {
+      //$('.deleteBtn').click(function(e) {
       e.preventDefault();
       del_id = $(this).attr('id');
       Swal.fire({
@@ -227,6 +248,7 @@ giriskontrol();
                   timer: 2500,
                   showConfirmButton: false,
                 });
+                displayAllMessage();
               }
             }
           });
