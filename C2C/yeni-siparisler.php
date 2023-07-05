@@ -41,28 +41,27 @@ giriskontrol();
                   INNER JOIN kullanici ON kullanici.kullanici_id=siparis_detay.kullanici_id 
                   INNER JOIN urun ON urun.urun_id=siparis_detay.urun_id 
                   where siparis.kullanici_idsatici=:kullanici_idsatici 
-                  and siparis_detay.siparisdetay_onay=:onay 
-                  or siparis_detay.siparisdetay_onay=:onay2 
                   order by siparis_zaman DESC");
                   $siparissor->execute(array(
-                    'kullanici_idsatici' => $_SESSION['userkullanici_id'],
-                    'onay' => 0,
-                    'onay2' => 1
+                    'kullanici_idsatici' => $_SESSION['userkullanici_id']
                   ));
+                  $say = 0;
                   while ($sipariscek = $siparissor->fetch(PDO::FETCH_ASSOC)) {
                     $say++ ?>
                     <tr>
                       <th scope="row"><?= $say ?></th>
-                      <td><?= date('d-m-Y', strtotime($sipariscek['siparis_zaman'])) ?></td>
+                      <td><?= tarih($sipariscek['siparis_zaman']) ?></td>
                       <td><?= $sipariscek['siparis_id'] ?></td>
                       <td><?= $sipariscek['kullanici_ad'] . " " . $sipariscek['kullanici_soyad'] ?></td>
                       <td><?= $sipariscek['urun_ad'] ?></td>
-                      <td><?= number_format($sipariscek['urun_fiyat'], 2, ',', '.') ?></td>
+                      <td><?= fiyat($sipariscek['urun_fiyat']) ?></td>
                       <td><?php
                           if ($sipariscek['siparisdetay_onay'] == 0) { ?>
-                          <a onclick="return confirm('Ürünü Teslim Ediyorsunuz Bu İşlem Geri Alınamaz');" href="nedmin/netting/kullanici.php?urunteslim=ok&siparisdetay_id=<?= $sipariscek['siparisdetay_id'] ?>&siparis_id=<?= $sipariscek['siparis_id'] ?>"><button class="btn btn-warning btn-xs"> Teslim Et</button></a>
+                          <a onclick="return confirm('Ürünü Teslim Ediyorsunuz Bu İşlem Geri Alınamaz');" href="admin/netting/kullanici.php?urunteslim=ok&siparisdetay_id=<?= $sipariscek['siparisdetay_id'] ?>&siparis_id=<?= $sipariscek['siparis_id'] ?>"><button class="btn btn-warning btn-xs"> Teslim Et</button></a>
                         <?php } elseif ($sipariscek['siparisdetay_onay'] == 1) { ?>
-                          <button class="btn btn-success btn-xs"> Alıcıdan Onay Bekliyor</button>
+                          <button class="btn btn-info btn-xs"> Alıcıdan Onay Bekliyor</button>
+                        <?php } elseif ($sipariscek['siparisdetay_onay'] == 2) { ?>
+                          <button class="btn btn-success btn-xs"> Tamamalanan Siparis</button>
                         <?php } ?>
                       </td>
                     </tr>

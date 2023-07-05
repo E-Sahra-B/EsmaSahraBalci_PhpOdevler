@@ -210,4 +210,12 @@ class Auth extends Database
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function orderCount($userId)
+    {
+        $sql = "SELECT COUNT(kullanici_idsatici) as ordercount FROM siparis WHERE kullanici_idsatici=:id";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['id' => $userId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

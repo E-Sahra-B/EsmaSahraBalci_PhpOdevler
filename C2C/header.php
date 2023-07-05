@@ -170,44 +170,38 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                     if (isset($_SESSION['userkullanici_mail'])) { ?>
                                         <li>
                                             <div class="notify-notification">
-                                                <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i><span>8</span></a>
+                                                <a href="yeni-siparisler"><i class="fa fa-bell-o" aria-hidden="true"></i><span>
+                                                        <?php
+                                                        $sc = $user->orderCount($user->guvenlik($_SESSION['userkullanici_id']));
+                                                        echo $sc['ordercount'];
+
+                                                        $siparissor = $db->prepare("SELECT siparis.*,siparis_detay.*,kullanici.*,urun.*
+                                                        FROM siparis 
+                                                        INNER JOIN siparis_detay ON siparis.siparis_id=siparis_detay.siparis_id 
+                                                        INNER JOIN kullanici ON kullanici.kullanici_id=siparis_detay.kullanici_id 
+                                                        INNER JOIN urun ON urun.urun_id=siparis_detay.urun_id 
+                                                        where siparis.kullanici_idsatici=:kullanici_idsatici 
+                                                        order by siparis_zaman DESC");
+                                                        $siparissor->execute(array(
+                                                            'kullanici_idsatici' => $_SESSION['userkullanici_id']
+                                                        ));
+                                                        ?>
+                                                    </span></a>
                                                 <ul>
-                                                    <li>
-                                                        <div class="notify-notification-img">
-                                                            <img class="img-responsive" src="img\profile\1.png" alt="profile">
-                                                        </div>
-                                                        <div class="notify-notification-info">
-                                                            <div class="notify-notification-subject">Need WP Help!</div>
-                                                            <div class="notify-notification-date">01 Dec, 2016</div>
-                                                        </div>
-                                                        <div class="notify-notification-sign">
-                                                            <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="notify-notification-img">
-                                                            <img class="img-responsive" src="img\profile\2.png" alt="profile">
-                                                        </div>
-                                                        <div class="notify-notification-info">
-                                                            <div class="notify-notification-subject">Need HTML Help!</div>
-                                                            <div class="notify-notification-date">01 Dec, 2016</div>
-                                                        </div>
-                                                        <div class="notify-notification-sign">
-                                                            <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="notify-notification-img">
-                                                            <img class="img-responsive" src="img\profile\3.png" alt="profile">
-                                                        </div>
-                                                        <div class="notify-notification-info">
-                                                            <div class="notify-notification-subject">Psd Template Help!</div>
-                                                            <div class="notify-notification-date">01 Dec, 2016</div>
-                                                        </div>
-                                                        <div class="notify-notification-sign">
-                                                            <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                                        </div>
-                                                    </li>
+                                                    <?php while ($sipariscek = $siparissor->fetch(PDO::FETCH_ASSOC)) : ?>
+                                                        <li>
+                                                            <div class="notify-notification-img">
+                                                                <img class="img-responsive" src="<?= $sipariscek['urunfoto_resimyol'] ?>" alt="<?= $sipariscek['urun_ad'] ?>">
+                                                            </div>
+                                                            <div class="notify-notification-info">
+                                                                <div class="notify-notification-subject"><?= $sipariscek['urun_ad'] ?></div>
+                                                                <div class="notify-notification-date"><?= tarih($sipariscek['siparis_zaman']) ?></div>
+                                                            </div>
+                                                            <div class="notify-notification-sign">
+                                                                <i class="fa fa-bell-o" aria-hidden="true"></i>
+                                                            </div>
+                                                        </li>
+                                                    <?php endwhile ?>
                                                 </ul>
                                             </div>
                                         </li>
