@@ -535,3 +535,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'messageDetailInbox') {
     }
     echo json_encode($row);
 }
+if (isset($_POST['action']) && $_POST['action'] == 'count') {
+    $output = 0;
+    $row = $user->messageCount($user->guvenlik($_SESSION['userkullanici_id']));
+    //print_r($row);
+    echo $row['say'];
+}

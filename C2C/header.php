@@ -5,6 +5,9 @@ error_reporting(0);
 date_default_timezone_set('Europe/Istanbul');
 require_once 'admin/netting/baglan.php';
 require_once 'admin/production/fonksiyon.php';
+require_once 'admin/netting/auth.php';
+$user = new Auth();
+
 $ayarcek = siteAyar();
 $url = "http://" . $_SERVER["SERVER_NAME"] . dirname($_SERVER["PHP_SELF"]);
 define("URL", $url);
@@ -210,17 +213,9 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                         </li>
                                         <li>
                                             <div class="notify-message">
-                                                <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i><span>
-                                                        <?php
-                                                        $mesajsay = $db->prepare("SELECT COUNT(mesaj_okunma) as say FROM mesaj where mesaj_okunma=:id and kullanici_gel=:kullanici_id");
-                                                        $mesajsay->execute(array(
-                                                            'id' => 0,
-                                                            'kullanici_id' => $_SESSION['userkullanici_id']
-                                                        ));
-                                                        $saycek = $mesajsay->fetch(PDO::FETCH_ASSOC);
-                                                        echo $saycek['say'];
-                                                        ?>
-                                                    </span></a>
+                                                <a href="gelen-mesajlar"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                    <span id="showmessagecount"><?= $user->messageCount($user->guvenlik($_SESSION['userkullanici_id']))['say'] ?></span>
+                                                </a>
                                                 <ul>
                                                     <?php
                                                     $mesajsor = $db->prepare("SELECT mesaj.*,kullanici.* FROM mesaj INNER JOIN kullanici ON mesaj.kullanici_gon=kullanici.kullanici_id where mesaj.kullanici_gel=:id and mesaj.mesaj_okunma=:okunma order by mesaj_okunma,mesaj_zaman DESC limit 5");
@@ -242,7 +237,7 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                                             </div>
                                                             <div class="notify-message-info">
                                                                 <div class="notify-message-sender"><?= $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] ?></div>
-                                                                <div class="notify-message-subject"><?= metinKirp($mesajcek['mesaj_detay'], 15) . "..."; ?></div>
+                                                                <div class="notify-message-subject"><?= guvenlik(metinKirp($mesajcek['mesaj_detay'], 15)) . "..."; ?></div>
                                                                 <div class="notify-message-date"><?= uzuntarih($mesajcek['mesaj_zaman']); ?></div>
                                                             </div>
                                                             <div class="notify-message-sign">

@@ -201,4 +201,13 @@ class Auth extends Database
         $stmt->execute(['mesaj_okunma' => 1, 'msgId' => $msgId]);
         return true;
     }
+
+    public function messageCount($userId)
+    {
+        $sql = "SELECT COUNT(mesaj_okunma) as say FROM mesaj WHERE mesaj_okunma=:mesaj_okunma AND kullanici_gel=:kullanici_id";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['mesaj_okunma' => 0, 'kullanici_id' => $userId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

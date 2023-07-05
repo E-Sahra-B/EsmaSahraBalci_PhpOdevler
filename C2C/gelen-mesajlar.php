@@ -132,6 +132,7 @@ giriskontrol();
                   showConfirmButton: false,
                 });
                 displayAllMessage();
+                showmessagecount();
               }
             }
           });
@@ -155,9 +156,24 @@ giriskontrol();
           $('#detailSendTime').val(result.mesaj_zaman);
           CKEDITOR.instances.detailSendMessage.setData(result.mesaj_detay);
           displayAllMessage();
+          showmessagecount();
         }
       })
     })
+    showmessagecount();
+
+    function showmessagecount() {
+      $.ajax({
+        type: 'POST',
+        url: site_url + '/admin/netting/kullanici.php',
+        data: {
+          action: 'count'
+        },
+        success: function(data) {
+          $('#showmessagecount').html(data);
+        }
+      });
+    }
   });
 </script>
 <!-- Settings Page End Here -->
