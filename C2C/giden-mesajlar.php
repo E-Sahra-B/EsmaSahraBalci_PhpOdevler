@@ -89,19 +89,19 @@ giriskontrol();
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Mesaj Saati</label>
                               <div class="col-sm-9">
-                                <input type="text" class="form-control" id="detailSendTime" value="">
+                                <input type="text" class="form-control" disabled id="detailSendTime" value="">
                               </div>
                             </div>
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Gönderilen Kullanıcı</label>
                               <div class="col-sm-9">
-                                <input type="text" class="form-control" id="detailSendUserId" value="">
+                                <input type="text" class="form-control" disabled id="detailSendUserId" value="">
                               </div>
                             </div>
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Mesajınız</label>
                               <div class="col-sm-9">
-                                <textarea class="form-control" rows="8" id="detailSendMessage"></textarea>
+                                <textarea class="ckeditor form-control" rows="8" disabled id="detailSendMessage"></textarea>
                               </div>
                             </div>
                             <div class="form-group">
@@ -315,7 +315,8 @@ giriskontrol();
           //result = JSON.parse(data); //dataType: 'json' olunca gerek yok
           $('#detailSendUserId').val(result.kullanici_ad + ' ' + result.kullanici_soyad);
           $('#detailSendTime').val(result.mesaj_zaman);
-          $('#detailSendMessage').val(result.mesaj_detay);
+          //$('#detailSendMessage').val(result.mesaj_detay);
+          CKEDITOR.instances.detailSendMessage.setData(result.mesaj_detay);
         }
       })
     })

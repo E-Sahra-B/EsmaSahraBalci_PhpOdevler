@@ -429,7 +429,7 @@ if (isset($_POST['SendUser'])) {
 }
 
 if (isset($_POST['mesajgonder'])) {
-    if ($user->addMessage($user->guvenlik($_POST['mesaj_detay']), $user->guvenlik($_POST['kullanici_gel']), $user->guvenlik($_SESSION['userkullanici_id']))) {
+    if ($user->addMessage(($_POST['mesaj_detay']), $user->guvenlik($_POST['kullanici_gel']), $user->guvenlik($_SESSION['userkullanici_id']))) {
         $msg["success"] = "Mesaj Gonderme islemi Tamamlandi";
     } else {
         $msg["danger"] = "Mesaj Gonderme islemi Tamamlanamadi";
@@ -448,6 +448,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'getAllMessage') {
                 <th scope="col">Mesaj Tarihi</th>
                 <th scope="col">Gönderilen Kullanıcı</th>
                 <th scope="col">İçerik</th>
+                <th scope="col">Durum</th>
                 <th scope="col">Detay</th>
                 <th scope="col">Sil</th>
             </tr>
@@ -461,9 +462,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'getAllMessage') {
                 <th scope="row">' . $say . '</th>
                 <td>' . tarih($mesajcek['mesaj_zaman']) . '</td>
                 <td>' . $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] . '</td>
-                <td>' . guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) . '</td>';
+                <td>' . guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) . '</td><td>';
             // <td><a href="mesaj-detay?gidenmesaj=ok&mesaj_id=' . $mesajcek['mesaj_id'] . '&kullanici_gon=' . $mesajcek['kullanici_gon'] . '"><button class="btn btn-primary btn-sm">Mesajı Oku</button></a></td>
-            $output .= '<td><a href="#" id="' . $mesajcek['mesaj_id'] . '" class="detailBtn"><button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#detailMessage">Mesajı Oku</button></a></td>
+            if ($mesajcek['mesaj_okunma'] == 1) {
+                $output .= ' <i style="color:green" class="fa fa-check-circle" aria-hidden="true">';
+            } else {
+                $output .= ' <i style="color:gray" class="fa fa-check-circle-o" aria-hidden="true">';
+            }
+            $output .= '</td><td><a href="#" id="' . $mesajcek['mesaj_id'] . '" class="detailBtn"><button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#detailMessage">Mesajı Oku</button></a></td>
                 
                 <td><a href="#" id="' . $mesajcek['mesaj_id'] . '" class="deleteBtn"><button class="btn btn-danger btn-sm">Sil</button></a></td>
             </tr>';

@@ -27,12 +27,15 @@ giriskontrol();
                                         <th scope="col">#</th>
                                         <th scope="col">Sipariş Tarihi</th>
                                         <th scope="col">Sipariş Numarası</th>
+                                        <th scope="col">Sipariş Durumu</th>
                                         <th scope="col">Detay</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $siparissor = $db->prepare("SELECT * FROM siparis where kullanici_id=:kullanici_id order by siparis_zaman DESC");
+                                    $siparissor = $db->prepare("SELECT siparis.*, siparis_detay.* FROM siparis
+                                    INNER JOIN siparis_detay ON siparis.siparis_id=siparis_detay.siparis_id
+                                    WHERE siparis.kullanici_id=:kullanici_id order by siparis_zaman DESC");
                                     $siparissor->execute(array(
                                         'kullanici_id' => $_SESSION['userkullanici_id']
                                     ));
@@ -43,6 +46,16 @@ giriskontrol();
                                             <th scope="row"><?= $say ?></th>
                                             <td><?= tarih($sipariscek['siparis_zaman']) ?></td>
                                             <td><?= $sipariscek['siparis_id'] ?></td>
+                                            <!-- <td><?= $sipariscek['siparisdetay_onay'] ?></td> -->
+                                            <td>
+                                                <?php if ($sipariscek['siparisdetay_onay'] == 1) : ?>
+                                                    <a href="javascript:void(0);" class="btn btn-info btn-xs"> Onay Ver</a>
+                                                <?php elseif ($sipariscek['siparisdetay_onay'] == 2) : ?>
+                                                    <a href="javascript:void(0);" class="btn btn-success btn-xs"> Onaylandı</a>
+                                                <?php elseif ($sipariscek['siparisdetay_onay'] == 0) : ?>
+                                                    <a href="javascript:void(0);" class="btn btn-warning btn-xs"> Teslim Edilmesi Bekleniyor</a>
+                                                <?php endif ?>
+                                            </td>
                                             <td><a href="siparis-detay?siparis_id=<?= $sipariscek['siparis_id'] ?>"><button class="btn btn-primary btn-xs">Detay</button></a></td>
                                         </tr>
                                     <?php } ?>
