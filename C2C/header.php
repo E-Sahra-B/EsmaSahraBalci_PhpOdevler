@@ -235,7 +235,8 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                                                 <div class="notify-message-date"><?= uzuntarih($mesajcek['mesaj_zaman']); ?></div>
                                                             </div>
                                                             <div class="notify-message-sign">
-                                                                <a href="mesaj-detay?mesaj_id=<?= $mesajcek['mesaj_id'] ?>&kullanici_gon=<?= $mesajcek['kullanici_gon'] ?>"><i style="color:#ef6c00; !important" class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                                                                <!-- <a href="mesaj-detay?mesaj_id=<?= $mesajcek['mesaj_id'] ?>&kullanici_gon=<?= $mesajcek['kullanici_gon'] ?>"><i style="color:#ef6c00; !important" class="fa fa-envelope-o" aria-hidden="true"></i></a> -->
+                                                                <a href="" id="<?= $mesajcek['mesaj_id'] ?>" class="detailBtn" data-toggle="modal" data-target="#detailMessage"><i style="color:#ef6c00 !important;" class="fa fa-envelope-o" aria-hidden="true"></i></a>
                                                             </div>
                                                         </li>
                                                     <?php } ?>

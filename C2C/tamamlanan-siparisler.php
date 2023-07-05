@@ -50,15 +50,13 @@ giriskontrol();
                     $say++ ?>
                     <tr>
                       <th scope="row"><?= $say ?></th>
-                      <td><?= date('d-m-Y', strtotime($sipariscek['siparis_zaman'])) ?></td>
+                      <td><?= tarih($sipariscek['siparis_zaman']) ?></td>
                       <td><?= $sipariscek['siparis_id'] ?></td>
                       <td><?= $sipariscek['urun_ad'] ?></td>
-                      <td><?= number_format($sipariscek['urun_fiyat'], 2, ',', '.') ?></td>
+                      <td><?= fiyat($sipariscek['urun_fiyat']) ?></td>
                       <td><?php
-                          if ($sipariscek['siparisdetay_onay'] == 0) { ?>
-                          <a onclick="return confirm('Ürünü Teslim Ediyorsunuz Bu İşlem Geri Alınamaz');" href="nedmin/netting/kullanici.php?urunteslim=ok&siparisdetay_id=<?= $sipariscek['siparisdetay_id'] ?>&siparis_id=<?= $sipariscek['siparis_id'] ?>"><button class="btn btn-warning btn-xs"> Teslim Et</button></a>
-                        <?php } else if ($sipariscek['siparisdetay_onay'] == 1) { ?>
-                          <button class="btn btn-success btn-xs"> Alıcıdan Onay Bekliyor</button>
+                          if ($sipariscek['siparisdetay_onay'] == 2) { ?>
+                          <button class="btn btn-success btn-xs"> Tamamalanan Siparis</button>
                         <?php } ?>
                       </td>
                     </tr>
