@@ -194,4 +194,11 @@ class Auth extends Database
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function inboxRead($msgId)
+    {
+        $sql = "UPDATE mesaj SET mesaj_okunma=:mesaj_okunma WHERE mesaj_id=:msgId";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['mesaj_okunma' => 1, 'msgId' => $msgId]);
+        return true;
+    }
 }
