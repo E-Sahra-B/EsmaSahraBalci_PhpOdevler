@@ -528,3 +528,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'getAllMessageInbox') {
     }
     echo $output;
 }
+if (isset($_POST['action']) && $_POST['action'] == 'messageDetailInbox') {
+    $row = $user->getMessageByUserIDInbox($user->guvenlik($_POST['mesaj_id']), $user->guvenlik($_SESSION['userkullanici_id']));
+    echo json_encode($row);
+}
