@@ -226,4 +226,19 @@ class Auth extends Database
         $stmt->execute(['onay' => 1, 'id' => $siparisDetayId]);
         return true;
     }
+
+    public function getAllOrderByUser($id)
+    {
+        $sql = "SELECT siparis.*,siparis_detay.*,kullanici.*,urun.*
+        FROM siparis 
+        INNER JOIN siparis_detay ON siparis.siparis_id=siparis_detay.siparis_id 
+        INNER JOIN kullanici ON kullanici.kullanici_id=siparis_detay.kullanici_id 
+        INNER JOIN urun ON urun.urun_id=siparis_detay.urun_id 
+        where siparis.kullanici_idsatici=:kullanici_idsatici 
+        ORDER BY siparis_zaman DESC";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['kullanici_idsatici' => $id]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

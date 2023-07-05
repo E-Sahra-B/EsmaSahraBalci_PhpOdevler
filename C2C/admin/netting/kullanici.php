@@ -549,3 +549,47 @@ if (isset($_POST['action']) && $_POST['action'] == 'teslimEtOnay') {
     }
     echo json_encode($msg);
 }
+
+if (isset($_POST['action']) && $_POST['action'] == 'orderList') {
+    $output = '';
+    $data = $user->getAllOrderByUser($user->guvenlik($_SESSION['userkullanici_id']));
+    if ($data) {
+        $output .= '<table class="table table-striped listTable">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tarih</th>
+                <th scope="col">Sipariş No</th>
+                <th scope="col">Alıcı</th>
+                <th scope="col">Ürün Ad</th>
+                <th scope="col">Ürün Fiyat</th>
+                <th scope="col">Durum</th>
+            </tr>
+        </thead>
+        <tbody>';
+        $say = 0;
+        foreach ($data as $sipariscek) {
+            $say++;
+            $output .= ' 
+            <tr>
+                <th scope="row">' . $say . '</th>
+                <td>' . tarih($sipariscek['siparis_zaman']) . '</td>
+                <td>' . $sipariscek['siparis_id'] . '</td>
+                <td>' . $sipariscek['kullanici_ad'] . ' ' . $sipariscek['kullanici_soyad'] . '</td>
+                <td>' . $sipariscek['urun_ad'] . '</td>
+                <td>' . fiyat($sipariscek['urun_fiyat']) . '</td><td>';
+            if ($sipariscek['siparisdetay_onay'] == 0) {
+                $output .= ' <a href="#" id="' . $sipariscek['siparisdetay_id'] . '" class="btn btn-warning btn-xs teslimEt"> Teslim Et</a>';
+            } else if ($sipariscek['siparisdetay_onay'] == 1) {
+                $output .= ' <button class="btn btn-info btn-xs"> Alıcıdan Onay Bekliyor</button>';
+            } else if ($sipariscek['siparisdetay_onay'] == 2) {
+                $output .= ' <button class="btn btn-success btn-xs"> Tamamalanan Siparis</button>';
+            }
+            $output .= '</td></tr>';
+        }
+        $output .= "</tbody></table>";
+    } else {
+        $output .= '<h3 class="text-center text-danger"> Siparis Bulunmamaktadir</h3>';
+    }
+    echo $output;
+}
