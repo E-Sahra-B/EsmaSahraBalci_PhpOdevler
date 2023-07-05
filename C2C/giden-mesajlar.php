@@ -299,6 +299,7 @@ giriskontrol();
       })
     })
 
+    CKEDITOR.replace('detailSendMessage');
     $("body").on("click", ".detailBtn", function(e) {
       e.preventDefault();
       detail_id = $(this).attr('id');

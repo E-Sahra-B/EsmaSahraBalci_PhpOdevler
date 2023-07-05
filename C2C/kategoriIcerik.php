@@ -33,7 +33,16 @@ while ($uruncek = $urunsor->fetch(PDO::FETCH_ASSOC)) {
                 <div class="profile-rating-info">
                     <ul>
                         <?php require_once 'yildiz.php'; ?>
-                        <li><i class="fa fa-comment-o" aria-hidden="true"></i>( 10 )</li>
+                        <li><i class="fa fa-comment-o" aria-hidden="true"></i>(
+                            <?php
+                            $yorumsay = $db->prepare("SELECT COUNT(urun_id) as say FROM yorumlar WHERE urun_id=:id");
+                            $yorumsay->execute(array(
+                                'id' => $uruncek['urun_id']
+                            ));
+                            $yorumsaycek = $yorumsay->fetch(PDO::FETCH_ASSOC);
+                            echo $yorumsaycek['say'];
+                            ?>
+                            )</li>
                     </ul>
                 </div>
             </div>
