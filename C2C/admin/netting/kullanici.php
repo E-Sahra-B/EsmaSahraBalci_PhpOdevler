@@ -316,7 +316,7 @@ if (isset($_GET['urunonay']) == "ok") {
     }
 }
 
-if (isset($_GET['urunteslim']) == "ok") {
+if (isset($_GET['urunteslimEski']) == "ok") {
     $siparis_id = $_GET['siparis_id'];
     $siparis_detayguncelle = $db->prepare("UPDATE siparis_detay SET
 		siparisdetay_onay=:siparisdetay_onay
@@ -539,4 +539,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'count') {
     $output = 0;
     $row = $user->messageCount($user->guvenlik($_SESSION['userkullanici_id']));
     echo $row['say'];
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'teslimEtOnay') {
+    if ($user->siparisdetayonay($user->guvenlik($_POST['siparis_id']))) {
+        $msg["success"] = "Ürün Teslim islemi Tamamlandi";
+    } else {
+        $msg["danger"] = "Ürün Teslim islemi Hata";
+    }
+    echo json_encode($msg);
 }

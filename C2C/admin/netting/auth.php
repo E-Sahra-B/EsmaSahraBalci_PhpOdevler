@@ -218,4 +218,12 @@ class Auth extends Database
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function siparisdetayonay($siparisDetayId)
+    {
+        $sql = "UPDATE siparis_detay SET siparisdetay_onay=:onay WHERE siparisdetay_id=:id";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['onay' => 1, 'id' => $siparisDetayId]);
+        return true;
+    }
 }

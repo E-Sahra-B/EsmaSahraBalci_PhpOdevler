@@ -57,7 +57,8 @@ giriskontrol();
                       <td><?= fiyat($sipariscek['urun_fiyat']) ?></td>
                       <td><?php
                           if ($sipariscek['siparisdetay_onay'] == 0) { ?>
-                          <a onclick="return confirm('Ürünü Teslim Ediyorsunuz Bu İşlem Geri Alınamaz');" href="admin/netting/kullanici.php?urunteslim=ok&siparisdetay_id=<?= $sipariscek['siparisdetay_id'] ?>&siparis_id=<?= $sipariscek['siparis_id'] ?>"><button class="btn btn-warning btn-xs"> Teslim Et</button></a>
+                          <!-- <a onclick="return confirm('Ürünü Teslim Ediyorsunuz Bu İşlem Geri Alınamaz');" href="admin/netting/kullanici.php?urunteslim=ok&siparisdetay_id=<?= $sipariscek['siparisdetay_id'] ?>&siparis_id=<?= $sipariscek['siparis_id'] ?>"><button class="btn btn-warning btn-xs"> Teslim Et</button></a> -->
+                          <a href="#" id="<?= $sipariscek['siparisdetay_id'] ?>" class="btn btn-warning btn-xs teslimEt"> Teslim Et</a>
                         <?php } elseif ($sipariscek['siparisdetay_onay'] == 1) { ?>
                           <button class="btn btn-info btn-xs"> Alıcıdan Onay Bekliyor</button>
                         <?php } elseif ($sipariscek['siparisdetay_onay'] == 2) { ?>
@@ -75,5 +76,57 @@ giriskontrol();
     </div>
   </div>
 </div>
+<script>
+  var site_url = '<?= URL; ?>';
+  $(document).ready(function(e) {
+    $("body").on("click", ".teslimEt", function(e) {
+      e.preventDefault();
+      onay_id = $(this).attr('id');
+      Swal.fire({
+        title: 'Ürünü Teslim Ediyorsunuz ?',
+        text: "İşlem geri alınamaz!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#8bc34a',
+        cancelButtonColor: '#ccc',
+        confirmButtonText: 'Evet Teslim Et!',
+        canselButtonText: 'iptal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            method: 'POST',
+            url: site_url + '/admin/netting/kullanici.php',
+            data: {
+              action: 'teslimEtOnay',
+              siparis_id: onay_id
+            },
+            dataType: 'json',
+            success: function(data) {
+              if (data.danger) {
+                Swal.fire({
+                  title: "Hatalı İşlem",
+                  text: data.danger,
+                  icon: "error",
+                  position: "top-center",
+                  timer: 2500,
+                  showConfirmButton: false,
+                });
+              } else if (data.success) {
+                Swal.fire({
+                  title: "İşlemi Tamam",
+                  text: data.success,
+                  icon: "success",
+                  position: "top-center",
+                  timer: 2500,
+                  showConfirmButton: false,
+                });
+              }
+            }
+          });
+        }
+      })
+    })
+  })
+</script>
 <!-- Settings Page End Here -->
 <?php require_once 'footer.php'; ?>
