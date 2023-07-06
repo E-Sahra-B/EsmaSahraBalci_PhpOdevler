@@ -102,8 +102,37 @@ giriskontrol();
                     </div>
                   </div>
                 </form>
-              <?php } else if ($siparisdetay_onay == 2 and $siparisdetay_yorum == 1) { ?>
-                <p>Bu ürün için oylama ve yorum yapılmıştır.</p>
+              <?php } else if ($siparisdetay_onay == 2 && $siparisdetay_yorum == 1) {
+                $yorumsor = $db->prepare("SELECT yorumlar.*,kullanici.* 
+                  FROM yorumlar 
+                  INNER JOIN kullanici ON yorumlar.kullanici_id=kullanici.kullanici_id 
+                  where urun_id=:id order by yorum_zaman DESC");
+                $yorumsor->execute(array(
+                  'id' => $urun_id
+                )); ?>
+                <br>
+                <h4><strong>Yorumlar</strong></h4>
+                <hr>
+                <?php
+                while ($yorumcek = $yorumsor->fetch(PDO::FETCH_ASSOC)) { ?>
+                  <div class="row">
+                    <em><?= tarih($yorumcek['yorum_zaman']) ?></em>
+                  </div>
+                  <div class="row">
+                    <strong class="title text-xl-left"><?= $yorumcek['yorum_detay'] ?></strong>
+                    <button class="pull-right btn btn-success btn-sm">
+                      Urun Puan:
+                      <?php
+                      for ($i = 1; $i <= $yorumcek['yorum_puan']; $i++) { ?>
+                        <i class='fa fa-star' aria-hidden='true'></i>
+                      <?php }
+                      for ($j = 1; $j <= 5 - ($yorumcek['yorum_puan']); $j++) { ?>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                      <?php } ?>
+                    </button>
+                  </div>
+                  <hr>
+                <?php } ?>
               <?php } ?>
             </div>
           </div>
