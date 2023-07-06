@@ -23,11 +23,14 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
             <?php require_once 'hesap-sidebar.php' ?>
             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
                 <?php require_once 'alert.php'; ?>
-                <form action="admin/netting/kullanici.php" method="POST" enctype="multipart/form-data" class="form-horizontal" id="personal-info-form">
+                <form method="POST" enctype="multipart/form-data" class="form-horizontal" id="mesajgondermeformu">
                     <div class="settings-details tab-content">
                         <div class="tab-pane fade active in" id="Personal">
-                            <h2 class="title-section">Mesaj Gönderme İşlemleri</h2>
                             <div class="personal-info inner-page-padding">
+                                <div class="row">
+                                    <strong class="title text-xl-left">Mesaj Gönderme İşlemleri</strong>
+                                    <a href="giden-mesajlar" id="sonuc"></a>
+                                </div><br><br>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Gönderilen Kullanıcı</label>
                                     <div class="col-sm-9">
@@ -54,7 +57,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                                 <input type="hidden" name="kullanici_gel" value="<?php echo $_GET['kullanici_gel'] ?>">
                                 <div class="form-group">
                                     <div class="text-right col-sm-12">
-                                        <button class="update-btn" name="mesajgonder" id="login-update">Mesaj Gönder</button>
+                                        <button class="update-btn" name="mesajgonder" id="mesajgondermebtn">Mesaj Gönder</button>
                                     </div>
                                 </div>
                             </div>
@@ -65,5 +68,51 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
         </div>
     </div>
 </div>
+<script>
+    var site_url = '<?= URL; ?>';
+    $(document).ready(function() {
+        $("body").on("click", "#mesajgondermebtn", function(e) {
+            e.preventDefault();
+            var myData = $('#mesajgondermeformu').serializeArray();
+            myData.push({
+                name: 'mesaj_detay',
+                value: CKEDITOR.instances.editor1.getData()
+            });
+            myData.push({
+                name: 'mesajgonder',
+                value: 'mesajgonder'
+            });
+            $.ajax({
+                type: 'POST',
+                url: site_url + '/admin/netting/kullanici.php',
+                data: myData,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.danger) {
+                        Swal.fire({
+                            title: "Hatalı İşlem",
+                            text: data.danger,
+                            icon: "error",
+                            position: "top-center",
+                            timer: 2500,
+                            showConfirmButton: false,
+                        });
+                    } else if (data.success) {
+                        CKEDITOR.instances.editor1.setData('');
+                        Swal.fire({
+                            title: "İşlemi Tamam",
+                            text: data.success,
+                            icon: "success",
+                            position: "top-center",
+                            timer: 2500,
+                            showConfirmButton: false,
+                        });
+                        $("#sonuc").append('<button type="button" class="pull-right btn btn-success btn-sm"> Gönderilen Mesajlara Git</button>');
+                    }
+                }
+            })
+        })
+    })
+</script>
 <!-- Settings Page End Here -->
 <?php require_once 'footer.php'; ?>

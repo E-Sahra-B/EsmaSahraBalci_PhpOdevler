@@ -461,8 +461,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'getAllMessage') {
             <tr>
                 <th scope="row">' . $say . '</th>
                 <td>' . tarih($mesajcek['mesaj_zaman']) . '</td>
-                <td>' . $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] . '</td>
-                <td>' . guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) . '</td><td>';
+                <td><a href="satici-' . $mesajcek['kullanici_ad'] . '-' . $mesajcek['kullanici_soyad'] . '-' . $mesajcek['kullanici_gel'] . '">' . $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] . '</a></td>
+                <td>' . kisalt($mesajcek['mesaj_detay'], 0, 15) . '</td><td>';
             // <td><a href="mesaj-detay?gidenmesaj=ok&mesaj_id=' . $mesajcek['mesaj_id'] . '&kullanici_gon=' . $mesajcek['kullanici_gon'] . '"><button class="btn btn-primary btn-sm">Mesajı Oku</button></a></td>
             if ($mesajcek['mesaj_okunma'] == 1) {
                 $output .= ' <i style="color:green" class="fa fa-check-circle" aria-hidden="true">';
@@ -511,8 +511,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'getAllMessageInbox') {
             <tr>
                 <th scope="row">' . $say . '</th>
                 <td>' . tarih($mesajcek['mesaj_zaman']) . '</td>
-                <td>' . $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] . '</td>
-                <td>' . guvenlik(kisalt($mesajcek['mesaj_detay'], 0, 15)) . '</td><td>';
+                <td><a href="satici-' . $mesajcek['kullanici_ad'] . '-' . $mesajcek['kullanici_soyad'] . '-' . $mesajcek['kullanici_gon'] . '">' . $mesajcek['kullanici_ad'] . " " . $mesajcek['kullanici_soyad'] . '</a></td>
+                <td>' . trim(kisalt($mesajcek['mesaj_detay'], 0, 15)) . '</td><td>';
             if ($mesajcek['mesaj_okunma'] == 0) {
                 $output .= ' <i style="color:orange" class="fa fa-circle" aria-hidden="true">';
             } else {
@@ -583,7 +583,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'orderList') {
             } else if ($sipariscek['siparisdetay_onay'] == 1) {
                 $output .= ' <button class="btn btn-info btn-xs"> Alıcıdan Onay Bekliyor</button>';
             } else if ($sipariscek['siparisdetay_onay'] == 2) {
-                $output .= ' <button class="btn btn-success btn-xs"> Tamamalanan Siparis</button>';
+                $output .= ' <a href="tamamlanan-siparisler"><button class="btn btn-success btn-xs"> Tamamalanan Siparis</button></a>';
             }
             $output .= '</td></tr>';
         }
