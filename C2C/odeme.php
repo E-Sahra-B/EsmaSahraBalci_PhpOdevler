@@ -40,7 +40,7 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
                                     <th style="width:50%">Ürün Bilgisi</th>
                                     <th style="width:22%" class="text-center">Satıcı</th>
                                     <th style="width:10%">Fiyat</th>
-                                    <th style="width:8%">Quantity</th>
+                                    <th style="width:8%">Miktar</th>
                                     <th style="width:10%"></th>
                                 </tr>
                             </thead>

@@ -26,15 +26,18 @@ giriskontrol();
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Sipariş Tarihi</th>
-                                        <th scope="col">Sipariş Numarası</th>
+                                        <th scope="col">Ürün Adı</th>
+                                        <th scope="col">Ürün Fiyatı</th>
                                         <th scope="col">Sipariş Durumu</th>
                                         <th scope="col">Detay</th>
+                                        <th scope="col">Puan / Yorum</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $siparissor = $db->prepare("SELECT siparis.*, siparis_detay.* FROM siparis
+                                    $siparissor = $db->prepare("SELECT siparis.*, siparis_detay.*,urun.* FROM siparis
                                     INNER JOIN siparis_detay ON siparis.siparis_id=siparis_detay.siparis_id
+                                    INNER JOIN urun ON urun.urun_id=siparis_detay.urun_id 
                                     WHERE siparis.kullanici_id=:kullanici_id order by siparis_zaman DESC");
                                     $siparissor->execute(array(
                                         'kullanici_id' => $_SESSION['userkullanici_id']
@@ -45,7 +48,8 @@ giriskontrol();
                                         <tr>
                                             <th scope="row"><?= $say ?></th>
                                             <td><?= tarih($sipariscek['siparis_zaman']) ?></td>
-                                            <td><?= $sipariscek['siparis_id'] ?></td>
+                                            <td><?= $sipariscek['urun_ad'] ?></td>
+                                            <td><?= fiyat($sipariscek['urun_fiyat']) ?></td>
                                             <!-- <td><?= $sipariscek['siparisdetay_onay'] ?></td> -->
                                             <td>
                                                 <?php if ($sipariscek['siparisdetay_onay'] == 1) : ?>
@@ -57,6 +61,11 @@ giriskontrol();
                                                 <?php endif ?>
                                             </td>
                                             <td><a href="siparis-detay?siparis_id=<?= $sipariscek['siparis_id'] ?>"><button class="btn btn-primary btn-xs">Detay</button></a></td>
+                                            <td>
+                                                <?php if ($sipariscek['siparisdetay_onay'] == 2 and $sipariscek['siparisdetay_yorum'] == 0) : ?>
+                                                    <a href="siparis-detay?siparis_id=<?= $sipariscek['siparis_id'] ?>"><button class="btn btn-info btn-xs">Puan / Yorum</button></a>
+                                                <?php endif ?>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

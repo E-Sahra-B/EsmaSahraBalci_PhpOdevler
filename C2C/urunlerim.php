@@ -70,12 +70,11 @@ giriskontrol();
 <script>
     var site_url = '<?= URL; ?>';
     $(document).ready(function() {
-        $('.deleteBtn').click(function(e) {
+        //$('.deleteBtn').click(function(e) {
+        $("body").on("click", ".deleteBtn", function(e) {
             e.preventDefault();
             del_id = $(this).attr('id');
             resimyol = $(this).attr('data-resim');
-            console.log(resimyol);
-            console.log(path);
             Swal.fire({
                 title: 'Bu ürünü silmek istiyor musunuz?',
                 text: 'İşlem geri alınamaz!',

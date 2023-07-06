@@ -21,7 +21,7 @@
             <li class="active"><a href="javascript:void(0)"><b>MAĞAZA İŞLEMLERİ</b></a></li>
             <li><a href="urun-ekle">Ürün Ekle</a></li>
             <li><a href="urunlerim">Ürünlerim</a></li>
-            <li><a href="yeni-siparisler">Yeni Siparişler</a></li>
+            <li><a href="yeni-siparisler">Gelen Siparişler</a></li>
             <li><a href="tamamlanan-siparisler">Tamamlanan Siparişler</a></li>
             <li><a href="sifre-guncelle">Ayarlar</a></li>
         </ul>
