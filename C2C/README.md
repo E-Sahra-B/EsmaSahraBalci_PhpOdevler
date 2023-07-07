@@ -1,6 +1,7 @@
 ### C2C Alıcı-Satıcı
 
 <img src="/C2C/img/c2c.gif">  
+
 **Proje_için_Kullanılanlar**   
 PHP, PDO, MySQL, OOP, MVC(Basic), Javascript, jQuery, Ajax(Json), Bootstrap, CKEditor, DataTable, SweetAlert, Captcha, PHPMailer
 
