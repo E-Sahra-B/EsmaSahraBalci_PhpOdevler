@@ -1,5 +1,7 @@
 <?php
 require_once 'header.php';
+require_once '../netting/auth.php';
+$user = new Auth();
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
@@ -29,30 +31,30 @@ require_once 'header.php';
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i style="color:#1abb9c;" class="fa fa-turkish-lira"></i></div>
-                  <div style="color:#1abb9c;" class="count">1.234,67</div>
-                  <h3>Günlük Satış</h3>
-                  <p>Lorem ipsum psdea itgum rixt.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i style="color:#1abb9c;" class="fa fa-check-square-o"></i></div>
-                  <div style="color:#1abb9c;" class="count">12.345</div>
+                  <div style="color:#1abb9c;" class="count"><?= $user->allSumOrder()['toplamSatisTutari'] ?></div>
                   <h3>Toplam Satış</h3>
                   <p>Lorem ipsum psdea itgum rixt.</p>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
+                  <div class="icon"><i style="color:#1abb9c;" class="fa fa-check-square-o"></i></div>
+                  <div style="color:#1abb9c;" class="count"><?= $user->allCountOrder()['toplamSatisAdeti'] ?></div>
+                  <h3>Toplam Satış Adeti</h3>
+                  <p>Lorem ipsum psdea itgum rixt.</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
                   <div class="icon"><i style="color:#1abb9c;" class="fa fa-arrow-circle-up"></i></div>
-                  <div style="color:#1abb9c;" class="count">8.615</div>
-                  <h3>Toplam Ürün</h3>
+                  <div style="color:#1abb9c;" class="count"><?= $user->allCountProduct()['toplamUrun'] ?></div>
+                  <h3>Toplam Ürün Adeti</h3>
                   <p>Lorem ipsum psdea itgum rixt.</p>
                 </div>
               </div>
 
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-12">
                 <script type="text/javascript">
                   google.charts.load('current', {
@@ -78,7 +80,7 @@ require_once 'header.php';
                 </script>
                 <div id="regions_div" style="width: auto; height: 400px;"></div>
               </div>
-            </div>
+            </div> -->
             <div class="row">
               <div class="col-md-6">
                 <?php $rakam = 7; ?>
@@ -90,15 +92,15 @@ require_once 'header.php';
 
                   function drawChart() {
                     var data = google.visualization.arrayToDataTable([
-                      ['Task', 'Hours per Day'],
-                      ['Bilgisayar', <?php echo $rakam; ?>],
-                      ['Tablet', <?php echo 4; ?>],
-                      ['Cep Telefonu', <?php echo 5; ?>],
-                      ['Klavye', <?php echo 3; ?>],
-                      ['Mouse', <?php echo 2; ?>]
+                      ['Html Template', '7'],
+                      ['Html Template', 7],
+                      ['Php Script', <?php echo 2; ?>],
+                      ['Wordpress Template', <?php echo 3; ?>],
+                      ['Alan Adı', <?php echo 2; ?>],
+                      ['E-Commerce', <?php echo 2; ?>]
                     ]);
                     var options = {
-                      title: 'Ürünler',
+                      title: 'Kategoriler',
                       pieHole: 0.4,
                     };
                     var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
@@ -119,10 +121,11 @@ require_once 'header.php';
                       ["Element", "Density", {
                         role: "style"
                       }],
-                      ["Eylül", <?php echo 11.614; ?>, "purple"],
-                      ["Ekim", <?php echo 9.614; ?>, "silver"],
-                      ["Kasım", <?php echo 10.614; ?>, "#1abb9c"],
-                      ["Aralık", <?php echo 12.614; ?>, "color: green"]
+                      ["Emma", <?php echo 0; ?>, "purple"],
+                      ["Jane", <?php echo 2; ?>, "silver"],
+                      ["Adam", <?php echo 6; ?>, "#1abb9c"],
+                      ["David", <?php echo 1; ?>, "#d2ffff"],
+                      ["Eva", <?php echo 7; ?>, "color: green"]
                     ]);
                     var view = new google.visualization.DataView(data);
                     view.setColumns([0, 1,
@@ -135,7 +138,7 @@ require_once 'header.php';
                       2
                     ]);
                     var options = {
-                      title: "Aylık Satışlar",
+                      title: "Satıtıcıların Satış Adetleri",
                       width: 600,
                       height: 400,
                       bar: {

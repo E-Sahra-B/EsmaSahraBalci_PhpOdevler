@@ -241,4 +241,37 @@ class Auth extends Database
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function allSumOrder()
+    {
+        $sql = "SELECT SUM(urun_fiyat) as toplamSatisTutari FROM siparis_detay";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function allCountOrder()
+    {
+        $sql = "SELECT COUNT(siparis_id) as toplamSatisAdeti FROM siparis_detay";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function allCountProduct()
+    {
+        $sql = "SELECT COUNT(urun_id) as toplamUrun FROM urun";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function salesQuantity($saticiId)
+    {
+        $sql = "SELECT COUNT(kullanici_idsatici) as saticiSatisAdeti FROM siparis_detay where kullanici_idsatici=:id";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute(['id' => $saticiId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
