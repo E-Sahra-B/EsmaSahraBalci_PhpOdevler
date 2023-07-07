@@ -1,7 +1,8 @@
 ### C2C Alıcı-Satıcı
 
-<img src="/C2C/img/c2c.gif">
-
+<img src="/C2C/img/c2c.gif">  
+**Proje için Kullanılanlar**  
+PHP, PDO, MySQL, OOP, MVC(Basic), Javascript, jQuery, Ajax(Json), Bootstrap, CKEditor, DataTable, SweetAlert, Captcha, PHPMailer, Session,
 
 **Kayıt**  
 E-posta ve şifre ile kayıt yapılıyor.  
@@ -112,12 +113,14 @@ Satıcıya direkt mesaj gönder butonu.
 
 **Admin**  
 Password_Hash ve Password_Verify kontrollü admin girişi.  
-Admin Anasayfa Api ile anlık hava durumu gösterimi.  
-Admin Anasayfa GoogleChart ile grafik tablolar.  
+Admin Anasayfa Api ile anlık hava durumu gösterimi. 
+Admin Toplam Satış tutarı, Toplam Satış Adeti ve Toplam Ürün Sayısının Dinamik çekilip gösterilmesi.   
+Admin Anasayfa GoogleChart ile grafik tablolar ve DB verilerinin google chart ile gösterilmesi.   
 Admin Ürünler Crud işlemleri ve çoklu resim ekleme.  
-AdminÜrünler ürünlerin aktif/pasif ve C2C tarafı öne çıkar özelliklerinin button ile otomatik yapılması.  
+Admin Ürünler ürünlerin aktif/pasif ve C2C tarafı öne çıkar özelliklerinin button ile otomatik yapılması.  
 Admin Menülerde Crud işlerimleri C2C tarafı görünüm işlemi.  
-Admin Hakkımızda Crud işlemleri Video ekleme ve Ck editörü ile içerik düzenleme.  
+Admin Hakkımızda Crud işlemleri Video ekleme ve Ck editörü ile içerik düzenleme. 
+Admin Mağaza Başvuları Alıcıların Satıcı olmak için başvurularının onay işlemi.   
 Admin Yorumlar C2C tarafından alıcının yapmış oldukları yorumların onay ve silme işlemleri.  
 Admin Profil Bilgilerim giriş yapmış olan admin hesap bilgi güncelleme işlemleri.  
 Admin Çıkış ile Session sonlarındırma.  
