@@ -250,15 +250,16 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                             <div class="user-account-info">
                                                 <div class="user-account-info-controler">
                                                     <div class="user-account-img">
-                                                        <img style="border-radius: 30px; width:32px; height:32px;" class="img-responsive" src="<?= $kullanicicek['kullanici_magazafoto'] ?>" alt="profile">
+                                                        <a href="hesabim"><img style="border-radius: 30px; width:32px; height:32px;" class="img-responsive" src="<?= $kullanicicek['kullanici_magazafoto'] ?>" alt="profile"></a>
                                                     </div>
                                                     <div class="user-account-title">
                                                         <div class="user-account-name"><?= $kullanicicek['kullanici_ad'] . " " . substr($kullanicicek['kullanici_soyad'], 0, 1) ?>.</div>
                                                         <div class="user-account-balance">
                                                             <?php
-                                                            $siparissor = $db->prepare("SELECT SUM(urun_fiyat) as toplam FROM siparis_detay where kullanici_idsatici=:kullanici_id ");
+                                                            $siparissor = $db->prepare("SELECT SUM(urun_fiyat) as toplam FROM siparis_detay WHERE kullanici_idsatici=:kullanici_id AND siparisdetay_onay=:onay");
                                                             $siparissor->execute(array(
-                                                                'kullanici_id' => $_SESSION['userkullanici_id']
+                                                                'kullanici_id' => $_SESSION['userkullanici_id'],
+                                                                'onay' => 2
                                                             ));
                                                             $sipariscek = $siparissor->fetch(PDO::FETCH_ASSOC);
                                                             if (isset($sipariscek['toplam'])) {
@@ -274,6 +275,9 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                                     </div>
                                                 </div>
                                                 <ul>
+                                                    <?php if ($kullanicicek['kullanici_magaza'] != 2) : ?>
+                                                        <li><a href="magaza-basvuru">Mağaza Başvuru</a></li>
+                                                    <?php endif ?>
                                                     <li><a href="siparislerim">Siparişlerim</a></li>
                                                     <li><a href="gelen-mesajlar">Gelen Mesajlar</a></li>
                                                     <li><a href="giden-mesajlar">Giden Mesajlar</a></li>
@@ -281,11 +285,13 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                                     <li><a href="adres-bilgileri">Adres Bilgilerim</a></li>
                                                     <li><a href="profil-resim-guncelle">Resim Güncelle</a></li>
                                                     <li><a href="sifre-guncelle">Şifre Güncelle</a></li>
-                                                    <hr>
-                                                    <li><a href="urunlerim">Ürünlerim</a></li>
-                                                    <li><a href="urun-ekle">Ürün Ekle</a></li>
-                                                    <li><a href="yeni-siparisler">Yeni Siparişler</a></li>
-                                                    <li><a href="tamamlanan-siparisler">Tamamlanan Siparişler</a></li>
+                                                    <?php if ($kullanicicek['kullanici_magaza'] == 2) : ?>
+                                                        <hr>
+                                                        <li><a href="urunlerim">Ürünlerim</a></li>
+                                                        <li><a href="urun-ekle">Ürün Ekle</a></li>
+                                                        <li><a href="yeni-siparisler">Gelen Siparişler</a></li>
+                                                        <li><a href="tamamlanan-siparisler">Tamamlanan Siparişler</a></li>
+                                                    <?php endif ?>
                                                 </ul>
                                             </div>
                                         </li>
@@ -314,6 +320,7 @@ if (isset($_SESSION['userkullanici_sonzaman'])) {
                                 while ($kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC)) { ?>
                                     <li><a href="kategoriler-<?= seo($kategoricek['kategori_ad']) . "-" . $kategoricek['kategori_id'] ?>"><?= $kategoricek['kategori_ad'] ?></a></li>
                                 <?php } ?>
+                                <li class="<?= (basename($_SERVER['PHP_SELF'], '.php') == "hesabim") ? "active" : ""; ?>"><a href="hesabim">Üye İşlemleri</a></li>
                             </ul>
                         </nav>
                     </div>
