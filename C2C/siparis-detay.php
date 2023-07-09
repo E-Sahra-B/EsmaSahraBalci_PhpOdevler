@@ -116,7 +116,8 @@ giriskontrol();
                 <?php
                 while ($yorumcek = $yorumsor->fetch(PDO::FETCH_ASSOC)) { ?>
                   <div class="row">
-                    <em><?= tarih($yorumcek['yorum_zaman']) ?></em>
+                    <em class="float-left"><?= tarih($yorumcek['yorum_zaman']) ?></>
+                      <em class="float-right"><?= $user->timeInAgo($yorumcek['yorum_zaman']) ?></>
                   </div>
                   <div class="row">
                     <strong class="title text-xl-left"><?= $yorumcek['yorum_detay'] ?></strong>

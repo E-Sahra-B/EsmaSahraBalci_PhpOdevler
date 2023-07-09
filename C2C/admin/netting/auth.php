@@ -274,4 +274,34 @@ class Auth extends Database
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function timeInAgo($timestamp)
+    {
+        //date_default_timezone_set('Europe/Istanbul');
+        $timestamp = strtotime($timestamp) ? strtotime($timestamp) : $timestamp;
+        $time = time() - $timestamp;
+        switch ($time) {
+            case $time <= 60:
+                return 'Şimdi';
+                break;
+            case $time >= 60 && $time < 60 * 60:
+                return (round($time / 60) == 1) ? ' 1 dakika önce' : round($time / 60) . ' dakika önce';
+                break;
+            case $time >= 60 * 60 && $time < 60 * 60 * 24:
+                return (round($time / 3600) == 1) ? ' 1 saat önce' : round($time / 3600) . ' saat önce';
+                break;
+            case $time >= 60 * 60 * 24 && $time < 60 * 60 * 24 * 7:
+                return (round($time / 86400) == 1) ? ' 1 gün önce' : round($time / 86400) . ' gün önce';
+                break;
+            case $time >= 60 * 60 * 24 * 7 && $time < 2629800:
+                return (round($time / 604800) == 1) ? ' 1 hafta önce' : round($time / 604800) . ' hafta önce';
+                break;
+            case $time >= 2629800 && $time < 31557600:
+                return (round($time / 2629800) == 1) ? ' 1 ay önce' : round($time / 2629800) . ' ay önce';
+                break;
+            case $time >= 31557600: //(365*(60*60*24))+(6*60*60)
+                return (round($time / 31557600) == 1) ? ' 1 yıl önce' : round($time / 31557600) . ' yıl önce';
+                break;
+        }
+    }
 }
