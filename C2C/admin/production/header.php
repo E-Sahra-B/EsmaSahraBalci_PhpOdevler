@@ -83,7 +83,7 @@ if ($kullaniciGeldiMi == 0) {
                         </div>
                         <div class="profile_info">
                             <span>Hoşgeldin</span>
-                            <h2><?php echo $kullanicicek['kullanici_adsoyad'] ?></h2>
+                            <h2><?php echo $kullanicicek['kullanici_ad'] . ' ' . $kullanicicek['kullanici_soyad']; ?></h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -94,7 +94,12 @@ if ($kullaniciGeldiMi == 0) {
                             <ul class="nav side-menu">
                                 <li><a href="index.php"><i class="fa fa-home"></i> Anasayfa </a></li>
                                 <li><a href="urun.php"><i class="fa fa-shopping-basket"></i> Ürünler </a></li>
+                                <li><a href="yorum.php"><i class="fa fa-comments"></i> Yorumlar </a></li>
                                 <li><a href="kategori.php"><i class="fa fa-list"></i> Kategoriler </a></li>
+                                <li><a href="magazalar.php"><i class="fa fa-truck"></i> Mağazalar</a></li>
+                                <li><a href="magaza-onay.php"><i class="fa fa-suitcase"></i> Mağaza Başvuruları </a></li>
+                                <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda </a></li>
+                                <li><a href="kullanici.php"><i class="fa fa-user"></i> Kullanıcılar </a></li>
                                 <li><a href="slider.php"><i class="fa fa-image"></i> Slider </a></li>
                                 <li><a><i class="fa fa-cogs"></i> Site Ayarları <span class="fa fa-cogs"></span></a>
                                     <ul class="nav child_menu">
@@ -106,11 +111,6 @@ if ($kullaniciGeldiMi == 0) {
                                     </ul>
                                 </li>
                                 <li><a href="menu.php"><i class="fa fa-list"></i> Menüler </a></li>
-                                <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda </a></li>
-                                <li><a href="magazalar.php"><i class="fa fa-truck"></i> Mağazalar</a></li>
-                                <li><a href="magaza-onay.php"><i class="fa fa-suitcase"></i> Mağaza Başvuruları </a></li>
-                                <li><a href="kullanici.php"><i class="fa fa-user"></i> Kullanıcılar </a></li>
-                                <li><a href="yorum.php"><i class="fa fa-comments"></i> Yorumlar </a></li>
                                 <li><a href="banka.php"><i class="fa fa-bank"></i> Bankalar </a></li>
                             </ul>
                         </div>

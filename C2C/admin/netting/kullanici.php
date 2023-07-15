@@ -581,7 +581,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'orderList') {
             if ($sipariscek['siparisdetay_onay'] == 0) {
                 $output .= ' <a href="#" id="' . $sipariscek['siparisdetay_id'] . '" class="btn btn-warning btn-xs teslimEt"> Teslim Et</a>';
             } else if ($sipariscek['siparisdetay_onay'] == 1) {
-                $output .= ' <button class="btn btn-info btn-xs"> Alıcıdan Onay Bekliyor</button>';
+                $output .= ' <button class="btn btn-info btn-xs"> Alıcıdan Ödeme Bekliyor</button>';
             } else if ($sipariscek['siparisdetay_onay'] == 2) {
                 $output .= ' <a href="tamamlanan-siparisler"><button class="btn btn-success btn-xs"> Tamamalanan Siparis</button></a>';
             }

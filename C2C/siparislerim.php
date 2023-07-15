@@ -53,9 +53,9 @@ giriskontrol();
                                             <!-- <td><?= $sipariscek['siparisdetay_onay'] ?></td> -->
                                             <td>
                                                 <?php if ($sipariscek['siparisdetay_onay'] == 1) : ?>
-                                                    <a href="javascript:void(0);" class="btn btn-info btn-xs"> Onay Ver</a>
+                                                    <a href="javascript:void(0);" class="btn btn-info btn-xs"> Ödemesini Yap</a>
                                                 <?php elseif ($sipariscek['siparisdetay_onay'] == 2) : ?>
-                                                    <a href="javascript:void(0);" class="btn btn-success btn-xs"> Onaylandı</a>
+                                                    <a href="javascript:void(0);" class="btn btn-success btn-xs"> Tamamlandı</a>
                                                 <?php elseif ($sipariscek['siparisdetay_onay'] == 0) : ?>
                                                     <a href="javascript:void(0);" class="btn btn-warning btn-xs"> Teslim Edilmesi Bekleniyor</a>
                                                 <?php endif ?>

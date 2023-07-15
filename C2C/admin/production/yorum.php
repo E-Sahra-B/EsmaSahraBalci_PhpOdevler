@@ -52,7 +52,7 @@ $yorumsor->execute();
                           'id' => $kullanici_id
                         ));
                         $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
-                        echo $kullanicicek['kullanici_adsoyad'];
+                        echo $kullanicicek['kullanici_ad'] . ' ' . $kullanicicek['kullanici_soyad'];
                         ?></td>
                     <td><?php
                         $urun_id = $yorumcek['urun_id'];

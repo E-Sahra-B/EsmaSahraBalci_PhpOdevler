@@ -118,9 +118,10 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                         <div class="inner-page-main-body">
                             <div class="row more-product-item-wrapper">
                                 <?php
-                                $urunsor = $db->prepare("SELECT urun.*,kategori.* FROM urun INNER JOIN kategori ON urun.kategori_id=kategori.kategori_id where urun.kullanici_id=:kullanici_id ");
+                                $urunsor = $db->prepare("SELECT urun.*,kategori.* FROM urun INNER JOIN kategori ON urun.kategori_id=kategori.kategori_id where urun.kullanici_id=:kullanici_id  AND urun.urun_durum=:durum");
                                 $urunsor->execute(array(
-                                    'kullanici_id' => $_GET['kullanici_id']
+                                    'kullanici_id' => $_GET['kullanici_id'],
+                                    'durum' => 1
                                 ));
                                 while ($uruncek = $urunsor->fetch(PDO::FETCH_ASSOC)) { ?>
                                     <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6">
