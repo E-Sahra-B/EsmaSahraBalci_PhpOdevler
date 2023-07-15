@@ -593,3 +593,33 @@ if (isset($_POST['action']) && $_POST['action'] == 'orderList') {
     }
     echo $output;
 }
+
+if (isset($_GET['export']) && $_GET['export'] == 'excel') {
+    header('Content-Type: text/html; charset=utf-8');
+    // header('Content-Type: application/vnd.ms-excel');
+    header("Content-Type: application/xls");
+    header("Content-Disposition: attachment; filename=kullanici.xls");
+    header("Content-Transfer-Encoding: binary");
+    header("Pragma:no-cache");
+    header("Expires:0");
+
+    $data = $user->exportAllUser();
+    echo '<table border="1" align=center>';
+    echo '<tr>
+            <th>#</th>
+            <th>Ad Soyad</th>
+            <th>Email</th>
+            <th>Telefon Numarasi</th>
+            <th>Kayit Tarihi</th>
+        </tr>';
+    foreach ($data as $row) {
+        echo   '<tr>
+                    <td>' . $row["kullanici_id"] . '</td>
+                    <td>' . $row["kullanici_ad"] . ' ' . $row["kullanici_soyad"] . '</td>
+                    <td>' . $row["kullanici_mail"] . '</td>
+                    <td>' . $row["kullanici_gsm"] . '</td>
+                    <td>' . tarih($row['kullanici_zaman']) . '</td>
+                </tr>';
+    }
+    echo '</table>';
+}

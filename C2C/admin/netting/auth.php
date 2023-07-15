@@ -320,4 +320,13 @@ class Auth extends Database
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function exportAllUser()
+    {
+        $sql = "SELECT * FROM kullanici where kullanici_yetki=1";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

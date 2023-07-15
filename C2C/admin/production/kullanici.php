@@ -13,20 +13,13 @@ $kullanicisor->execute(['yetki' => 1]);
         <div class="x_panel">
           <div class="x_title">
             <div>
-              <?php
-              if ($_GET['sil'] == "ok") { ?>
-                <div class="alert alert-success alert-dismissible">
-                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                  Kullanıcı Silme İşlemi Başarılı
-                </div>
-              <?php } elseif ($_GET['sil'] == "no") { ?>
-                <div class="alert alert-danger">İşlem Başarısız
-                </div>
-              <?php }
-              ?>
+              <div class="alert alert-<?= $_GET['sil']; ?>"><?= !empty($_GET['sil']) ? (($_GET['sil'] == "danger") ? "İşlem Başarısız" : "İşlem Başarılı") : ""; ?></div>
             </div>
             <h2>Kullanıcı Listeleme</h2>
             <div class="clearfix"></div>
+            <div class="text-right">
+              <a href="../netting/kullanici.php?export=excel"><button class="btn btn-info btn-sm"> Excel</button></a>
+            </div>
           </div>
           <div class="x_content">
             <!-- Tablo İçerik Başlangıç -->
@@ -47,7 +40,7 @@ $kullanicisor->execute(['yetki' => 1]);
                 while ($kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC)) { ?>
                   <tr>
                     <td><?php echo date("d-m-Y", strtotime($kullanicicek['kullanici_zaman'])) ?></td>
-                    <td><?php echo $kullanicicek['kullanici_adsoyad'] ?></td>
+                    <td><?php echo $kullanicicek['kullanici_ad'] . ' ' . $kullanicicek['kullanici_soyad'] ?></td>
                     <td><?php echo $kullanicicek['kullanici_mail'] ?></td>
                     <td><?php echo $kullanicicek['kullanici_gsm'] ?></td>
                     <td class="text-center">
