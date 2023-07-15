@@ -40,7 +40,7 @@ $user = new Auth();
                 <div class="tile-stats">
                   <div class="icon"><i style="color:#1abb9c;" class="fa fa-check-square-o"></i></div>
                   <div style="color:#1abb9c;" class="count"><?= $user->allCountOrder()['toplamSatisAdeti'] ?></div>
-                  <h3>Toplam Satış Adeti</h3>
+                  <h3>Satış Adeti</h3>
                   <p>Lorem ipsum psdea itgum rixt.</p>
                 </div>
               </div>
@@ -48,7 +48,7 @@ $user = new Auth();
                 <div class="tile-stats">
                   <div class="icon"><i style="color:#1abb9c;" class="fa fa-arrow-circle-up"></i></div>
                   <div style="color:#1abb9c;" class="count"><?= $user->allCountProduct()['toplamUrun'] ?></div>
-                  <h3>Toplam Ürün Adeti</h3>
+                  <h3>Ürün Adeti</h3>
                   <p>Lorem ipsum psdea itgum rixt.</p>
                 </div>
               </div>
@@ -92,12 +92,13 @@ $user = new Auth();
 
                   function drawChart() {
                     var data = google.visualization.arrayToDataTable([
-                      ['Html Template', '7'],
-                      ['Html Template', 7],
-                      ['Php Script', <?php echo 2; ?>],
-                      ['Wordpress Template', <?php echo 3; ?>],
-                      ['Alan Adı', <?php echo 2; ?>],
-                      ['E-Commerce', <?php echo 2; ?>]
+                      ['Kategori Ad', 'Adet'],
+                      <?php
+                      $categories = $user->totalProductsOfCategories();
+                      foreach ($categories as $category) {
+                        echo '["' . $category['ad'] . '",' . $category['say'] . '],';
+                      }
+                      ?>
                     ]);
                     var options = {
                       title: 'Kategoriler',

@@ -296,12 +296,28 @@ class Auth extends Database
             case $time >= 60 * 60 * 24 * 7 && $time < 2629800:
                 return (round($time / 604800) == 1) ? ' 1 hafta önce' : round($time / 604800) . ' hafta önce';
                 break;
-            case $time >= 2629800 && $time < 31557600:
+            case $time >= 2629800 && $time < 31557600: //60*60*24*(365,25/12)
                 return (round($time / 2629800) == 1) ? ' 1 ay önce' : round($time / 2629800) . ' ay önce';
                 break;
-            case $time >= 31557600: //(365*(60*60*24))+(6*60*60)
+            case $time >= 31557600: //(365*(60*60*24))+(6*60*60) // 365,25*(60*60*24)
                 return (round($time / 31557600) == 1) ? ' 1 yıl önce' : round($time / 31557600) . ' yıl önce';
                 break;
         }
+        //$bugun = tarih($yorumcek['yorum_zaman']);
+        $bugun = date("Y-m-d");
+        $cevir = strtotime('-1 day', strtotime($bugun));
+        echo date("Y-m-d", $cevir);
+    }
+
+    public function totalProductsOfCategories()
+    {
+        $sql = "SELECT kategori.kategori_ad AS ad,COUNT(urun.kategori_id) AS say FROM urun
+        INNER JOIN kategori ON urun.kategori_id = kategori.kategori_id
+        WHERE urun.urun_durum='1' 
+        GROUP BY kategori.kategori_id ";
+        $stmt = $this->baglan->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 }
