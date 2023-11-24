@@ -28,6 +28,17 @@ if ($_POST) {
         print '<div class="alert alert-success">GÜNCELLEME YAPILDI</div>';
         header("Refresh: 2; url=menuliste.php");
     }
+    // $query = $connect->prepare("UPDATE images SET
+    // imageTitle=:title,
+    // imageurl=:img 
+    // WHERE id=$ID");
+    // $updateImage = $query->execute([
+    //     'title' => $title,
+    //     'img' => ($image_tmp != "") ? $image : $oldImageUrl
+    // ]);
+    // //($resim_tmp != "") ? move_uploaded_file($resim_tmp, $resim) && unlink($oldImageUrl) : "";
+    // move_uploaded_file($resim_tmp, $resim);
+    // unlink($oldImageUrl);
 } else {
     $kayitNo = $_GET["id"];
     $satirlar = $baglan->query("select * from menuler where id=$kayitNo");
