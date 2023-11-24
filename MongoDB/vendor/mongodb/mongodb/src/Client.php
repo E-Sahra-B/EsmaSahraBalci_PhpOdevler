@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2015-2017 MongoDB, Inc.
+ * Copyright 2015-present MongoDB, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 
 namespace MongoDB;
 
+use Iterator;
+use Jean85\PrettyVersions;
 use MongoDB\Driver\ClientEncryption;
 use MongoDB\Driver\Exception\InvalidArgumentException as DriverInvalidArgumentException;
 use MongoDB\Driver\Exception\RuntimeException as DriverRuntimeException;
@@ -32,9 +34,13 @@ use MongoDB\Model\BSONArray;
 use MongoDB\Model\BSONDocument;
 use MongoDB\Model\DatabaseInfoIterator;
 use MongoDB\Operation\DropDatabase;
+use MongoDB\Operation\ListDatabaseNames;
 use MongoDB\Operation\ListDatabases;
 use MongoDB\Operation\Watch;
+use Throwable;
+
 use function is_array;
+use function is_string;
 
 class Client
 {
@@ -45,11 +51,11 @@ class Client
         'root' => BSONDocument::class,
     ];
 
-    /** @var integer */
-    private static $wireVersionForReadConcern = 4;
+    /** @var string */
+    private static $handshakeSeparator = ' / ';
 
-    /** @var integer */
-    private static $wireVersionForWritableCommandWriteConcern = 5;
+    /** @var string|null */
+    private static $version;
 
     /** @var Manager */
     private $manager;
@@ -108,8 +114,10 @@ class Client
             }
         }
 
+        $driverOptions['driver'] = $this->mergeDriverInfo($driverOptions['driver'] ?? []);
+
         $this->uri = (string) $uri;
-        $this->typeMap = isset($driverOptions['typeMap']) ? $driverOptions['typeMap'] : null;
+        $this->typeMap = $driverOptions['typeMap'] ?? null;
 
         unset($driverOptions['typeMap']);
 
@@ -201,7 +209,7 @@ class Client
 
         $server = select_server($this->manager, $options);
 
-        if (! isset($options['writeConcern']) && server_supports_feature($server, self::$wireVersionForWritableCommandWriteConcern) && ! is_in_transaction($options)) {
+        if (! isset($options['writeConcern']) && ! is_in_transaction($options)) {
             $options['writeConcern'] = $this->writeConcern;
         }
 
@@ -260,6 +268,22 @@ class Client
     public function getWriteConcern()
     {
         return $this->writeConcern;
+    }
+
+    /**
+     * List database names.
+     *
+     * @see ListDatabaseNames::__construct() for supported options
+     * @throws UnexpectedValueException if the command response was malformed
+     * @throws InvalidArgumentException for parameter/option parsing errors
+     * @throws DriverRuntimeException for other driver errors (e.g. connection errors)
+     */
+    public function listDatabaseNames(array $options = []): Iterator
+    {
+        $operation = new ListDatabaseNames($options);
+        $server = select_server($this->manager, $options);
+
+        return $operation->execute($server);
     }
 
     /**
@@ -342,7 +366,7 @@ class Client
 
         $server = select_server($this->manager, $options);
 
-        if (! isset($options['readConcern']) && server_supports_feature($server, self::$wireVersionForReadConcern) && ! is_in_transaction($options)) {
+        if (! isset($options['readConcern']) && ! is_in_transaction($options)) {
             $options['readConcern'] = $this->readConcern;
         }
 
@@ -353,5 +377,48 @@ class Client
         $operation = new Watch($this->manager, null, null, $pipeline, $options);
 
         return $operation->execute($server);
+    }
+
+    private static function getVersion(): string
+    {
+        if (self::$version === null) {
+            try {
+                self::$version = PrettyVersions::getVersion('mongodb/mongodb')->getPrettyVersion();
+            } catch (Throwable $t) {
+                return 'unknown';
+            }
+        }
+
+        return self::$version;
+    }
+
+    private function mergeDriverInfo(array $driver): array
+    {
+        $mergedDriver = [
+            'name' => 'PHPLIB',
+            'version' => self::getVersion(),
+        ];
+
+        if (isset($driver['name'])) {
+            if (! is_string($driver['name'])) {
+                throw InvalidArgumentException::invalidType('"name" handshake option', $driver['name'], 'string');
+            }
+
+            $mergedDriver['name'] .= self::$handshakeSeparator . $driver['name'];
+        }
+
+        if (isset($driver['version'])) {
+            if (! is_string($driver['version'])) {
+                throw InvalidArgumentException::invalidType('"version" handshake option', $driver['version'], 'string');
+            }
+
+            $mergedDriver['version'] .= self::$handshakeSeparator . $driver['version'];
+        }
+
+        if (isset($driver['platform'])) {
+            $mergedDriver['platform'] = $driver['platform'];
+        }
+
+        return $mergedDriver;
     }
 }

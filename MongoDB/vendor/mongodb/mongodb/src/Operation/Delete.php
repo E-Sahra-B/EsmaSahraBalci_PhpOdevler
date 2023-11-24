@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2015-2017 MongoDB, Inc.
+ * Copyright 2015-present MongoDB, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,11 @@ use MongoDB\Driver\Session;
 use MongoDB\Driver\WriteConcern;
 use MongoDB\Exception\InvalidArgumentException;
 use MongoDB\Exception\UnsupportedException;
+
 use function is_array;
 use function is_object;
+use function is_string;
+use function MongoDB\is_write_concern_acknowledged;
 use function MongoDB\server_supports_feature;
 
 /**
@@ -41,7 +44,7 @@ use function MongoDB\server_supports_feature;
 class Delete implements Executable, Explainable
 {
     /** @var integer */
-    private static $wireVersionForCollation = 5;
+    private static $wireVersionForHint = 9;
 
     /** @var string */
     private $databaseName;
@@ -65,12 +68,14 @@ class Delete implements Executable, Explainable
      *
      *  * collation (document): Collation specification.
      *
-     *    This is not supported for server versions < 3.4 and will result in an
+     *  * hint (string|document): The index to use. Specify either the index
+     *    name as a string or the index key pattern as a document. If specified,
+     *    then the query system will only consider plans using the hinted index.
+     *
+     *    This is not supported for server versions < 4.4 and will result in an
      *    exception at execution time if used.
      *
      *  * session (MongoDB\Driver\Session): Client session.
-     *
-     *    Sessions are not supported for server versions < 3.6.
      *
      *  * writeConcern (MongoDB\Driver\WriteConcern): Write concern.
      *
@@ -95,6 +100,10 @@ class Delete implements Executable, Explainable
 
         if (isset($options['collation']) && ! is_array($options['collation']) && ! is_object($options['collation'])) {
             throw InvalidArgumentException::invalidType('"collation" option', $options['collation'], 'array or object');
+        }
+
+        if (isset($options['hint']) && ! is_string($options['hint']) && ! is_array($options['hint']) && ! is_object($options['hint'])) {
+            throw InvalidArgumentException::invalidType('"hint" option', $options['hint'], ['string', 'array', 'object']);
         }
 
         if (isset($options['session']) && ! $options['session'] instanceof Session) {
@@ -122,12 +131,18 @@ class Delete implements Executable, Explainable
      * @see Executable::execute()
      * @param Server $server
      * @return DeleteResult
+     * @throws UnsupportedException if hint or write concern is used and unsupported
      * @throws DriverRuntimeException for other driver errors (e.g. connection errors)
      */
     public function execute(Server $server)
     {
-        if (isset($this->options['collation']) && ! server_supports_feature($server, self::$wireVersionForCollation)) {
-            throw UnsupportedException::collationNotSupported();
+        /* CRUD spec requires a client-side error when using "hint" with an
+         * unacknowledged write concern on an unsupported server. */
+        if (
+            isset($this->options['writeConcern']) && ! is_write_concern_acknowledged($this->options['writeConcern']) &&
+            isset($this->options['hint']) && ! server_supports_feature($server, self::$wireVersionForHint)
+        ) {
+            throw UnsupportedException::hintNotSupported();
         }
 
         $inTransaction = isset($this->options['session']) && $this->options['session']->isInTransaction();
@@ -143,6 +158,13 @@ class Delete implements Executable, Explainable
         return new DeleteResult($writeResult);
     }
 
+    /**
+     * Returns the command document for this operation.
+     *
+     * @see Explainable::getCommandDocument()
+     * @param Server $server
+     * @return array
+     */
     public function getCommandDocument(Server $server)
     {
         $cmd = ['delete' => $this->collectionName, 'deletes' => [['q' => $this->filter] + $this->createDeleteOptions()]];
@@ -168,6 +190,10 @@ class Delete implements Executable, Explainable
 
         if (isset($this->options['collation'])) {
             $deleteOptions['collation'] = (object) $this->options['collation'];
+        }
+
+        if (isset($this->options['hint'])) {
+            $deleteOptions['hint'] = $this->options['hint'];
         }
 
         return $deleteOptions;
