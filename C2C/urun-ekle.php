@@ -62,7 +62,7 @@ giriskontrol();
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Fiyat</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" required="" name="urun_fiyat" id="urun_fiyat" placeholder="Ürün Fiyat..." type="text">
+                                        <input type="text" class="form-control" id="urun_fiyat" name="urun_fiyat" value="" placeholder="Ürün Fiyat..." oninput="this.value = this.value.replace(/[^\d,]/g, '');">
                                     </div>
                                 </div>
                                 <div class="form-group">
